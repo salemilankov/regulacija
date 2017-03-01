@@ -12,12 +12,17 @@ void adcInit(){
 unsigned int adcRead(){
     unsigned int temp = 0;
     unsigned short tempL=0, tempH=0;
+    unsigned int loop_count=0;
 
     ADCON0bits.ADON = 1;    //AD enable
     __delay_ms(1);  //cekamo da prodje aquisition time
     ADCON0bits.GO = 1;  //pokrecemo AD konverziju
 
-    while(ADCON0bits.GO);   //cekamo da se zavrsi AD konverzija
+    while(ADCON0bits.GO)    //cekamo da se zavrsi AD konverzija
+    {
+        __delay_ms(10);
+        if(++loop_count > 150) return 0;
+    }
 
     tempL |= ADRESL;    //uzimamo rezultat
     tempH |= ADRESH;

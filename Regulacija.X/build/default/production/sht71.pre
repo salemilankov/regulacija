@@ -2051,6 +2051,8 @@ _delay((unsigned long)((2)*(8000000/4000000.0)));
 char measureSHT71(unsigned char *p_value, unsigned char *p_checksum, unsigned char mode){
 unsigned error = 0;
 unsigned int temp = 0;
+unsigned char loop_cnt=0;
+
 tranStartSHT71();
 switch(mode){
 case 2 : error += writeByteSHT71(0x03); break;
@@ -2060,7 +2062,8 @@ default : break;
 TRISBbits.TRISB7 = 1;
 while (1)
 {
-if(RB7 == 0) break;
+if((RB7 == 0) || (++loop_cnt > 200)) break;
+_delay((unsigned long)((10)*(8000000/4000.0)));
 }
 if(RB7) error += 1;
 switch(mode){

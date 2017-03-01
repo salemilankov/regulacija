@@ -1514,48 +1514,68 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _tempL -> -> 0 `i `us ]
 [v _tempH `us ~T0 @X0 1 a ]
 [e = _tempH -> -> 0 `i `us ]
-[; ;tgs4161.c: 16: ADCON0bits.ADON = 1;
-"16
-[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;tgs4161.c: 17: _delay((unsigned long)((1)*(8000000/4000.0)));
+"15
+[v _loop_count `ui ~T0 @X0 1 a ]
+[; ;tgs4161.c: 15: unsigned int loop_count=0;
+[e = _loop_count -> -> 0 `i `ui ]
+[; ;tgs4161.c: 17: ADCON0bits.ADON = 1;
 "17
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;tgs4161.c: 18: ADCON0bits.GO = 1;
+[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
+[; ;tgs4161.c: 18: _delay((unsigned long)((1)*(8000000/4000.0)));
 "18
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;tgs4161.c: 19: ADCON0bits.GO = 1;
+"19
 [e = . . _ADCON0bits 1 1 -> -> 1 `i `uc ]
-[; ;tgs4161.c: 20: while(ADCON0bits.GO);
-"20
+[; ;tgs4161.c: 21: while(ADCON0bits.GO)
+"21
 [e $U 137  ]
 [e :U 138 ]
+[; ;tgs4161.c: 22: {
+"22
+{
+[; ;tgs4161.c: 23: _delay((unsigned long)((10)*(8000000/4000.0)));
+"23
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;tgs4161.c: 24: if(++loop_count > 150) return 0;
+"24
+[e $ ! > =+ _loop_count -> -> 1 `i `ui -> -> 150 `i `ui 140  ]
+[e ) -> -> 0 `i `ui ]
+[e $UE 136  ]
+[e :U 140 ]
+"25
+}
 [e :U 137 ]
+"21
 [e $ != -> . . _ADCON0bits 1 1 `i -> -> -> 0 `i `Vuc `i 138  ]
 [e :U 139 ]
-[; ;tgs4161.c: 22: tempL |= ADRESL;
-"22
-[e =| _tempL -> _ADRESL `us ]
-[; ;tgs4161.c: 23: tempH |= ADRESH;
-"23
-[e =| _tempH -> _ADRESH `us ]
-[; ;tgs4161.c: 25: temp = ((unsigned int)tempH <<8) + (unsigned int)tempL;
-"25
-[e = _temp + << -> _tempH `ui -> 8 `i -> _tempL `ui ]
-[; ;tgs4161.c: 27: return temp;
+[; ;tgs4161.c: 25: }
+[; ;tgs4161.c: 27: tempL |= ADRESL;
 "27
+[e =| _tempL -> _ADRESL `us ]
+[; ;tgs4161.c: 28: tempH |= ADRESH;
+"28
+[e =| _tempH -> _ADRESH `us ]
+[; ;tgs4161.c: 30: temp = ((unsigned int)tempH <<8) + (unsigned int)tempL;
+"30
+[e = _temp + << -> _tempH `ui -> 8 `i -> _tempL `ui ]
+[; ;tgs4161.c: 32: return temp;
+"32
 [e ) _temp ]
 [e $UE 136  ]
-[; ;tgs4161.c: 28: }
-"28
+[; ;tgs4161.c: 33: }
+"33
 [e :UE 136 ]
 }
-"30
+"35
 [v _measureTGS4161 `(ui ~T0 @X0 1 ef ]
 {
-[; ;tgs4161.c: 30: unsigned int measureTGS4161(){
+[; ;tgs4161.c: 35: unsigned int measureTGS4161(){
 [e :U _measureTGS4161 ]
 [f ]
-"31
+"36
 [v _temp `ui ~T0 @X0 1 a ]
-[; ;tgs4161.c: 31: unsigned int temp=0, ppm=0, ppm_temp=0, krez1, krez2;
+[; ;tgs4161.c: 36: unsigned int temp=0, ppm=0, ppm_temp=0, krez1, krez2;
 [e = _temp -> -> 0 `i `ui ]
 [v _ppm `ui ~T0 @X0 1 a ]
 [e = _ppm -> -> 0 `i `ui ]
@@ -1563,77 +1583,77 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _ppm_temp -> -> 0 `i `ui ]
 [v _krez1 `ui ~T0 @X0 1 a ]
 [v _krez2 `ui ~T0 @X0 1 a ]
-"32
-[v _i `uc ~T0 @X0 1 a ]
-[; ;tgs4161.c: 32: char i;
-[; ;tgs4161.c: 34: krez1 = -23.43;
-"34
-[e = _krez1 -> -U .23.43 `ui ]
-[; ;tgs4161.c: 35: krez2 = -53.63;
-"35
-[e = _krez2 -> -U .53.63 `ui ]
-[; ;tgs4161.c: 37: INTCONbits.T0IE = 0;
 "37
+[v _i `uc ~T0 @X0 1 a ]
+[; ;tgs4161.c: 37: char i;
+[; ;tgs4161.c: 39: krez1 = -23.43;
+"39
+[e = _krez1 -> -U .23.43 `ui ]
+[; ;tgs4161.c: 40: krez2 = -53.63;
+"40
+[e = _krez2 -> -U .53.63 `ui ]
+[; ;tgs4161.c: 42: INTCONbits.T0IE = 0;
+"42
 [e = . . _INTCONbits 0 5 -> -> 0 `i `uc ]
-[; ;tgs4161.c: 38: for(i=0;i<7;i++)
-"38
+[; ;tgs4161.c: 43: for(i=0;i<7;i++)
+"43
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 7 `i 141  ]
-[e $U 142  ]
-"39
-[e :U 141 ]
-[; ;tgs4161.c: 39: {
-{
-[; ;tgs4161.c: 40: temp = adcRead();
-"40
-[e = _temp ( _adcRead ..  ]
-[; ;tgs4161.c: 42: if(temp > 236) ppm = krez1*temp + 6650;
-"42
-[e $ ! > _temp -> -> 236 `i `ui 144  ]
-[e = _ppm + * _krez1 _temp -> -> 6650 `i `ui ]
-[e $U 145  ]
-"43
-[e :U 144 ]
-[; ;tgs4161.c: 43: else ppm = krez2*temp + 13500;
-[e = _ppm + * _krez2 _temp -> -> 13500 `i `ui ]
-[e :U 145 ]
-[; ;tgs4161.c: 44: ppm_temp += ppm;
+[e $ < -> _i `i -> 7 `i 142  ]
+[e $U 143  ]
 "44
-[e =+ _ppm_temp _ppm ]
-[; ;tgs4161.c: 45: _delay((unsigned long)((20)*(8000000/4000.0)));
-"45
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"46
-}
-"38
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 7 `i 141  ]
 [e :U 142 ]
-"46
-}
-[; ;tgs4161.c: 46: }
-[; ;tgs4161.c: 47: INTCONbits.T0IE = 1;
+[; ;tgs4161.c: 44: {
+{
+[; ;tgs4161.c: 45: temp = adcRead();
+"45
+[e = _temp ( _adcRead ..  ]
+[; ;tgs4161.c: 47: if(temp > 236) ppm = krez1*temp + 6650;
 "47
-[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-[; ;tgs4161.c: 49: ppm = ppm_temp/7;
-"49
-[e = _ppm / _ppm_temp -> -> 7 `i `ui ]
-[; ;tgs4161.c: 50: if(ppm < 350) ppm = 350;
-"50
-[e $ ! < _ppm -> -> 350 `i `ui 146  ]
-[e = _ppm -> -> 350 `i `ui ]
+[e $ ! > _temp -> -> 236 `i `ui 145  ]
+[e = _ppm + * _krez1 _temp -> -> 6650 `i `ui ]
+[e $U 146  ]
+"48
+[e :U 145 ]
+[; ;tgs4161.c: 48: else ppm = krez2*temp + 13500;
+[e = _ppm + * _krez2 _temp -> -> 13500 `i `ui ]
 [e :U 146 ]
-[; ;tgs4161.c: 51: if(ppm > 5500) ppm = 5500;
+[; ;tgs4161.c: 49: ppm_temp += ppm;
+"49
+[e =+ _ppm_temp _ppm ]
+[; ;tgs4161.c: 50: _delay((unsigned long)((20)*(8000000/4000.0)));
+"50
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "51
-[e $ ! > _ppm -> -> 5500 `i `ui 147  ]
-[e = _ppm -> -> 5500 `i `ui ]
-[e :U 147 ]
-[; ;tgs4161.c: 53: return ppm;
-"53
-[e ) _ppm ]
-[e $UE 140  ]
-[; ;tgs4161.c: 54: }
+}
+"43
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 7 `i 142  ]
+[e :U 143 ]
+"51
+}
+[; ;tgs4161.c: 51: }
+[; ;tgs4161.c: 52: INTCONbits.T0IE = 1;
+"52
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+[; ;tgs4161.c: 54: ppm = ppm_temp/7;
 "54
-[e :UE 140 ]
+[e = _ppm / _ppm_temp -> -> 7 `i `ui ]
+[; ;tgs4161.c: 55: if(ppm < 350) ppm = 350;
+"55
+[e $ ! < _ppm -> -> 350 `i `ui 147  ]
+[e = _ppm -> -> 350 `i `ui ]
+[e :U 147 ]
+[; ;tgs4161.c: 56: if(ppm > 5500) ppm = 5500;
+"56
+[e $ ! > _ppm -> -> 5500 `i `ui 148  ]
+[e = _ppm -> -> 5500 `i `ui ]
+[e :U 148 ]
+[; ;tgs4161.c: 58: return ppm;
+"58
+[e ) _ppm ]
+[e $UE 141  ]
+[; ;tgs4161.c: 59: }
+"59
+[e :UE 141 ]
 }

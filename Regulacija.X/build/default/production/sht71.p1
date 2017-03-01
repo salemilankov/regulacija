@@ -1574,557 +1574,564 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _temp `ui ~T0 @X0 1 a ]
 [; ;sht71.c: 93: unsigned int temp = 0;
 [e = _temp -> -> 0 `i `ui ]
-[; ;sht71.c: 94: tranStartSHT71();
 "94
+[v _loop_cnt `uc ~T0 @X0 1 a ]
+[; ;sht71.c: 94: unsigned char loop_cnt=0;
+[e = _loop_cnt -> -> 0 `i `uc ]
+[; ;sht71.c: 96: tranStartSHT71();
+"96
 [e ( _tranStartSHT71 ..  ]
-[; ;sht71.c: 95: switch(mode){
-"95
+[; ;sht71.c: 97: switch(mode){
+"97
 [e $U 140  ]
 {
-[; ;sht71.c: 96: case 2 : error += writeByteSHT71(0x03); break;
-"96
+[; ;sht71.c: 98: case 2 : error += writeByteSHT71(0x03); break;
+"98
 [e :U 141 ]
 [e =+ _error -> ( _writeByteSHT71 (1 -> -> 3 `i `uc `ui ]
 [e $U 139  ]
-[; ;sht71.c: 97: case 3 : error += writeByteSHT71(0x05); break;
-"97
+[; ;sht71.c: 99: case 3 : error += writeByteSHT71(0x05); break;
+"99
 [e :U 142 ]
 [e =+ _error -> ( _writeByteSHT71 (1 -> -> 5 `i `uc `ui ]
 [e $U 139  ]
-[; ;sht71.c: 98: default : break;
-"98
+[; ;sht71.c: 100: default : break;
+"100
 [e :U 143 ]
 [e $U 139  ]
-"99
+"101
 }
-[; ;sht71.c: 99: }
+[; ;sht71.c: 101: }
 [e $U 139  ]
-"95
+"97
 [e :U 140 ]
 [e [\ _mode , $ -> -> 2 `i `uc 141
  , $ -> -> 3 `i `uc 142
  143 ]
-"99
-[e :U 139 ]
-[; ;sht71.c: 100: TRISBbits.TRISB7 = 1;
-"100
-[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
-[; ;sht71.c: 101: while (1)
 "101
-[e :U 145 ]
-[; ;sht71.c: 102: {
+[e :U 139 ]
+[; ;sht71.c: 102: TRISBbits.TRISB7 = 1;
 "102
-{
-[; ;sht71.c: 103: if(RB7 == 0) break;
+[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
+[; ;sht71.c: 103: while (1)
 "103
-[e $ ! == -> _RB7 `i -> 0 `i 147  ]
+[e :U 145 ]
+[; ;sht71.c: 104: {
+"104
+{
+[; ;sht71.c: 105: if((RB7 == 0) || (++loop_cnt > 200)) break;
+"105
+[e $ ! || == -> _RB7 `i -> 0 `i > -> =+ _loop_cnt -> -> 1 `i `uc `i -> 200 `i 147  ]
 [e $U 146  ]
 [e :U 147 ]
-"104
+[; ;sht71.c: 106: _delay((unsigned long)((10)*(8000000/4000.0)));
+"106
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"107
 }
 [e :U 144 ]
-"101
+"103
 [e $U 145  ]
 [e :U 146 ]
-[; ;sht71.c: 104: }
-[; ;sht71.c: 105: if(RB7) error += 1;
-"105
+[; ;sht71.c: 107: }
+[; ;sht71.c: 108: if(RB7) error += 1;
+"108
 [e $ ! _RB7 148  ]
 [e =+ _error -> -> 1 `i `ui ]
 [e :U 148 ]
-[; ;sht71.c: 106: switch(mode){
-"106
+[; ;sht71.c: 109: switch(mode){
+"109
 [e $U 150  ]
 {
-[; ;sht71.c: 107: case 2 : temp = 0;
-"107
+[; ;sht71.c: 110: case 2 : temp = 0;
+"110
 [e :U 151 ]
 [e = _temp -> -> 0 `i `ui ]
-[; ;sht71.c: 108: temp = readByteSHT71(1);
-"108
-[e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
-[; ;sht71.c: 109: temp <<= 8;
-"109
-[e =<< _temp -> 8 `i ]
-[; ;sht71.c: 110: tempervalue[0] = temp;
-"110
-[e = *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
-[; ;sht71.c: 111: temp = 0;
+[; ;sht71.c: 111: temp = readByteSHT71(1);
 "111
-[e = _temp -> -> 0 `i `ui ]
-[; ;sht71.c: 112: temp = readByteSHT71(1);
-"112
 [e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
-[; ;sht71.c: 113: tempervalue[0] |= temp;
+[; ;sht71.c: 112: temp <<= 8;
+"112
+[e =<< _temp -> 8 `i ]
+[; ;sht71.c: 113: tempervalue[0] = temp;
 "113
-[e =| *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
-[; ;sht71.c: 114: break;
+[e = *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
+[; ;sht71.c: 114: temp = 0;
 "114
-[e $U 149  ]
-[; ;sht71.c: 115: case 3 : temp = 0;
+[e = _temp -> -> 0 `i `ui ]
+[; ;sht71.c: 115: temp = readByteSHT71(1);
 "115
+[e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
+[; ;sht71.c: 116: tempervalue[0] |= temp;
+"116
+[e =| *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
+[; ;sht71.c: 117: break;
+"117
+[e $U 149  ]
+[; ;sht71.c: 118: case 3 : temp = 0;
+"118
 [e :U 152 ]
 [e = _temp -> -> 0 `i `ui ]
-[; ;sht71.c: 116: temp = readByteSHT71(1);
-"116
-[e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
-[; ;sht71.c: 117: temp <<= 8;
-"117
-[e =<< _temp -> 8 `i ]
-[; ;sht71.c: 118: tempervalue[1] = temp;
-"118
-[e = *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
-[; ;sht71.c: 119: temp = 0;
+[; ;sht71.c: 119: temp = readByteSHT71(1);
 "119
-[e = _temp -> -> 0 `i `ui ]
-[; ;sht71.c: 120: temp = readByteSHT71(1);
-"120
 [e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
-[; ;sht71.c: 121: tempervalue[1] |= temp;
+[; ;sht71.c: 120: temp <<= 8;
+"120
+[e =<< _temp -> 8 `i ]
+[; ;sht71.c: 121: tempervalue[1] = temp;
 "121
-[e =| *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
-[; ;sht71.c: 122: break;
+[e = *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
+[; ;sht71.c: 122: temp = 0;
 "122
-[e $U 149  ]
-[; ;sht71.c: 123: default : break;
+[e = _temp -> -> 0 `i `ui ]
+[; ;sht71.c: 123: temp = readByteSHT71(1);
 "123
+[e = _temp -> ( _readByteSHT71 (1 -> -> 1 `i `uc `ui ]
+[; ;sht71.c: 124: tempervalue[1] |= temp;
+"124
+[e =| *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux _temp ]
+[; ;sht71.c: 125: break;
+"125
+[e $U 149  ]
+[; ;sht71.c: 126: default : break;
+"126
 [e :U 153 ]
 [e $U 149  ]
-"124
+"127
 }
-[; ;sht71.c: 124: }
+[; ;sht71.c: 127: }
 [e $U 149  ]
-"106
+"109
 [e :U 150 ]
 [e [\ _mode , $ -> -> 2 `i `uc 151
  , $ -> -> 3 `i `uc 152
  153 ]
-"124
+"127
 [e :U 149 ]
-[; ;sht71.c: 125: *p_checksum = readByteSHT71(0);
-"125
+[; ;sht71.c: 128: *p_checksum = readByteSHT71(0);
+"128
 [e = *U _p_checksum ( _readByteSHT71 (1 -> -> 0 `i `uc ]
-[; ;sht71.c: 126: return error;
-"126
+[; ;sht71.c: 129: return error;
+"129
 [e ) -> _error `uc ]
 [e $UE 138  ]
-[; ;sht71.c: 127: }
-"127
+[; ;sht71.c: 130: }
+"130
 [e :UE 138 ]
 }
-"129
+"132
 [v _calcSHT71 `(f ~T0 @X0 1 ef2`f`*f ]
 {
-[; ;sht71.c: 129: float calcSHT71(float p_humidity ,float *p_temperature){
+[; ;sht71.c: 132: float calcSHT71(float p_humidity ,float *p_temperature){
 [e :U _calcSHT71 ]
 [v _p_humidity `f ~T0 @X0 1 r1 ]
 [v _p_temperature `*f ~T0 @X0 1 r2 ]
 [f ]
-"130
-[v _rh_lin `f ~T0 @X0 1 a ]
-"131
-[v _rh_true `f ~T0 @X0 1 a ]
-"132
-[v _t `f ~T0 @X0 1 a ]
-[; ;sht71.c: 130: float rh_lin;
-[; ;sht71.c: 131: float rh_true;
-[; ;sht71.c: 132: float t = *p_temperature;
-[e = _t *U _p_temperature ]
 "133
-[v _rh `f ~T0 @X0 1 a ]
-[; ;sht71.c: 133: float rh = p_humidity;
-[e = _rh _p_humidity ]
+[v _rh_lin `f ~T0 @X0 1 a ]
 "134
-[v _t_C `f ~T0 @X0 1 a ]
-[; ;sht71.c: 134: float t_C;
-[; ;sht71.c: 136: t_C = t*0.01 + -40.1 - 1;
+[v _rh_true `f ~T0 @X0 1 a ]
+"135
+[v _t `f ~T0 @X0 1 a ]
+[; ;sht71.c: 133: float rh_lin;
+[; ;sht71.c: 134: float rh_true;
+[; ;sht71.c: 135: float t = *p_temperature;
+[e = _t *U _p_temperature ]
 "136
-[e = _t_C -> - + * -> _t `d .0.01 -U .40.1 -> -> 1 `i `d `f ]
-[; ;sht71.c: 138: rh_lin = -0.0000028*rh*rh + +0.0405*rh + -4.0;
-"138
-[e = _rh_lin -> + + * * -U .0.0000028 -> _rh `d -> _rh `d * .0.0405 -> _rh `d -U .4.0 `f ]
-[; ;sht71.c: 139: rh_true = (t_C - 25)*(+0.01 + +0.00008*rh) + rh_lin;
+[v _rh `f ~T0 @X0 1 a ]
+[; ;sht71.c: 136: float rh = p_humidity;
+[e = _rh _p_humidity ]
+"137
+[v _t_C `f ~T0 @X0 1 a ]
+[; ;sht71.c: 137: float t_C;
+[; ;sht71.c: 139: t_C = t*0.01 + -40.1 - 1;
 "139
-[e = _rh_true -> + * -> - _t_C -> -> 25 `i `f `d + .0.01 * .0.00008 -> _rh `d -> _rh_lin `d `f ]
-[; ;sht71.c: 141: if(rh_true > 99) rh_true = 99;
+[e = _t_C -> - + * -> _t `d .0.01 -U .40.1 -> -> 1 `i `d `f ]
+[; ;sht71.c: 141: rh_lin = -0.0000028*rh*rh + +0.0405*rh + -4.0;
 "141
+[e = _rh_lin -> + + * * -U .0.0000028 -> _rh `d -> _rh `d * .0.0405 -> _rh `d -U .4.0 `f ]
+[; ;sht71.c: 142: rh_true = (t_C - 25)*(+0.01 + +0.00008*rh) + rh_lin;
+"142
+[e = _rh_true -> + * -> - _t_C -> -> 25 `i `f `d + .0.01 * .0.00008 -> _rh `d -> _rh_lin `d `f ]
+[; ;sht71.c: 144: if(rh_true > 99) rh_true = 99;
+"144
 [e $ ! > _rh_true -> -> 99 `i `f 155  ]
 [e = _rh_true -> -> 99 `i `f ]
 [e :U 155 ]
-[; ;sht71.c: 142: if(rh_true < 0.1) rh_true = 0.1;
-"142
+[; ;sht71.c: 145: if(rh_true < 0.1) rh_true = 0.1;
+"145
 [e $ ! < -> _rh_true `d .0.1 156  ]
 [e = _rh_true -> .0.1 `f ]
 [e :U 156 ]
-[; ;sht71.c: 144: *p_temperature = t_C;
-"144
+[; ;sht71.c: 147: *p_temperature = t_C;
+"147
 [e = *U _p_temperature _t_C ]
-[; ;sht71.c: 145: return rh_true;
-"145
+[; ;sht71.c: 148: return rh_true;
+"148
 [e ) _rh_true ]
 [e $UE 154  ]
-[; ;sht71.c: 146: }
-"146
+[; ;sht71.c: 149: }
+"149
 [e :UE 154 ]
 }
-"148
+"151
 [v _readByteSHT71 `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;sht71.c: 148: char readByteSHT71(unsigned char ack){
+[; ;sht71.c: 151: char readByteSHT71(unsigned char ack){
 [e :U _readByteSHT71 ]
 [v _ack `uc ~T0 @X0 1 r1 ]
 [f ]
-"149
+"152
 [v _i `uc ~T0 @X0 1 a ]
 [v _res `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 149: unsigned char i, res=0;
+[; ;sht71.c: 152: unsigned char i, res=0;
 [e = _res -> -> 0 `i `uc ]
-[; ;sht71.c: 150: TRISBbits.TRISB7 = 1;
-"150
+[; ;sht71.c: 153: TRISBbits.TRISB7 = 1;
+"153
 [e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
-[; ;sht71.c: 151: for (i=0x80;i>0;i/=2)
-"151
+[; ;sht71.c: 154: for (i=0x80;i>0;i/=2)
+"154
 {
 [e = _i -> -> 128 `i `uc ]
 [e $ > -> _i `i -> 0 `i 158  ]
 [e $U 159  ]
-"152
-[e :U 158 ]
-[; ;sht71.c: 152: {
-{
-[; ;sht71.c: 153: RB6 = 1;
-"153
-[e = _RB6 -> -> 1 `i `b ]
-[; ;sht71.c: 154: _delay((unsigned long)((2)*(8000000/4000000.0)));
-"154
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 155: if (RB7) res = (res | i);
 "155
+[e :U 158 ]
+[; ;sht71.c: 155: {
+{
+[; ;sht71.c: 156: RB6 = 1;
+"156
+[e = _RB6 -> -> 1 `i `b ]
+[; ;sht71.c: 157: _delay((unsigned long)((2)*(8000000/4000000.0)));
+"157
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 158: if (RB7) res = (res | i);
+"158
 [e $ ! _RB7 161  ]
 [e = _res -> | -> _res `i -> _i `i `uc ]
 [e :U 161 ]
-[; ;sht71.c: 156: _delay((unsigned long)((2)*(8000000/4000000.0)));
-"156
+[; ;sht71.c: 159: _delay((unsigned long)((2)*(8000000/4000000.0)));
+"159
 [e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 157: RB6 = 0;
-"157
+[; ;sht71.c: 160: RB6 = 0;
+"160
 [e = _RB6 -> -> 0 `i `b ]
-"158
+"161
 }
-"151
+"154
 [e =/ _i -> 2 `uc ]
 [e $ > -> _i `i -> 0 `i 158  ]
 [e :U 159 ]
-"158
-}
-[; ;sht71.c: 158: }
-[; ;sht71.c: 159: TRISBbits.TRISB7 = 0;
-"159
-[e = . . _TRISBbits 0 7 -> -> 0 `i `uc ]
-[; ;sht71.c: 160: RB7 = !ack;
-"160
-[e = _RB7 ! != -> _ack `i -> -> -> 0 `i `uc `i ]
-[; ;sht71.c: 161: RB6 = 1;
 "161
-[e = _RB6 -> -> 1 `i `b ]
-[; ;sht71.c: 162: _delay((unsigned long)((5)*(8000000/4000000.0)));
+}
+[; ;sht71.c: 161: }
+[; ;sht71.c: 162: TRISBbits.TRISB7 = 0;
 "162
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 163: RB6 = 0;
+[e = . . _TRISBbits 0 7 -> -> 0 `i `uc ]
+[; ;sht71.c: 163: RB7 = !ack;
 "163
-[e = _RB6 -> -> 0 `i `b ]
-[; ;sht71.c: 164: RB7 = 1;
+[e = _RB7 ! != -> _ack `i -> -> -> 0 `i `uc `i ]
+[; ;sht71.c: 164: RB6 = 1;
 "164
-[e = _RB7 -> -> 1 `i `b ]
-[; ;sht71.c: 165: return res;
+[e = _RB6 -> -> 1 `i `b ]
+[; ;sht71.c: 165: _delay((unsigned long)((5)*(8000000/4000000.0)));
 "165
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 166: RB6 = 0;
+"166
+[e = _RB6 -> -> 0 `i `b ]
+[; ;sht71.c: 167: RB7 = 1;
+"167
+[e = _RB7 -> -> 1 `i `b ]
+[; ;sht71.c: 168: return res;
+"168
 [e ) _res ]
 [e $UE 157  ]
-[; ;sht71.c: 166: }
-"166
+[; ;sht71.c: 169: }
+"169
 [e :UE 157 ]
 }
-"168
+"171
 [v _writeByteSHT71 `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;sht71.c: 168: char writeByteSHT71(unsigned char cmd){
+[; ;sht71.c: 171: char writeByteSHT71(unsigned char cmd){
 [e :U _writeByteSHT71 ]
 [v _cmd `uc ~T0 @X0 1 r1 ]
 [f ]
-"169
+"172
 [v _i `uc ~T0 @X0 1 a ]
 [v _error `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 169: unsigned char i,error = 0;
+[; ;sht71.c: 172: unsigned char i,error = 0;
 [e = _error -> -> 0 `i `uc ]
-[; ;sht71.c: 170: TRISBbits.TRISB7 = 0;
-"170
+[; ;sht71.c: 173: TRISBbits.TRISB7 = 0;
+"173
 [e = . . _TRISBbits 0 7 -> -> 0 `i `uc ]
-[; ;sht71.c: 172: for (i=0x80;i>0;i/=2)
-"172
+[; ;sht71.c: 175: for (i=0x80;i>0;i/=2)
+"175
 {
 [e = _i -> -> 128 `i `uc ]
 [e $ > -> _i `i -> 0 `i 163  ]
 [e $U 164  ]
-"173
+"176
 [e :U 163 ]
-[; ;sht71.c: 173: {
+[; ;sht71.c: 176: {
 {
-[; ;sht71.c: 174: if (i & cmd)
-"174
+[; ;sht71.c: 177: if (i & cmd)
+"177
 [e $ ! != & -> _i `i -> _cmd `i -> 0 `i 166  ]
-[; ;sht71.c: 175: RB7 = 1;
-"175
+[; ;sht71.c: 178: RB7 = 1;
+"178
 [e = _RB7 -> -> 1 `i `b ]
 [e $U 167  ]
-"176
+"179
 [e :U 166 ]
-[; ;sht71.c: 176: else RB7 = 0;
+[; ;sht71.c: 179: else RB7 = 0;
 [e = _RB7 -> -> 0 `i `b ]
 [e :U 167 ]
-[; ;sht71.c: 177: RB6 = 1;
-"177
-[e = _RB6 -> -> 1 `i `b ]
-[; ;sht71.c: 178: _delay((unsigned long)((5)*(8000000/4000000.0)));
-"178
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 179: RB6 = 0;
-"179
-[e = _RB6 -> -> 0 `i `b ]
+[; ;sht71.c: 180: RB6 = 1;
 "180
+[e = _RB6 -> -> 1 `i `b ]
+[; ;sht71.c: 181: _delay((unsigned long)((5)*(8000000/4000000.0)));
+"181
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 182: RB6 = 0;
+"182
+[e = _RB6 -> -> 0 `i `b ]
+"183
 }
-"172
+"175
 [e =/ _i -> 2 `uc ]
 [e $ > -> _i `i -> 0 `i 163  ]
 [e :U 164 ]
-"180
-}
-[; ;sht71.c: 180: }
-[; ;sht71.c: 181: RB7 = 1;
-"181
-[e = _RB7 -> -> 1 `i `b ]
-[; ;sht71.c: 182: TRISBbits.TRISB7 = 1;
-"182
-[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
-[; ;sht71.c: 183: RB6 = 1;
 "183
-[e = _RB6 -> -> 1 `i `b ]
-[; ;sht71.c: 184: _delay((unsigned long)((2)*(8000000/4000000.0)));
+}
+[; ;sht71.c: 183: }
+[; ;sht71.c: 184: RB7 = 1;
 "184
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 185: error = RB7;
+[e = _RB7 -> -> 1 `i `b ]
+[; ;sht71.c: 185: TRISBbits.TRISB7 = 1;
 "185
-[e = _error -> -> _RB7 `i `uc ]
-[; ;sht71.c: 186: _delay((unsigned long)((2)*(8000000/4000000.0)));
+[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
+[; ;sht71.c: 186: RB6 = 1;
 "186
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 187: RB6 = 0;
+[e = _RB6 -> -> 1 `i `b ]
+[; ;sht71.c: 187: _delay((unsigned long)((2)*(8000000/4000000.0)));
 "187
-[e = _RB6 -> -> 0 `i `b ]
-[; ;sht71.c: 188: return error;
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 188: error = RB7;
 "188
+[e = _error -> -> _RB7 `i `uc ]
+[; ;sht71.c: 189: _delay((unsigned long)((2)*(8000000/4000000.0)));
+"189
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 190: RB6 = 0;
+"190
+[e = _RB6 -> -> 0 `i `b ]
+[; ;sht71.c: 191: return error;
+"191
 [e ) _error ]
 [e $UE 162  ]
-[; ;sht71.c: 189: }
-"189
+[; ;sht71.c: 192: }
+"192
 [e :UE 162 ]
 }
-"191
+"194
 [v _connectionResetSHT71 `(v ~T0 @X0 1 ef ]
 {
-[; ;sht71.c: 191: void connectionResetSHT71(){
+[; ;sht71.c: 194: void connectionResetSHT71(){
 [e :U _connectionResetSHT71 ]
 [f ]
-"192
-[v _i `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 192: unsigned char i;
-[; ;sht71.c: 193: TRISBbits.TRISB7 = 0;
-"193
-[e = . . _TRISBbits 0 7 -> -> 0 `i `uc ]
-[; ;sht71.c: 194: RB7 = 1;
-"194
-[e = _RB7 -> -> 1 `i `b ]
-[; ;sht71.c: 195: RB6=0;
 "195
-[e = _RB6 -> -> 0 `i `b ]
-[; ;sht71.c: 196: for(i=0;i<9;i++)
+[v _i `uc ~T0 @X0 1 a ]
+[; ;sht71.c: 195: unsigned char i;
+[; ;sht71.c: 196: TRISBbits.TRISB7 = 0;
 "196
+[e = . . _TRISBbits 0 7 -> -> 0 `i `uc ]
+[; ;sht71.c: 197: RB7 = 1;
+"197
+[e = _RB7 -> -> 1 `i `b ]
+[; ;sht71.c: 198: RB6=0;
+"198
+[e = _RB6 -> -> 0 `i `b ]
+[; ;sht71.c: 199: for(i=0;i<9;i++)
+"199
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 9 `i 169  ]
 [e $U 170  ]
-"197
+"200
 [e :U 169 ]
-[; ;sht71.c: 197: { RB6 = 1;
+[; ;sht71.c: 200: { RB6 = 1;
 {
 [e = _RB6 -> -> 1 `i `b ]
-[; ;sht71.c: 198: _delay((unsigned long)((1)*(8000000/4000000.0)));
-"198
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;sht71.c: 199: RB6 = 0;
-"199
-[e = _RB6 -> -> 0 `i `b ]
-[; ;sht71.c: 200: _delay((unsigned long)((1)*(8000000/4000000.0)));
-"200
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 201: _delay((unsigned long)((1)*(8000000/4000000.0)));
 "201
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;sht71.c: 202: RB6 = 0;
+"202
+[e = _RB6 -> -> 0 `i `b ]
+[; ;sht71.c: 203: _delay((unsigned long)((1)*(8000000/4000000.0)));
+"203
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+"204
 }
-"196
+"199
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 9 `i 169  ]
 [e :U 170 ]
-"201
-}
-[; ;sht71.c: 201: }
-[; ;sht71.c: 202: tranStartSHT71();
-"202
-[e ( _tranStartSHT71 ..  ]
-[; ;sht71.c: 203: TRISBbits.TRISB7 = 1;
-"203
-[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
-[; ;sht71.c: 204: }
 "204
+}
+[; ;sht71.c: 204: }
+[; ;sht71.c: 205: tranStartSHT71();
+"205
+[e ( _tranStartSHT71 ..  ]
+[; ;sht71.c: 206: TRISBbits.TRISB7 = 1;
+"206
+[e = . . _TRISBbits 0 7 -> -> 1 `i `uc ]
+[; ;sht71.c: 207: }
+"207
 [e :UE 168 ]
 }
-"206
+"209
 [v _softReset `(uc ~T0 @X0 1 ef ]
 {
-[; ;sht71.c: 206: char softReset(){
+[; ;sht71.c: 209: char softReset(){
 [e :U _softReset ]
 [f ]
-"207
-[v _error `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 207: unsigned char error=0;
-[e = _error -> -> 0 `i `uc ]
-[; ;sht71.c: 208: connectionResetSHT71();
-"208
-[e ( _connectionResetSHT71 ..  ]
-[; ;sht71.c: 209: error += writeByteSHT71(0x1E);
-"209
-[e =+ _error ( _writeByteSHT71 (1 -> -> 30 `i `uc ]
-[; ;sht71.c: 210: return error;
 "210
+[v _error `uc ~T0 @X0 1 a ]
+[; ;sht71.c: 210: unsigned char error=0;
+[e = _error -> -> 0 `i `uc ]
+[; ;sht71.c: 211: connectionResetSHT71();
+"211
+[e ( _connectionResetSHT71 ..  ]
+[; ;sht71.c: 212: error += writeByteSHT71(0x1E);
+"212
+[e =+ _error ( _writeByteSHT71 (1 -> -> 30 `i `uc ]
+[; ;sht71.c: 213: return error;
+"213
 [e ) _error ]
 [e $UE 172  ]
-[; ;sht71.c: 211: }
-"211
+[; ;sht71.c: 214: }
+"214
 [e :UE 172 ]
 }
-"213
+"216
 [v _readStatusRegSHT71 `(uc ~T0 @X0 1 ef2`*uc`*uc ]
-"214
+"217
 {
-[; ;sht71.c: 213: char readStatusRegSHT71(unsigned char *p_value, unsigned char *p_checksum)
-[; ;sht71.c: 214: {
+[; ;sht71.c: 216: char readStatusRegSHT71(unsigned char *p_value, unsigned char *p_checksum)
+[; ;sht71.c: 217: {
 [e :U _readStatusRegSHT71 ]
-"213
+"216
 [v _p_value `*uc ~T0 @X0 1 r1 ]
 [v _p_checksum `*uc ~T0 @X0 1 r2 ]
-"214
-[f ]
-"215
-[v _error `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 215: unsigned char error=0;
-[e = _error -> -> 0 `i `uc ]
-[; ;sht71.c: 216: tranStartSHT71();
-"216
-[e ( _tranStartSHT71 ..  ]
-[; ;sht71.c: 217: error = writeByteSHT71(0x07);
 "217
-[e = _error ( _writeByteSHT71 (1 -> -> 7 `i `uc ]
-[; ;sht71.c: 218: *p_value = readByteSHT71(1);
+[f ]
 "218
-[e = *U _p_value ( _readByteSHT71 (1 -> -> 1 `i `uc ]
-[; ;sht71.c: 219: *p_checksum = readByteSHT71(0);
+[v _error `uc ~T0 @X0 1 a ]
+[; ;sht71.c: 218: unsigned char error=0;
+[e = _error -> -> 0 `i `uc ]
+[; ;sht71.c: 219: tranStartSHT71();
 "219
-[e = *U _p_checksum ( _readByteSHT71 (1 -> -> 0 `i `uc ]
-[; ;sht71.c: 220: return error;
+[e ( _tranStartSHT71 ..  ]
+[; ;sht71.c: 220: error = writeByteSHT71(0x07);
 "220
+[e = _error ( _writeByteSHT71 (1 -> -> 7 `i `uc ]
+[; ;sht71.c: 221: *p_value = readByteSHT71(1);
+"221
+[e = *U _p_value ( _readByteSHT71 (1 -> -> 1 `i `uc ]
+[; ;sht71.c: 222: *p_checksum = readByteSHT71(0);
+"222
+[e = *U _p_checksum ( _readByteSHT71 (1 -> -> 0 `i `uc ]
+[; ;sht71.c: 223: return error;
+"223
 [e ) _error ]
 [e $UE 173  ]
-[; ;sht71.c: 221: }
-"221
+[; ;sht71.c: 224: }
+"224
 [e :UE 173 ]
 }
-"223
+"226
 [v _getResSHT71 `(v ~T0 @X0 1 ef2`*f`*f ]
 {
-[; ;sht71.c: 223: void getResSHT71(float *p_temp, float *p_humi){
+[; ;sht71.c: 226: void getResSHT71(float *p_temp, float *p_humi){
 [e :U _getResSHT71 ]
 [v _p_temp `*f ~T0 @X0 1 r1 ]
 [v _p_humi `*f ~T0 @X0 1 r2 ]
 [f ]
-"224
+"227
 [v _humi_val `S135 ~T0 @X0 1 a ]
 [v _temp_val `S135 ~T0 @X0 1 a ]
-"225
+"228
 [v _error `uc ~T0 @X0 1 a ]
 [v _checksum `uc ~T0 @X0 1 a ]
-"226
-[v _inp `uc ~T0 @X0 1 a ]
-[; ;sht71.c: 224: value humi_val,temp_val;
-[; ;sht71.c: 225: unsigned char error, checksum;
-[; ;sht71.c: 226: char inp;
-[; ;sht71.c: 227: error=0;
-"227
-[e = _error -> -> 0 `i `uc ]
-[; ;sht71.c: 228: error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,3);
-"228
-[e =+ _error ( _measureSHT71 (3 , , -> &U . _humi_val 0 `*uc &U _checksum -> -> 3 `i `uc ]
-[; ;sht71.c: 229: error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,2);
 "229
-[e =+ _error ( _measureSHT71 (3 , , -> &U . _temp_val 0 `*uc &U _checksum -> -> 2 `i `uc ]
-[; ;sht71.c: 230: error += readStatusRegSHT71(&inp, &checksum);
+[v _inp `uc ~T0 @X0 1 a ]
+[; ;sht71.c: 227: value humi_val,temp_val;
+[; ;sht71.c: 228: unsigned char error, checksum;
+[; ;sht71.c: 229: char inp;
+[; ;sht71.c: 230: error=0;
 "230
-[e =+ _error ( _readStatusRegSHT71 (2 , &U _inp &U _checksum ]
-[; ;sht71.c: 231: if(error != 0)
+[e = _error -> -> 0 `i `uc ]
+[; ;sht71.c: 231: error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,3);
 "231
-[e $ ! != -> _error `i -> 0 `i 175  ]
-[; ;sht71.c: 232: {
+[e =+ _error ( _measureSHT71 (3 , , -> &U . _humi_val 0 `*uc &U _checksum -> -> 3 `i `uc ]
+[; ;sht71.c: 232: error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,2);
 "232
-{
-[; ;sht71.c: 233: connectionResetSHT71();
+[e =+ _error ( _measureSHT71 (3 , , -> &U . _temp_val 0 `*uc &U _checksum -> -> 2 `i `uc ]
+[; ;sht71.c: 233: error += readStatusRegSHT71(&inp, &checksum);
 "233
-[e ( _connectionResetSHT71 ..  ]
-[; ;sht71.c: 234: LcdSetCursor(1,1);
+[e =+ _error ( _readStatusRegSHT71 (2 , &U _inp &U _checksum ]
+[; ;sht71.c: 234: if(error != 0)
 "234
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;sht71.c: 235: LcdWriteString("Greska SHT71!");
+[e $ ! != -> _error `i -> 0 `i 175  ]
+[; ;sht71.c: 235: {
 "235
-[e ( _LcdWriteString (1 -> :s 1C `*uc ]
-[; ;sht71.c: 236: _delay((unsigned long)((1000)*(8000000/4000.0)));
-"236
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"237
-}
-[; ;sht71.c: 237: }
-[e $U 176  ]
-"238
-[e :U 175 ]
-[; ;sht71.c: 238: else
-[; ;sht71.c: 239: {
-"239
 {
-[; ;sht71.c: 240: humi_val.f = (float)tempervalue[1];
+[; ;sht71.c: 236: connectionResetSHT71();
+"236
+[e ( _connectionResetSHT71 ..  ]
+[; ;sht71.c: 237: LcdSetCursor(1,1);
+"237
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;sht71.c: 238: LcdWriteString("Greska SHT71!");
+"238
+[e ( _LcdWriteString (1 -> :s 1C `*uc ]
+[; ;sht71.c: 239: _delay((unsigned long)((1000)*(8000000/4000.0)));
+"239
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "240
-[e = . _humi_val 1 -> *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
-[; ;sht71.c: 241: temp_val.f = (float)tempervalue[0];
+}
+[; ;sht71.c: 240: }
+[e $U 176  ]
 "241
-[e = . _temp_val 1 -> *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
-[; ;sht71.c: 242: humi_val.f = calcSHT71(humi_val.f,&temp_val.f);
+[e :U 175 ]
+[; ;sht71.c: 241: else
+[; ;sht71.c: 242: {
 "242
-[e = . _humi_val 1 ( _calcSHT71 (2 , . _humi_val 1 &U . _temp_val 1 ]
-[; ;sht71.c: 243: *p_temp = temp_val.f;
+{
+[; ;sht71.c: 243: humi_val.f = (float)tempervalue[1];
 "243
-[e = *U _p_temp . _temp_val 1 ]
-[; ;sht71.c: 244: *p_humi = humi_val.f;
+[e = . _humi_val 1 -> *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
+[; ;sht71.c: 244: temp_val.f = (float)tempervalue[0];
 "244
-[e = *U _p_humi . _humi_val 1 ]
+[e = . _temp_val 1 -> *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
+[; ;sht71.c: 245: humi_val.f = calcSHT71(humi_val.f,&temp_val.f);
 "245
+[e = . _humi_val 1 ( _calcSHT71 (2 , . _humi_val 1 &U . _temp_val 1 ]
+[; ;sht71.c: 246: *p_temp = temp_val.f;
+"246
+[e = *U _p_temp . _temp_val 1 ]
+[; ;sht71.c: 247: *p_humi = humi_val.f;
+"247
+[e = *U _p_humi . _humi_val 1 ]
+"248
 }
 [e :U 176 ]
-[; ;sht71.c: 245: }
-[; ;sht71.c: 247: }
-"247
+[; ;sht71.c: 248: }
+[; ;sht71.c: 250: }
+"250
 [e :UE 174 ]
 }
 [a 1C 71 114 101 115 107 97 32 83 72 84 55 49 33 0 ]

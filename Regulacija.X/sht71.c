@@ -91,6 +91,8 @@ void tranStartSHT71(){
 char measureSHT71(unsigned char *p_value, unsigned char *p_checksum, unsigned char mode){
     unsigned error = 0;
     unsigned int temp = 0;
+    unsigned char loop_cnt=0;
+
     tranStartSHT71();                   //transmission start
     switch(mode){                     //send command to sensor
         case TEM        : error += writeByteSHT71(MEASURE_TEMP); break;    //merenje temperature
@@ -100,7 +102,8 @@ char measureSHT71(unsigned char *p_value, unsigned char *p_checksum, unsigned ch
     RX_DATA;    // DATA is input
     while (1)
     {
-        if(DATA == 0) break; //wait until sensor has finished the measurement
+        if((DATA == 0) || (++loop_cnt > 200)) break; //wait until sensor has finished the measurement
+        __delay_ms(10);
     }
     if(DATA) error += 1;                // or timeout (~2 sec.) is reached
     switch(mode){                     //send command to sensor

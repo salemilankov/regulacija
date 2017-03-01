@@ -82,7 +82,7 @@ float getTempDS18B20(){
         tempH = readDS18B20();
 
         temp = ((unsigned int)tempH << 8) + (unsigned int)tempL;
-        temperatura = (float)temp * 0.0625 - TEMP_GRESKA;
+        temperatura = (float)temp * 0.0625 - TEMP_GRESKA_DS;
     }
     return temperatura;
 }

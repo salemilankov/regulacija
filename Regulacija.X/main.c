@@ -41,7 +41,7 @@
 
 // CONFIG1
 #pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
-#pragma config WDTE = OFF       // Watchdog Timer Enable bit (WDT disabled and can be enabled by SWDTEN bit of the WDTCON register)
+#pragma config WDTE = ON        // Watchdog Timer Enable bit (WDT disabled and can be enabled by SWDTEN bit of the WDTCON register)
 #pragma config PWRTE = OFF      // Power-up Timer Enable bit (PWRT disabled)
 #pragma config MCLRE = ON       // RE3/MCLR pin function select bit (RE3/MCLR pin function is MCLR)
 #pragma config CP = OFF         // Code Protection bit (Program memory code protection is disabled)
@@ -56,15 +56,27 @@
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
 
 char ok_flag, ok_flag_humi, ok_flag_co2, menu_flag, plus_flag, minus_flag;
-unsigned char tmr_count, measure , disp_count, disp, measure_co2;
+unsigned char measure , disp_count, disp, measure_co2;
 unsigned char humidity[5]={0,0,0,0,0};
 unsigned char temperature[5]={0,0,0,0,0};
-char uart_data[30], str[5]; //za uart
-float temp, humi, t, zeljena_temperatura, zeljena_vlaznost;
-unsigned int co2, zeljena_co2, tmr_co2;
+//char uart_data[30], str[5]; //za uart
+float temp, humi, t;
+__eeprom float zeljena_temperatura;
+__eeprom float zeljena_vlaznost;
+__eeprom int zeljena_co2;
+unsigned int co2, tmr_co2;
+unsigned int tmr_count;
 
 static void interrupt isr(){
-    INTCONbits.T0IF = 0;    //interrupt flag clear
+    if(INTCONbits.T0IF)
+    {
+        INTCONbits.T0IF = 0;    //interrupt flag clear
+        TMR0 = 0;
+        return;
+    }
+
+    //INTCONbits.T0IF = 0;    //interrupt flag clear
+    PIR1bits.TMR1IF = 0;
     //if(tmr_co2 == 5450) //priblizno 3 min (5450 = 180/0.033)
     //{
     //    tmr_co2 = 0;
@@ -76,18 +88,26 @@ static void interrupt isr(){
     //}
     //else measure_co2 = 0;   // ne vrse se merenja
 
-    if(tmr_count == 91) //priblizno 3s
+    //if(tmr_count == 91) //priblizno 3s
+    if(tmr_count == 500)        // 5 sekundi
     {
         tmr_count = 0;
         measure = 1;
     }
-    else if(tmr_count == 65)  //priblizno 2s
+    else if(tmr_count == 200)  //priblizno 2s
     {
         disp = 1;
     }
     tmr_count++;    //obican brojac prekida
-    tmr_co2++; //brojac prekida koji ce sluziti za odredj. vremena uklj. i isklj. senzora co2
-    TMR0 = 0;
+    tmr_co2++;      //brojac prekida koji ce sluziti za odredj. vremena uklj. i isklj. senzora co2
+    //TMR0 = 0;
+    TMR1H = 0xD8;
+    TMR1L = 0xEF;
+}
+
+void initWDT()
+{
+    WDTCONbits.WDTPS = 0b1000;
 }
 
 void IOPinsConfig(){
@@ -109,47 +129,47 @@ void IOPinsInit(){
 void displayAirTemp(float temp2){
     sprintf(temperature, " %.1f", temp2);
     LcdSetCursor(1,1);
-    LcdWriteString("Air temperature ");
+    LcdWriteString((char *)"Air temperature ");
     LcdSetCursor(2,1);
     LcdWriteString(temperature);
     LcdSetCursor(2,6);
-    LcdWriteString(" deg        ");
+    LcdWriteString((char *)" deg        ");
 }
 
 void displayAirMoist(float humi2){
     sprintf(humidity, " %.1f", humi2);
     LcdSetCursor(1,1);
-    LcdWriteString("Air moist       ");
+    LcdWriteString((char *)"Air moist       ");
     LcdSetCursor(2,1);
     LcdWriteString(humidity);
     LcdSetCursor(2,6);
-    LcdWriteString(" %          ");
+    LcdWriteString((char *)" %          ");
 }
 
 void displayCO2(unsigned int co22){
     LcdSetCursor(1,1);
-    LcdWriteString("CO2 in air      ");
+    LcdWriteString((char *)"CO2 in air      ");
     if(measure_co2)
     {
         LcdWriteInt(co22,2,1);
         LcdSetCursor(2,5);
-        LcdWriteString(" ppm        ");
+        LcdWriteString((char *)" ppm        ");
     }
     else
     {
         LcdSetCursor(2,1);
-        LcdWriteString("Measuring...    ");
+        LcdWriteString((char *)"Measuring...    ");
     }
 }
 
 void displaySoilTemp(float t2){
     sprintf(temperature, " %.1f", t2);
     LcdSetCursor(1,1);
-    LcdWriteString("Soil temperature");
+    LcdWriteString((char *)"Soil temperature");
     LcdSetCursor(2,1);
     LcdWriteString(temperature);
     LcdSetCursor(2,6);
-    LcdWriteString(" deg        ");
+    LcdWriteString((char *)" deg        ");
 }
 
 void resetValues(){ //f-ja koja dodeljuje pocetne vrednosti promenljivima
@@ -161,9 +181,9 @@ void resetValues(){ //f-ja koja dodeljuje pocetne vrednosti promenljivima
     measure = 0;
     disp_count = 0;
     disp = 1;
-    zeljena_temperatura = 24;
-    zeljena_vlaznost = 90;
-    zeljena_co2 = 1000;
+    //zeljena_temperatura = 24;
+    //zeljena_vlaznost = 90;
+    //zeljena_co2 = 1000;
     ok_flag_humi = 0;
     ok_flag_co2 = 0;
     tmr_co2 = 0;
@@ -173,11 +193,21 @@ void resetValues(){ //f-ja koja dodeljuje pocetne vrednosti promenljivima
 
 void initTimer0(){  //f-ja koja konfigurise timer0, prekidi svakih 32,76ms
     OPTION_REGbits.T0CS = 0;    //timer 0 clock source, 0 znaci Fosc/4
-    OPTION_REGbits.PSA = 0; //prescaler dodeljen timer0
+    OPTION_REGbits.PSA = 1; //prescaler dodeljen watchdog
     OPTION_REG |= 0b00000111;   //prescaler 1:256
     INTCONbits.GIE = 1; //globalni prekidi dozvoljeni
     TMR0 = 0;   //256*256*0,5us = prekid svakih 32,76ms
     INTCONbits.T0IE = 1;    //prekid timer0 dozvoljen
+}
+
+void initTimer1()
+{
+    T1CONbits.T1CKPS = 0b01;        // 1:2 prescaler
+    TMR1H = 0xD8;
+    TMR1L = 0xEF;                   // Interrupt every 10 ms
+    PIE1bits.TMR1IE = 1;            // Enable TMR1 interrupts
+    INTCONbits.GIE = 1;             // Enable global interrupts
+    T1CONbits.TMR1ON = 1;           // Timer on
 }
 
 void regulacija(){
@@ -241,95 +271,85 @@ void regulacija(){
     }
 }
 
-void menuCO2(){
-    LcdSetCursor(1,1);
-    LcdWriteString("Set CO2 in air  ");
-    LcdSetCursor(2,1);
-    LcdWriteString("          ");
-    LcdSetCursor(2,1);
-    LcdWriteInt(zeljena_co2,2,1);
-    LcdSetCursor(2,6);
-    LcdWriteString("        ");
-    while(!ok_flag)
-    {
+void manage_buttons()
+{
     if(PLUS)
-        {
-            __delay_ms(20);
-            if(PLUS) plus_flag = 1;
-            while(PLUS);
-            __delay_ms(20);
-        }
-
-    if(MINUS)
-        {
-            __delay_ms(20);
-            if(MINUS) minus_flag = 1;
-            while(MINUS);
-            __delay_ms(20);
-        }
-
-    if(plus_flag)
     {
-        zeljena_co2 += PODEOK_CO2;
-        if(zeljena_co2 > 5000) zeljena_co2 = 5000;  //zastita
-        plus_flag = 0;
-
-        LcdSetCursor(2,1);
-        LcdWriteInt(zeljena_co2,2,1);
+        __delay_ms(20);
+        if(PLUS) plus_flag = 1;
+        __delay_ms(150);
     }
 
-    if(minus_flag)
+    if(MINUS)
     {
-        zeljena_co2 -= PODEOK_CO2;
-        if(zeljena_co2 < 300) zeljena_co2 = 300;    //zastita
-        minus_flag = 0;
-        
-        LcdSetCursor(2,1);
-        LcdWriteInt(zeljena_co2,2,1);
-
+        __delay_ms(20);
+        if(MINUS) minus_flag = 1;
+        __delay_ms(150);
     }
 
     if(OK)    //debouncing
-        {
-            __delay_ms(20);
-            if(OK)  ok_flag = 1;
-            while(OK);
-            __delay_ms(20);
-        }
-    if(ok_flag)
     {
-        ok_flag = 1;
-        ok_flag_co2 = 1;
+        __delay_ms(20);
+        if(OK)  ok_flag = 1;
+        while(OK);
+        __delay_ms(20);
     }
+}
+
+void menuCO2(){
+    LcdSetCursor(1,1);
+    LcdWriteString((char *)"Set CO2 in air  ");
+    LcdSetCursor(2,1);
+    LcdWriteString((char *)"          ");
+    LcdSetCursor(2,1);
+    LcdWriteInt(zeljena_co2,2,1);
+    LcdSetCursor(2,6);
+    LcdWriteString((char *)"        ");
+    while(!ok_flag)
+    {
+        manage_buttons();
+
+        if(plus_flag)
+        {
+            zeljena_co2 += PODEOK_CO2;
+            if(zeljena_co2 > 5000) zeljena_co2 = 5000;  //zastita
+            plus_flag = 0;
+
+            LcdSetCursor(2,1);
+            LcdWriteInt(zeljena_co2,2,1);
+        }
+
+        if(minus_flag)
+        {
+            zeljena_co2 -= PODEOK_CO2;
+            if(zeljena_co2 < 300) zeljena_co2 = 300;    //zastita
+            minus_flag = 0;
+
+            LcdSetCursor(2,1);
+            LcdWriteInt(zeljena_co2,2,1);
+
+        }
+
+        if(ok_flag)
+        {
+            ok_flag = 1;
+            ok_flag_co2 = 1;
+        }
     }
 }
 
 void menuHumi(){
     sprintf(humidity, " %.1f", zeljena_vlaznost);
     LcdSetCursor(1,1);
-    LcdWriteString("Set air moist   ");
+    LcdWriteString((char *)"Set air moist   ");
     LcdSetCursor(2,1);
     LcdWriteString(humidity);
     LcdSetCursor(2,6);
-    LcdWriteString("        ");
+    LcdWriteString((char *)"        ");
 
     while(!ok_flag_co2)
     {
-        if(PLUS)
-            {
-                __delay_ms(20);
-                if(PLUS) plus_flag = 1;
-                while(PLUS);
-                __delay_ms(20);
-            }
-
-        if(MINUS)
-            {
-                __delay_ms(20);
-                if(MINUS) minus_flag = 1;
-                while(MINUS);
-                __delay_ms(20);
-            }
+        manage_buttons();
 
         if(plus_flag)
         {
@@ -353,13 +373,6 @@ void menuHumi(){
             LcdWriteString(humidity);
         }
 
-        if(OK)    //debouncing
-            {
-                __delay_ms(20);
-                if(OK)  ok_flag = 1;
-                while(OK);
-                __delay_ms(20);
-            }
         if(ok_flag)
         {
             ok_flag = 0;
@@ -374,85 +387,65 @@ void menu(){
 
     sprintf(temperature, " %.1f", zeljena_temperatura);
     LcdSetCursor(1,1);
-    LcdWriteString("Set air temp.   ");
+    LcdWriteString((char *)"Set air temp.   ");
     LcdSetCursor(2,1);
     LcdWriteString(temperature);
     LcdSetCursor(2,6);
-    LcdWriteString("         ");
+    LcdWriteString((char *)"         ");
 
     while(!ok_flag_humi)
     {
-    if(PLUS)
+        manage_buttons();
+
+        if(plus_flag)
         {
-            __delay_ms(20);
-            if(PLUS) plus_flag = 1;
-            while(PLUS);
-            __delay_ms(20);
+            zeljena_temperatura += PODEOK_TEMP;
+            if(zeljena_temperatura > 40) zeljena_temperatura = 40;  //zastita
+            plus_flag = 0;
+
+            sprintf(temperature, " %.1f", zeljena_temperatura);
+            LcdSetCursor(2,1);
+            LcdWriteString(temperature);
         }
 
-    if(MINUS)
+        if(minus_flag)
         {
-            __delay_ms(20);
-            if(MINUS) minus_flag = 1;
-            while(MINUS);
-            __delay_ms(20);
+            zeljena_temperatura -= PODEOK_TEMP;
+            if(zeljena_temperatura < 15) zeljena_temperatura = 15;  //zastita
+            minus_flag = 0;
+
+            sprintf(temperature, " %.1f", zeljena_temperatura);
+            LcdSetCursor(2,1);
+            LcdWriteString(temperature);
         }
 
-    if(plus_flag)
-    {
-        zeljena_temperatura += PODEOK_TEMP;
-        if(zeljena_temperatura > 40) zeljena_temperatura = 40;  //zastita
-        plus_flag = 0;
-
-        sprintf(temperature, " %.1f", zeljena_temperatura);
-        LcdSetCursor(2,1);
-        LcdWriteString(temperature);
-    }
-
-    if(minus_flag)
-    {
-        zeljena_temperatura -= PODEOK_TEMP;
-        if(zeljena_temperatura < 15) zeljena_temperatura = 15;  //zastita
-        minus_flag = 0;
-
-        sprintf(temperature, " %.1f", zeljena_temperatura);
-        LcdSetCursor(2,1);
-        LcdWriteString(temperature);
-    }
-
-    if(OK)    //debouncing
+        if(ok_flag)
         {
-            __delay_ms(20);
-            if(OK)    ok_flag = 1;
-            while(OK);
-            __delay_ms(20);
+            ok_flag = 0;
+            menuHumi();
         }
-    if(ok_flag)
-    {
-        ok_flag = 0;
-        menuHumi(); 
     }
-    }
+
     ok_flag = 0;
     ok_flag_humi = 0;
     ok_flag_co2 = 0;
 }
 
-void slanjePodataka()
-{
-    uart_data[0] = '\0';
-    str[0] = '\0';
-    sprintf(str, "%.1f", temp);
-    strncat(uart_data, str, 5);
-    sprintf(str, "%.1f", humi);
-    strncat(uart_data, str, 5);
-    sprintf(str, "%.1f", t);
-    strncat(uart_data, str, 5);
-    sprintf(str, "%4d", co2);
-    strncat(uart_data, str, 5);
-
-    UARTWriteString(uart_data);
-}
+//void slanjePodataka()
+//{
+//    uart_data[0] = '\0';
+//    str[0] = '\0';
+//    sprintf(str, "%.1f", temp);
+//    strncat(uart_data, str, 5);
+//    sprintf(str, "%.1f", humi);
+//    strncat(uart_data, str, 5);
+//    sprintf(str, "%.1f", t);
+//    strncat(uart_data, str, 5);
+//    sprintf(str, "%4d", co2);
+//    strncat(uart_data, str, 5);
+//
+//    UARTWriteString(uart_data);
+//}
 
 void main(void) {
 
@@ -464,7 +457,9 @@ void main(void) {
     IOPinsConfig(); //konfiguracija pinova sa tasterima i izlaza za pobudu releja
     IOPinsInit();   //inicijalizacija pinova sa tasterima i izlaza za pobudu releja
     resetValues();  //pocetne vrednosti promeljivih
-    initTimer0();
+    initTimer1();
+    initTimer0();   // Used for WDT
+    initWDT();      // Reset on ~35 sec
 
     getResSHT71(&temp, &humi);  //pocetna merenja
 //    co2 = measureTGS4161(); preskacemo prvo merenje co2 jer senzor nije zagrejan
@@ -476,13 +471,16 @@ void main(void) {
         {
             measure = 0;
             getResSHT71(&temp, &humi);
+            UARTWriteString("\nSHT OK.\n");
 
             //if(measure_co2) //ako je senzor dovoljno zagrejan vrse se merenja
             //{
                 co2 = measureTGS4161();
+            UARTWriteString("\nTGS OK.\n");
             //}
             
             t = getTempDS18B20();
+            UARTWriteString("\nDS OK.\n");
         }
 
         if(disp)
@@ -519,12 +517,13 @@ void main(void) {
         if(menu_flag)
         {
             menu_flag = 0;
-            INTCONbits.T0IE = 0;    //prekid timer0 zabranjen
+            PIE1bits.TMR1IE = 0;            // Disable TMR1 interrupts
             menu();
-            INTCONbits.T0IE = 1;    //prekid timer0 dozvoljen
+            PIE1bits.TMR1IE = 1;            // Enable TMR1 interrupts
         }
 
         regulacija();
+        CLRWDT();                           // Reset watchdog timer
     }
 }
 

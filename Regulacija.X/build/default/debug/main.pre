@@ -2198,7 +2198,7 @@ void UARTWriteString(char *);
 
 # 43 "main.c"
 #pragma config FOSC = HS
-#pragma config WDTE = ON
+#pragma config WDTE = OFF
 #pragma config PWRTE = OFF
 #pragma config MCLRE = ON
 #pragma config CP = OFF
@@ -2213,48 +2213,30 @@ void UARTWriteString(char *);
 #pragma config WRT = OFF
 
 char ok_flag, ok_flag_humi, ok_flag_co2, menu_flag, plus_flag, minus_flag;
-unsigned char measure , disp_count, disp, measure_co2;
+unsigned char tmr_count, measure , disp_count, disp, measure_co2;
 unsigned char humidity[5]={0,0,0,0,0};
 unsigned char temperature[5]={0,0,0,0,0};
 
-float temp, humi, t;
-__eeprom float zeljena_temperatura;
-__eeprom float zeljena_vlaznost;
-__eeprom int zeljena_co2;
-unsigned int co2, tmr_co2;
-unsigned int tmr_count;
+float temp, humi, t, zeljena_temperatura, zeljena_vlaznost;
+unsigned int co2, zeljena_co2, tmr_co2;
+__eeprom int test=0;
 
 static void interrupt isr(){
-if(INTCONbits.T0IF)
-{
 INTCONbits.T0IF = 0;
-TMR0 = 0;
-return;
-}
 
-
-PIR1bits.TMR1IF = 0;
-
-# 92
-if(tmr_count == 500)
+# 80
+if(tmr_count == 91)
 {
 tmr_count = 0;
 measure = 1;
 }
-else if(tmr_count == 200)
+else if(tmr_count == 65)
 {
 disp = 1;
 }
 tmr_count++;
 tmr_co2++;
-
-TMR1H = 0xD8;
-TMR1L = 0xEF;
-}
-
-void initWDT()
-{
-WDTCONbits.WDTPS = 0b1000;
+TMR0 = 0;
 }
 
 void IOPinsConfig(){
@@ -2276,47 +2258,48 @@ RA5 = 0;
 void displayAirTemp(float temp2){
 sprintf(temperature, " %.1f", temp2);
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Air temperature ");
+LcdWriteString("Air temperature ");
 LcdSetCursor(2,1);
 LcdWriteString(temperature);
 LcdSetCursor(2,6);
-LcdWriteString((char *)" deg        ");
+LcdWriteString(" deg        ");
 }
 
 void displayAirMoist(float humi2){
 sprintf(humidity, " %.1f", humi2);
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Air moist       ");
+LcdWriteString("Air moist       ");
 LcdSetCursor(2,1);
 LcdWriteString(humidity);
 LcdSetCursor(2,6);
-LcdWriteString((char *)" %          ");
+LcdWriteString(" %          ");
 }
 
 void displayCO2(unsigned int co22){
 LcdSetCursor(1,1);
-LcdWriteString((char *)"CO2 in air      ");
+LcdWriteString("CO2 in air      ");
 if(measure_co2)
 {
 LcdWriteInt(co22,2,1);
 LcdSetCursor(2,5);
-LcdWriteString((char *)" ppm        ");
+LcdWriteString(" ppm        ");
 }
 else
 {
 LcdSetCursor(2,1);
-LcdWriteString((char *)"Measuring...    ");
+LcdWriteString("Measuring...    ");
 }
 }
 
 void displaySoilTemp(float t2){
-sprintf(temperature, " %.1f", t2);
+
+sprintf(temperature, "%d", test);
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Soil temperature");
+LcdWriteString("Soil temperature");
 LcdSetCursor(2,1);
 LcdWriteString(temperature);
 LcdSetCursor(2,6);
-LcdWriteString((char *)" deg        ");
+LcdWriteString(" deg        ");
 }
 
 void resetValues(){
@@ -2328,9 +2311,9 @@ tmr_count = 0;
 measure = 0;
 disp_count = 0;
 disp = 1;
-
-
-
+zeljena_temperatura = 24;
+zeljena_vlaznost = 90;
+zeljena_co2 = 1000;
 ok_flag_humi = 0;
 ok_flag_co2 = 0;
 tmr_co2 = 0;
@@ -2340,21 +2323,11 @@ co2 = 0;
 
 void initTimer0(){
 OPTION_REGbits.T0CS = 0;
-OPTION_REGbits.PSA = 1;
+OPTION_REGbits.PSA = 0;
 OPTION_REG |= 0b00000111;
 INTCONbits.GIE = 1;
 TMR0 = 0;
 INTCONbits.T0IE = 1;
-}
-
-void initTimer1()
-{
-T1CONbits.T1CKPS = 0b01;
-TMR1H = 0xD8;
-TMR1L = 0xEF;
-PIE1bits.TMR1IE = 1;
-INTCONbits.GIE = 1;
-T1CONbits.TMR1ON = 1;
 }
 
 void regulacija(){
@@ -2424,14 +2397,16 @@ if(RA2)
 {
 _delay((unsigned long)((20)*(8000000/4000.0)));
 if(RA2) plus_flag = 1;
-_delay((unsigned long)((150)*(8000000/4000.0)));
+while(RA2);
+_delay((unsigned long)((20)*(8000000/4000.0)));
 }
 
 if(RA3)
 {
 _delay((unsigned long)((20)*(8000000/4000.0)));
 if(RA3) minus_flag = 1;
-_delay((unsigned long)((150)*(8000000/4000.0)));
+while(RA3);
+_delay((unsigned long)((20)*(8000000/4000.0)));
 }
 
 if(RA1)
@@ -2445,13 +2420,13 @@ _delay((unsigned long)((20)*(8000000/4000.0)));
 
 void menuCO2(){
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Set CO2 in air  ");
+LcdWriteString("Set CO2 in air  ");
 LcdSetCursor(2,1);
-LcdWriteString((char *)"          ");
+LcdWriteString("          ");
 LcdSetCursor(2,1);
 LcdWriteInt(zeljena_co2,2,1);
 LcdSetCursor(2,6);
-LcdWriteString((char *)"        ");
+LcdWriteString("        ");
 while(!ok_flag)
 {
 manage_buttons();
@@ -2488,11 +2463,11 @@ ok_flag_co2 = 1;
 void menuHumi(){
 sprintf(humidity, " %.1f", zeljena_vlaznost);
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Set air moist   ");
+LcdWriteString("Set air moist   ");
 LcdSetCursor(2,1);
 LcdWriteString(humidity);
 LcdSetCursor(2,6);
-LcdWriteString((char *)"        ");
+LcdWriteString("        ");
 
 while(!ok_flag_co2)
 {
@@ -2534,16 +2509,17 @@ void menu(){
 
 sprintf(temperature, " %.1f", zeljena_temperatura);
 LcdSetCursor(1,1);
-LcdWriteString((char *)"Set air temp.   ");
+LcdWriteString("Set air temp.   ");
 LcdSetCursor(2,1);
 LcdWriteString(temperature);
 LcdSetCursor(2,6);
-LcdWriteString((char *)"         ");
+LcdWriteString("         ");
 
 while(!ok_flag_humi)
 {
 manage_buttons();
 
+# 389
 if(plus_flag)
 {
 zeljena_temperatura += 0.1;
@@ -2566,19 +2542,19 @@ LcdSetCursor(2,1);
 LcdWriteString(temperature);
 }
 
+# 418
 if(ok_flag)
 {
 ok_flag = 0;
 menuHumi();
 }
 }
-
 ok_flag = 0;
 ok_flag_humi = 0;
 ok_flag_co2 = 0;
 }
 
-# 450
+# 445
 void main(void) {
 
 LcdInit();
@@ -2589,9 +2565,7 @@ UARTInit(9600);
 IOPinsConfig();
 IOPinsInit();
 resetValues();
-initTimer1();
 initTimer0();
-initWDT();
 
 getResSHT71(&temp, &humi);
 
@@ -2601,18 +2575,16 @@ while(1)
 {
 if(measure)
 {
+test++;
 measure = 0;
 getResSHT71(&temp, &humi);
-UARTWriteString("\nSHT OK.\n");
 
 
 
 co2 = measureTGS4161();
-UARTWriteString("\nTGS OK.\n");
 
 
 t = getTempDS18B20();
-UARTWriteString("\nDS OK.\n");
 }
 
 if(disp)
@@ -2649,13 +2621,12 @@ _delay((unsigned long)((20)*(8000000/4000.0)));
 if(menu_flag)
 {
 menu_flag = 0;
-PIE1bits.TMR1IE = 0;
+INTCONbits.T0IE = 0;
 menu();
-PIE1bits.TMR1IE = 1;
+INTCONbits.T0IE = 1;
 }
 
 regulacija();
-asm("clrwdt");
 }
 }
 

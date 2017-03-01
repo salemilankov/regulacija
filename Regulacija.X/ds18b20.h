@@ -12,7 +12,7 @@
 #define CONVERT_T 0x44
 #define READ_SCRATCHPAD 0xBE
 
-#define TEMP_GRESKA 0.3
+#define TEMP_GRESKA_DS 0.3
 
 #define PIN_18B20 RC5
 #define PIN_DIR_18B20 TRISCbits.TRISC5

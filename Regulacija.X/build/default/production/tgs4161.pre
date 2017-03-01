@@ -2008,12 +2008,17 @@ PIE1bits.ADIE = 0;
 unsigned int adcRead(){
 unsigned int temp = 0;
 unsigned short tempL=0, tempH=0;
+unsigned int loop_count=0;
 
 ADCON0bits.ADON = 1;
 _delay((unsigned long)((1)*(8000000/4000.0)));
 ADCON0bits.GO = 1;
 
-while(ADCON0bits.GO);
+while(ADCON0bits.GO)
+{
+_delay((unsigned long)((10)*(8000000/4000.0)));
+if(++loop_count > 150) return 0;
+}
 
 tempL |= ADRESL;
 tempH |= ADRESH;
