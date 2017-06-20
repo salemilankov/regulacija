@@ -1436,37 +1436,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 22: void writeDS18B20(char Cmd);
 [; ;ds18b20.h: 23: char readDS18B20();
 [; ;ds18b20.h: 24: float getTempDS18B20();
-"3 ds18b20.c
-[v _sensor1_ROM `uc ~T0 @X0 -> 8 `i e ]
-[i _sensor1_ROM
-:U ..
--> -> 40 `i `uc
--> -> 255 `i `uc
--> -> 146 `i `uc
--> -> 16 `i `uc
--> -> 109 `i `uc
--> -> 20 `i `uc
--> -> 3 `i `uc
--> -> 196 `i `uc
-..
-]
-[; ;ds18b20.c: 3: char sensor1_ROM[8]={40, 255, 146, 16, 109, 20, 3, 196};
-"4
-[v _sensor2_ROM `uc ~T0 @X0 -> 8 `i e ]
-[i _sensor2_ROM
-:U ..
--> -> 40 `i `uc
--> -> 255 `i `uc
--> -> 113 `i `uc
--> -> 26 `i `uc
--> -> 109 `i `uc
--> -> 20 `i `uc
--> -> 3 `i `uc
--> -> 75 `i `uc
-..
-]
-[; ;ds18b20.c: 4: char sensor2_ROM[8]={40, 255, 113, 26, 109, 20, 3, 75};
-"6
+"6 ds18b20.c
 [v _resetDS18B20 `(uc ~T0 @X0 1 ef ]
 {
 [; ;ds18b20.c: 6: char resetDS18B20(){

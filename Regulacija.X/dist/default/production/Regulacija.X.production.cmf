@@ -11,7 +11,7 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+$C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 reset_vec CODE 0 0 0 3 2
 end_init CODE 0 C C 3 2
 config CONFIG 0 2007 2007 2 2
@@ -98,18 +98,18 @@ STRING 1975-1B72 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\Regulacija.X.production.obj
-F cinit CODE >1768:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-F cinit CODE >1771:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-F cinit CODE >1876:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-10 cinit CODE >1871:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-11 cinit CODE >1872:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-12 cinit CODE >1875:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-13 cinit CODE >1877:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-14 cinit CODE >1878:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-15 cinit CODE >1879:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-18 cinit CODE >1885:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-18 cinit CODE >1887:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-19 cinit CODE >1888:C:\Users\Milankov\AppData\Local\Temp\s3ds.
+F cinit CODE >1768:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+F cinit CODE >1771:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+F cinit CODE >1876:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+10 cinit CODE >1871:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+11 cinit CODE >1872:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+12 cinit CODE >1875:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+13 cinit CODE >1877:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+14 cinit CODE >1878:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+15 cinit CODE >1879:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+18 cinit CODE >1885:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+18 cinit CODE >1887:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+19 cinit CODE >1888:C:\Users\Milankov\AppData\Local\Temp\s3j4.
 4 intentry CODE >70:D:\GitHub\regulacija\Regulacija.X\main.c
 85E text72 CODE >70:D:\GitHub\regulacija\Regulacija.X\main.c
 85E text72 CODE >71:D:\GitHub\regulacija\Regulacija.X\main.c
@@ -1290,16 +1290,16 @@ FBF text34 CODE >33:C:\Program Files\Microchip\xc8\v1.35\sources\pic\eeprom.c
 1E95 maintext CODE >555:D:\GitHub\regulacija\Regulacija.X\main.c
 1E96 maintext CODE >558:D:\GitHub\regulacija\Regulacija.X\main.c
 1E9B maintext CODE >559:D:\GitHub\regulacija\Regulacija.X\main.c
-834 clrtext CODE >1858:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-834 clrtext CODE >1859:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-835 clrtext CODE >1860:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-835 clrtext CODE >1861:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-836 clrtext CODE >1862:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-837 clrtext CODE >1863:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-838 clrtext CODE >1864:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-839 clrtext CODE >1865:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-83A clrtext CODE >1866:C:\Users\Milankov\AppData\Local\Temp\s3ds.
-83B clrtext CODE >1867:C:\Users\Milankov\AppData\Local\Temp\s3ds.
+834 clrtext CODE >1858:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+834 clrtext CODE >1859:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+835 clrtext CODE >1860:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+835 clrtext CODE >1861:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+836 clrtext CODE >1862:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+837 clrtext CODE >1863:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+838 clrtext CODE >1864:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+839 clrtext CODE >1865:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+83A clrtext CODE >1866:C:\Users\Milankov\AppData\Local\Temp\s3j4.
+83B clrtext CODE >1867:C:\Users\Milankov\AppData\Local\Temp\s3j4.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -1355,7 +1355,7 @@ _TMR0 1 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _TRMT 4C1 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _TXEN 4C5 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _WREN C62 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
-___sp 0 0 STACK 2 stack C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+___sp 0 0 STACK 2 stack C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 _disp AB 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
 _humi BE 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
 _main 3A92 0 CODE 0 maintext dist/default/production\Regulacija.X.production.obj
@@ -1366,7 +1366,7 @@ ltemp 7E 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 __end_of_getResSHT71 248E 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 ___ftadd@f1 42 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___ftadd@f2 45 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-start 18 0 CODE 0 init C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+start 18 0 CODE 0 init C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 ttemp 7E 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 wtemp 7E 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _LcdSetCursor 1D0A 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
@@ -1413,13 +1413,13 @@ __end_of_resetValues FE2 0 CODE 0 text1 dist/default/production\Regulacija.X.pro
 __end_of_displaySoilTemp 117E 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 __end_of_LcdWriteInt 18AA 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 _UARTWriteString 3A24 0 CODE 0 text13 dist/default/production\Regulacija.X.production.obj
-_sprintf$1263 C4 0 BANK1 1 cstackBANK1 dist/default/production\Regulacija.X.production.obj
-intlevel0 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-intlevel1 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-intlevel2 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-intlevel3 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-intlevel4 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-intlevel5 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+_sprintf$1261 C4 0 BANK1 1 cstackBANK1 dist/default/production\Regulacija.X.production.obj
+intlevel0 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+intlevel1 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+intlevel2 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+intlevel3 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+intlevel4 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+intlevel5 0 0 CODE 0 functab C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 LcdWriteInt@ch_manje_1000 29 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 _WDTCONbits 105 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _readDS18B20 228E 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
@@ -1470,7 +1470,7 @@ _ADRESH 1E 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _ADRESL 9E 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _ANSELH 189 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 ?_measureTGS4161 2C 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-_scale$1262 3E 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_scale$1260 3E 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___awdiv@dividend 22 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 _measure_count AF 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
 __end_of_menuHumi 14D0 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
@@ -1493,7 +1493,7 @@ _EEDATA 10C 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 ___ftsub@f1 51 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___ftsub@f2 4E 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___lbdiv@dividend 20 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-_UARTInit$1259 29 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_UARTInit$1257 29 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___lbmod@divisor 72 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
 getResSHT71@temp_val CE 0 BANK1 1 cstackBANK1 dist/default/production\Regulacija.X.production.obj
 __size_of___eetoft 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
@@ -1588,7 +1588,7 @@ __end_of___eetoft 1CB6 0 CODE 0 text34 dist/default/production\Regulacija.X.prod
 __size_of_LcdInit 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 __size_of_LcdPort 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 __size_of_IOPinsInit 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
-_isdigit$961 72 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
+_isdigit$959 72 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
 ?_adcRead 20 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 writeByteSHT71@error 74 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
 __size_of_resetValues 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
@@ -1596,7 +1596,7 @@ _measureSHT71 24AE 0 CODE 0 text21 dist/default/production\Regulacija.X.producti
 ___lbdiv@counter 21 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 __size_of_LcdWriteInt 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 __end_of_initWDT 1068 0 CODE 0 text17 dist/default/production\Regulacija.X.production.obj
-___int_sp 0 0 STACK 2 stack C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+___int_sp 0 0 STACK 2 stack C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 __end_of___ftpack 2ECE 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 __end_of___fttoee 1D9A 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 __size_of_LcdCmd 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
@@ -1681,8 +1681,8 @@ PL22 EE0 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 PL24 1FBE 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 PL26 EFC 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 PL28 2EEA 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-PL30 3F9E 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
-PL32 2EFA 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+PL30 2EFA 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+PL32 3F9E 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
 PL34 2F14 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 PL36 2F22 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 PL38 F16 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
@@ -1710,9 +1710,9 @@ PL80 F94 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 PL82 FA2 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 PL84 3FD8 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
 PL86 2FE6 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-PL88 2FF2 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-PL90 1FF2 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
-PL92 3FE6 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
+PL88 3FE6 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
+PL90 2FF2 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+PL92 1FF2 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 PL94 FB0 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 PL96 3A86 0 CODE 0 text13 dist/default/production\Regulacija.X.production.obj
 PL98 3FF4 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
@@ -1765,8 +1765,8 @@ __end_ofPL22 EFC 0 CODE 0 text65 dist/default/production\Regulacija.X.production
 __end_ofPL24 1FD8 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 __end_ofPL26 F16 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 __end_ofPL28 2EFA 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-__end_ofPL30 3FAC 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
-__end_ofPL32 2F14 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+__end_ofPL30 2F14 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+__end_ofPL32 3FAC 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
 __end_ofPL34 2F22 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 __end_ofPL36 2F3C 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 __end_ofPL38 F26 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
@@ -1794,9 +1794,9 @@ __end_ofPL80 FA2 0 CODE 0 text65 dist/default/production\Regulacija.X.production
 __end_ofPL82 FB0 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 __end_ofPL84 3FE6 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
 __end_ofPL86 2FF2 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-__end_ofPL88 3000 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-__end_ofPL90 2000 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
-__end_ofPL92 3FF4 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
+__end_ofPL88 3FF4 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
+__end_ofPL90 3000 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
+__end_ofPL92 2000 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
 __end_ofPL94 FBC 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
 __end_ofPL96 3A92 0 CODE 0 text13 dist/default/production\Regulacija.X.production.obj
 __end_ofPL98 4000 0 CODE 0 text45 dist/default/production\Regulacija.X.production.obj
@@ -1810,7 +1810,7 @@ ___lldiv@divisor 72 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X
 __end_of_measureSHT71 25B2 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 __stringtab 3000 0 STRCODE 0 stringtext dist/default/production\Regulacija.X.production.obj
 _ok_flag_humi B3 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
-reset_vec 0 0 CODE 0 reset_vec C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+reset_vec 0 0 CODE 0 reset_vec C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 __size_of_eecpymem 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 __powers_ 3072 0 STRCODE 0 stringtext dist/default/production\Regulacija.X.production.obj
 __end_of_LcdInit 1ECE 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj
@@ -1940,8 +1940,8 @@ _getResSHT71 2354 0 CODE 0 text21 dist/default/production\Regulacija.X.productio
 displayCO2@co22 2B 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 _calcSHT71 26F4 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
 ___lwtoft@c 20 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-stackhi 0 0 ABS 0 - C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
-stacklo 0 0 ABS 0 - C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+stackhi 0 0 ABS 0 - C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
+stacklo 0 0 ABS 0 - C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
 _minus_flag B1 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
 ?___lltoft 20 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 _menu_flag B0 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
@@ -2104,8 +2104,8 @@ __Lram 0 0 ABS 0 ram -
 interrupt_function 8 0 CODE 0 intentry dist/default/production\Regulacija.X.production.obj
 __CFG_CPD$OFF 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 _scale 291C 0 CODE 0 text21 dist/default/production\Regulacija.X.production.obj
-_fround$1260 3E 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-_fround$1261 3B 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_fround$1258 3E 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_fround$1259 3B 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 __end_of_IOPinsConfig 10A4 0 CODE 0 text71 dist/default/production\Regulacija.X.production.obj
 _temperature B9 0 BANK1 1 bssBANK1 dist/default/production\Regulacija.X.production.obj
 _UARTInit 38 0 CODE 0 text65 dist/default/production\Regulacija.X.production.obj
@@ -2137,8 +2137,8 @@ __div_to_l_@exp1 2D 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.p
 __div_to_l_@quot 28 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 __size_of_writeDS18B20 0 0 ABS 0 - dist/default/production\Regulacija.X.production.obj
 ___lbmod@counter 75 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
-_calcSHT71$1257 61 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
-_calcSHT71$1258 64 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_calcSHT71$1255 61 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
+_calcSHT71$1256 64 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 ___ftmul@f3_as_product 32 0 BANK0 1 cstackBANK0 dist/default/production\Regulacija.X.production.obj
 readDS18B20@i 74 0 COMMON 1 cstackCOMMON dist/default/production\Regulacija.X.production.obj
 __end_of_manage_buttons 158C 0 CODE 0 text34 dist/default/production\Regulacija.X.production.obj

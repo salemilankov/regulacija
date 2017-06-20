@@ -5,7 +5,7 @@ Linker command line:
 --edf=C:\Program Files\Microchip\xc8\v1.35\dat\en_msgs.txt -cs \
   -h+dist/default/production\Regulacija.X.production.sym \
   --cmf=dist/default/production\Regulacija.X.production.cmf -z -Q16F886 \
-  -oC:\Users\Milankov\AppData\Local\Temp\s3ds.2 \
+  -oC:\Users\Milankov\AppData\Local\Temp\s3j4.2 \
   -Mdist/default/production/Regulacija.X.production.map -E1 -ver=XC8 \
   -ASTACK=0110h-016fh -pstack=STACK -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh \
   -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 -AENTRY=00h-0FFhx32 \
@@ -18,7 +18,7 @@ Linker command line:
   -pfunctab=CODE -ACONFIG=02007h-02008h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=02000h-02003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/02100h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
-  -DENTRY=2 -k C:\Users\Milankov\AppData\Local\Temp\s3ds.obj \
+  -DENTRY=2 -k C:\Users\Milankov\AppData\Local\Temp\s3j4.obj \
   dist/default/production\Regulacija.X.production.obj 
 
 Object code version is 3.11
@@ -28,7 +28,7 @@ Machine type is 16F886
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Milankov\AppData\Local\Temp\s3ds.obj
+C:\Users\Milankov\AppData\Local\Temp\s3j4.obj
                 end_init                              C        C        3        8       0
                 reset_vec                             0        0        3        0       0
                 config                             2007     2007        2     400E       0
@@ -255,8 +255,8 @@ PL22                           text65       0770
 PL24                           text34       0FDF
 PL26                           text65       077E
 PL28                           text21       1775
-PL30                           text45       1FCF
-PL32                           text21       177D
+PL30                           text21       177D
+PL32                           text45       1FCF
 PL34                           text21       178A
 PL36                           text21       1791
 PL38                           text65       078B
@@ -287,9 +287,9 @@ PL80                           text65       07CA
 PL82                           text65       07D1
 PL84                           text45       1FEC
 PL86                           text21       17F3
-PL88                           text21       17F9
-PL90                           text34       0FF9
-PL92                           text45       1FF3
+PL88                           text45       1FF3
+PL90                           text21       17F9
+PL92                           text34       0FF9
 PL94                           text65       07D8
 PL96                           text13       1D43
 PL98                           text45       1FFA
@@ -365,7 +365,7 @@ _TRMT                          (abs)        04C1
 _TXEN                          (abs)        04C5
 _TXREG                         (abs)        0019
 _UARTInit                      text65       001C
-_UARTInit$1259                 cstackBANK0  0029
+_UARTInit$1257                 cstackBANK0  0029
 _UARTWrite                     text13       1D2A
 _UARTWriteString               text13       1D12
 _WDTCONbits                    (abs)        0105
@@ -574,8 +574,8 @@ __end_ofPL22                   text65       077E
 __end_ofPL24                   text34       0FEC
 __end_ofPL26                   text65       078B
 __end_ofPL28                   text21       177D
-__end_ofPL30                   text45       1FD6
-__end_ofPL32                   text21       178A
+__end_ofPL30                   text21       178A
+__end_ofPL32                   text45       1FD6
 __end_ofPL34                   text21       1791
 __end_ofPL36                   text21       179E
 __end_ofPL38                   text65       0793
@@ -606,9 +606,9 @@ __end_ofPL80                   text65       07D1
 __end_ofPL82                   text65       07D8
 __end_ofPL84                   text45       1FF3
 __end_ofPL86                   text21       17F9
-__end_ofPL88                   text21       1800
-__end_ofPL90                   text34       1000
-__end_ofPL92                   text45       1FFA
+__end_ofPL88                   text45       1FFA
+__end_ofPL90                   text21       1800
+__end_ofPL92                   text34       1000
 __end_ofPL94                   text65       07DE
 __end_ofPL96                   text13       1D49
 __end_ofPL98                   text45       2000
@@ -858,8 +858,8 @@ __tdiv_to_l_@quot              cstackBANK0  0023
 _adcInit                       text64       0852
 _adcRead                       text13       1CCB
 _calcSHT71                     text21       137A
-_calcSHT71$1257                cstackBANK0  0061
-_calcSHT71$1258                cstackBANK0  0064
+_calcSHT71$1255                cstackBANK0  0061
+_calcSHT71$1256                cstackBANK0  0064
 _co2                           bssBANK1     00A7
 _connectionResetSHT71          text21       1363
 _disp                          bssBANK1     00AB
@@ -871,8 +871,8 @@ _displaySoilTemp               text34       088B
 _dpowers                       stringtext   1860
 _eecpymem                      text34       0E69
 _fround                        text45       1E9D
-_fround$1260                   cstackBANK0  003E
-_fround$1261                   cstackBANK0  003B
+_fround$1258                   cstackBANK0  003E
+_fround$1259                   cstackBANK0  003B
 _getResSHT71                   text21       11AA
 _getTempDS18B20                text21       10AB
 _humi                          bssBANK1     00BE
@@ -882,7 +882,7 @@ _initTimer0                    text19       083C
 _initTimer1                    text18       07F1
 _initWDT                       text17       082D
 _isdigit                       text65       0730
-_isdigit$961                   cstackCOMMON 0072
+_isdigit$959                   cstackCOMMON 0072
 _isr                           text72       085E
 _main                          maintext     1D49
 _manage_buttons                text34       0A68
@@ -908,9 +908,9 @@ _regulacija                    text34       0D66
 _resetDS18B20                  text21       116E
 _resetValues                   text1        07DE
 _scale                         text21       148E
-_scale$1262                    cstackBANK0  003E
+_scale$1260                    cstackBANK0  003E
 _sprintf                       text65       00A6
-_sprintf$1263                  cstackBANK1  00C4
+_sprintf$1261                  cstackBANK1  00C4
 _t                             bssBANK1     00A4
 _temp                          bssBANK1     00C1
 _temperature                   bssBANK1     00B9
@@ -3654,13 +3654,13 @@ shared
 		PL8            		CODE           	0755	0000	13
 		PL22           		CODE           	0770	0000	15
 		PL60           		CODE           	17C4	0000	8
-		PL32           		CODE           	177D	0000	14
+		PL32           		CODE           	1FCF	0000	8
 		PL70           		CODE           	17DB	0000	9
 		PL42           		CODE           	07A0	0000	13
 		PL80           		CODE           	07CA	0000	8
 		PL14           		CODE           	0761	0000	16
 		PL52           		CODE           	1FD6	0000	8
-		PL90           		CODE           	0FF9	0000	8
+		PL90           		CODE           	17F9	0000	8
 		PL24           		CODE           	0FDF	0000	14
 		PL62           		CODE           	0FEC	0000	8
 		__stringtab    		STRCODE        	1800	0000	19
@@ -3670,7 +3670,7 @@ shared
 		PL82           		CODE           	07D1	0000	8
 		PL16           		CODE           	0097	0000	16
 		PL54           		CODE           	17B5	0000	9
-		PL92           		CODE           	1FF3	0000	8
+		PL92           		CODE           	0FF9	0000	8
 		PL26           		CODE           	077E	0000	14
 		PL64           		CODE           	17CB	0000	9
 		__powers_      		STRCODE        	1839	0000	40
@@ -3692,7 +3692,7 @@ shared
 		PL96           		CODE           	1D43	0000	7
 		PL68           		CODE           	17D3	0000	9
 		PL78           		CODE           	17EB	0000	9
-		PL88           		CODE           	17F9	0000	8
+		PL88           		CODE           	1FF3	0000	8
 		PL98           		CODE           	1FFA	0000	7
 		__npowers_     		STRCODE        	1812	0000	40
 		__initialization		CODE           	000F	0000	10
@@ -3700,7 +3700,7 @@ shared
 		PL10           		CODE           	1D32	0000	18
 		PL4            		CODE           	0081	0000	23
 		PL20           		CODE           	0FD1	0000	15
-		PL30           		CODE           	1FCF	0000	8
+		PL30           		CODE           	177D	0000	14
 		PL6            		CODE           	1C31	0000	14
 		PL40           		CODE           	0793	0000	14
 

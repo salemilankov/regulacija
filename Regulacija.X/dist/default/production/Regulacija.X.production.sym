@@ -26,20 +26,20 @@ __end_of___ftneg 5BB 0 CODE 0
 __CFG_WRT$OFF 0 0 ABS 0
 PL10 1D32 0 CODE 0
 PL20 FD1 0 CODE 0
-PL30 1FCF 0 CODE 0
+PL30 177D 0 CODE 0
 PL40 793 0 CODE 0
 PL12 FC0 0 CODE 0
 PL50 7B7 0 CODE 0
 PL22 770 0 CODE 0
 PL60 17C4 0 CODE 0
-PL32 177D 0 CODE 0
+PL32 1FCF 0 CODE 0
 PL70 17DB 0 CODE 0
 PL42 7A0 0 CODE 0
 PL80 7CA 0 CODE 0
 _writeDS18B20 1117 0 CODE 0
 PL14 761 0 CODE 0
 PL52 1FD6 0 CODE 0
-PL90 FF9 0 CODE 0
+PL90 17F9 0 CODE 0
 PL24 FDF 0 CODE 0
 PL62 FEC 0 CODE 0
 PL34 178A 0 CODE 0
@@ -48,7 +48,7 @@ PL44 179E 0 CODE 0
 PL82 7D1 0 CODE 0
 PL16 97 0 CODE 0
 PL54 17B5 0 CODE 0
-PL92 1FF3 0 CODE 0
+PL92 FF9 0 CODE 0
 PL26 77E 0 CODE 0
 PL64 17CB 0 CODE 0
 PL36 1791 0 CODE 0
@@ -68,7 +68,7 @@ PL58 17BD 0 CODE 0
 PL96 1D43 0 CODE 0
 PL68 17D3 0 CODE 0
 PL78 17EB 0 CODE 0
-PL88 17F9 0 CODE 0
+PL88 1FF3 0 CODE 0
 _RB0 30 0 ABS 0
 PL98 1FFA 0 CODE 0
 _RA1 29 0 ABS 0
@@ -111,7 +111,7 @@ LcdSetCursor@b 76 0 COMMON 1
 _TMR0 1 0 ABS 0
 __size_of___ftsub 0 0 ABS 0
 __size_of_writeByteSHT71 0 0 ABS 0
-__end_ofPL32 178A 0 CODE 0
+__end_ofPL32 1FD6 0 CODE 0
 __end_ofPL70 17E3 0 CODE 0
 _BRGH 4C2 0 ABS 0
 __size_of___lbdiv 0 0 ABS 0
@@ -146,7 +146,6 @@ _menu C55 0 CODE 0
 start C 0 CODE 0
 calcSHT71@rh_true 67 0 BANK0 1
 _BRG16 C3B 0 ABS 0
-_sprintf$1263 C4 0 BANK1 1
 ?___ftadd 42 0 BANK0 1
 ___fttol@f1 42 0 BANK0 1
 ___ftsub@f2 4E 0 BANK0 1
@@ -159,7 +158,7 @@ __LbssEEDATA 0 0 ABS 0
 __end_of_readByteSHT71 1309 0 CODE 0
 __end_ofPL14 770 0 CODE 0
 __end_ofPL52 1FDD 0 CODE 0
-__end_ofPL90 1000 0 CODE 0
+__end_ofPL90 1800 0 CODE 0
 _TMR1H F 0 ABS 0
 __pbssEEDATA 0 4200 EEDATA 3
 _TMR1L E 0 ABS 0
@@ -189,7 +188,6 @@ ___ftmul@f2 2B 0 BANK0 1
 ttemp4 7F 0 ABS 0
 wtemp4 86 0 ABS 0
 wtemp5 88 0 ABS 0
-_UARTInit$1259 29 0 BANK0 1
 wtemp6 7F 0 ABS 0
 __end_of_UARTWriteString 1D2A 0 CODE 0
 scale@scl 41 0 BANK0 1
@@ -221,6 +219,7 @@ __Hram 0 0 ABS 0
 ?___ftsub 4E 0 BANK0 1
 __Lram 0 0 ABS 0
 __size_of_IOPinsConfig 0 0 ABS 0
+_calcSHT71$1256 64 0 BANK0 1
 __size_of_isr 0 0 ABS 0
 ___ftge@ff1 4E 0 BANK0 1
 _zeljena_temperatura 0 4200 EEDATA 3
@@ -254,7 +253,7 @@ __Hcommon 0 0 ABS 0
 __Lcommon 0 0 ABS 0
 __end_ofPL16 A6 0 CODE 0
 __end_ofPL54 17BD 0 CODE 0
-__end_ofPL92 1FFA 0 CODE 0
+__end_ofPL92 1000 0 CODE 0
 ?___fttol 42 0 BANK0 1
 _PIE1bits 8C 0 ABS 0
 __Heeprom_data 0 0 EEDATA 3
@@ -280,6 +279,7 @@ _SPBRGH 9A 0 ABS 0
 _ANSELH 189 0 ABS 0
 ?___lwdiv 72 0 COMMON 1
 ___lwtoft 1247 0 CODE 0
+_scale$1260 3E 0 BANK0 1
 __end_ofPL26 78B 0 CODE 0
 __end_ofPL64 17D3 0 CODE 0
 __end_of_menu D66 0 CODE 0
@@ -316,7 +316,6 @@ __npowers_ 1812 0 STRCODE 0
 __end_of___ftpack 1767 0 CODE 0
 ?___ftpack 72 0 COMMON 1
 readDS18B20@result 73 0 COMMON 1
-_scale$1262 3E 0 BANK0 1
 _humidity B4 0 BANK1 1
 __end_ofPL46 7B7 0 CODE 0
 __end_ofPL84 1FF3 0 CODE 0
@@ -427,7 +426,6 @@ __end_of_LcdWriteChar EF2 0 CODE 0
 ?___lwtoft 20 0 BANK0 1
 __end_of_resetValues 7F1 0 CODE 0
 __size_of___lltoft 0 0 ABS 0
-_fround$1260 3E 0 BANK0 1
 _ok_flag_humi B3 0 BANK1 1
 __size_of_menu 0 0 ABS 0
 __Hbank0 0 0 ABS 0
@@ -435,7 +433,7 @@ __Lbank0 0 0 ABS 0
 ___eetoi@data 20 0 BANK0 1
 __Hbank1 0 0 ABS 0
 __Lbank1 0 0 ABS 0
-__end_ofPL88 1800 0 CODE 0
+__end_ofPL88 1FFA 0 CODE 0
 __Hbank2 0 0 ABS 0
 __Lbank2 0 0 ABS 0
 LcdWriteInt@i 24 0 BANK0 1
@@ -459,7 +457,6 @@ __ptext3 C55 0 CODE 0
 measureTGS4161@ppm_temp 34 0 BANK0 1
 __ptext4 95A 0 CODE 0
 __size_of_LcdCmd 0 0 ABS 0
-_fround$1261 3B 0 BANK0 1
 __ptext5 AC6 0 CODE 0
 _initWDT 82D 0 CODE 0
 __end_of_displayAirTemp 8F3 0 CODE 0
@@ -481,7 +478,6 @@ ___eetoft@addr 23 0 BANK0 1
 writeByteSHT71@cmd 73 0 COMMON 1
 LcdCmd@a 75 0 COMMON 1
 _resetValues 7DE 0 CODE 0
-_calcSHT71$1257 61 0 BANK0 1
 displayAirMoist@humi2 5E 0 BANK0 1
 adcRead@tempH 28 0 BANK0 1
 __end_of__initialization 18 0 CODE 0
@@ -587,7 +583,6 @@ calcSHT71@t_C 5E 0 BANK0 1
 __size_of_connectionResetSHT71 0 0 ABS 0
 getResSHT71@p_temp C8 0 BANK1 1
 ___ftadd@exp2 4C 0 BANK0 1
-_isdigit$961 72 0 COMMON 1
 __Hpa_nodes 0 0 ABS 0
 __Lpa_nodes 0 0 ABS 0
 __size_of_isdigit 0 0 ABS 0
@@ -645,6 +640,7 @@ __ptext72 85E 0 CODE 0
 __ptext25 11AA 0 CODE 0
 __ptext44 730 0 CODE 0
 __ptext63 E85 0 CODE 0
+_fround$1258 3E 0 BANK0 1
 __ptext16 1D2A 0 CODE 0
 __ptext35 927 0 CODE 0
 __ptext54 512 0 CODE 0
@@ -697,12 +693,14 @@ __Lend_init C 0 CODE 0
 __end_of_UARTInit 81 0 CODE 0
 __end_of_writeByteSHT71 1363 0 CODE 0
 ___lbdiv@divisor 77 0 COMMON 1
+_UARTInit$1257 29 0 BANK0 1
 __end_of_displayAirMoist 927 0 CODE 0
 __end_of_fround 1F98 0 CODE 0
 ___lldiv@divisor 72 0 COMMON 1
 ___ftpack@exp 75 0 COMMON 1
 __size_of___lldiv 0 0 ABS 0
 ___awdiv@divisor 20 0 BANK0 1
+_fround$1259 3B 0 BANK0 1
 ___lwdiv@divisor 72 0 COMMON 1
 getResSHT71@inp C7 0 BANK1 1
 measureTGS4161@n 36 0 BANK0 1
@@ -713,6 +711,7 @@ LcdWriteInt@ch 2A 0 BANK0 1
 __end_of___llmod 551 0 CODE 0
 measureSHT71@loop_cnt 21 0 BANK0 1
 __tdiv_to_l_@cntr 27 0 BANK0 1
+_calcSHT71$1255 61 0 BANK0 1
 UARTWrite@data 72 0 COMMON 1
 __size_of___wmul 0 0 ABS 0
 __Hreset_vec 3 0 CODE 0
@@ -728,7 +727,6 @@ __tdiv_to_l_@exp1 28 0 BANK0 1
 _tranStartSHT71 1309 0 CODE 0
 __div_to_l_@cntr 2C 0 BANK0 1
 __end_of_menuHumi A68 0 CODE 0
-_calcSHT71$1258 64 0 BANK0 1
 UARTWriteString@i 78 0 COMMON 1
 writeDS18B20@Cmd 73 0 COMMON 1
 __size_of_regulacija 0 0 ABS 0
@@ -774,6 +772,7 @@ ___awdiv@quotient 26 0 BANK0 1
 __size_of_readStatusRegSHT71 0 0 ABS 0
 __size_of_measureTGS4161 0 0 ABS 0
 ___lwdiv@quotient 76 0 COMMON 1
+_sprintf$1261 C4 0 BANK1 1
 __size_of___ftge 0 0 ABS 0
 _readStatusRegSHT71 1191 0 CODE 0
 __size_of___itoee 0 0 ABS 0
@@ -798,7 +797,7 @@ __initialization F 0 CODE 0
 __end_of___ftge 4B7 0 CODE 0
 __stringbase 1812 0 STRCODE 0
 ___lbmod@dividend 74 0 COMMON 1
-__end_ofPL30 1FD6 0 CODE 0
+__end_ofPL30 178A 0 CODE 0
 __end_ofPL6 1C3E 0 CODE 0
 ___llmod@dividend 76 0 COMMON 1
 ___awmod@dividend 74 0 COMMON 1
@@ -815,6 +814,7 @@ __end_ofPL40 7A0 0 CODE 0
 __end_of_memcpyee FC0 0 CODE 0
 ___lbmod@rem 76 0 COMMON 1
 UARTInit@baud_rate 25 0 BANK0 1
+_isdigit$959 72 0 COMMON 1
 __CFG_LVP$OFF 0 0 ABS 0
 __size_of___bmul 0 0 ABS 0
 __end_of___bmul 1725 0 CODE 0
@@ -853,7 +853,7 @@ text70 104C 1059 CODE 104C 0
 text20 1044 104B CODE 1044 0
 %locals
 dist/default/production\Regulacija.X.production.obj
-C:\Users\Milankov\AppData\Local\Temp\s3ds.
+C:\Users\Milankov\AppData\Local\Temp\s3j4.
 1768 F 0 CODE 0
 1771 F 0 CODE 0
 1876 F 0 CODE 0
