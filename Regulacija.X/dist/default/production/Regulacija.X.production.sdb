@@ -63,13 +63,13 @@
 [v ___eetoft __eetoft `(f  1 e 3 0 ]
 "124
 [v ___fttoee __fttoee `(f  1 e 3 0 ]
-"3 D:\GitHub\regulacija\Regulacija.X\ds18b20.c
+"6 D:\GitHub\regulacija\Regulacija.X\ds18b20.c
 [v _resetDS18B20 resetDS18B20 `(uc  1 e 1 0 ]
-"23
+"25
 [v _writeDS18B20 writeDS18B20 `(v  1 e 0 0 ]
-"48
+"50
 [v _readDS18B20 readDS18B20 `(uc  1 e 1 0 ]
-"67
+"69
 [v _getTempDS18B20 getTempDS18B20 `(f  1 e 3 0 ]
 "8 D:\GitHub\regulacija\Regulacija.X\lcd.c
 [v _LcdPort LcdPort `(v  1 e 0 0 ]
@@ -89,35 +89,35 @@
 [v _isr isr `II(v  1 s 0 isr ]
 "108
 [v _initWDT initWDT `(v  1 e 0 0 ]
-"113
+"114
 [v _IOPinsConfig IOPinsConfig `(v  1 e 0 0 ]
-"121
+"122
 [v _IOPinsInit IOPinsInit `(v  1 e 0 0 ]
-"129
+"130
 [v _displayAirTemp displayAirTemp `(v  1 e 0 0 ]
-"139
+"140
 [v _displayAirMoist displayAirMoist `(v  1 e 0 0 ]
-"149
+"150
 [v _displayCO2 displayCO2 `(v  1 e 0 0 ]
-"165
+"166
 [v _displaySoilTemp displaySoilTemp `(v  1 e 0 0 ]
-"175
+"176
 [v _resetValues resetValues `(v  1 e 0 0 ]
-"194
+"196
 [v _initTimer0 initTimer0 `(v  1 e 0 0 ]
-"203
+"205
 [v _initTimer1 initTimer1 `(v  1 e 0 0 ]
-"213
+"215
 [v _regulacija regulacija `(v  1 e 0 0 ]
-"274
+"276
 [v _manage_buttons manage_buttons `(v  1 e 0 0 ]
-"299
+"301
 [v _menuCO2 menuCO2 `(v  1 e 0 0 ]
-"341
+"345
 [v _menuHumi menuHumi `(v  1 e 0 0 ]
-"386
+"392
 [v _menu menu `(v  1 e 0 0 ]
-"450
+"458
 [v _main main `(v  1 e 0 0 ]
 "10 D:\GitHub\regulacija\Regulacija.X\sht71.c
 [v _initSHT71 initSHT71 `(v  1 e 0 0 ]
@@ -137,11 +137,11 @@
 [v _readStatusRegSHT71 readStatusRegSHT71 `(uc  1 e 1 0 ]
 "226
 [v _getResSHT71 getResSHT71 `(v  1 e 0 0 ]
-"4 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
+"5 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
 [v _adcInit adcInit `(v  1 e 0 0 ]
-"12
+"13
 [v _adcRead adcRead `(ui  1 e 2 0 ]
-"35
+"40
 [v _measureTGS4161 measureTGS4161 `(ui  1 e 2 0 ]
 "4 D:\GitHub\regulacija\Regulacija.X\uart.c
 [v _UARTInit UARTInit `(uc  1 e 1 0 ]
@@ -153,7 +153,7 @@
 [v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
 "369
 [v _INTCON INTCON `VEuc  1 e 1 @11 ]
-[s S287 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S294 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -163,14 +163,14 @@
 `uc 1 GIE 1 0 :1:7 
 ]
 "392
-[s S296 . 1 `uc 1 . 1 0 :2:0 
+[s S303 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
-[u S301 . 1 `S287 1 . 1 0 `S296 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES301  1 e 1 @11 ]
-[s S379 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S308 . 1 `S294 1 . 1 0 `S303 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES308  1 e 1 @11 ]
+[s S388 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
 `uc 1 SSPIF 1 0 :1:3 
@@ -179,13 +179,13 @@
 `uc 1 ADIF 1 0 :1:6 
 ]
 "462
-[u S387 . 1 `S379 1 . 1 0 ]
-[v _PIR1bits PIR1bits `VES387  1 e 1 @12 ]
+[u S396 . 1 `S388 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES396  1 e 1 @12 ]
 "563
 [v _TMR1L TMR1L `VEuc  1 e 1 @14 ]
 "569
 [v _TMR1H TMR1H `VEuc  1 e 1 @15 ]
-[s S466 . 1 `uc 1 TMR1ON 1 0 :1:0 
+[s S475 . 1 `uc 1 TMR1ON 1 0 :1:0 
 `uc 1 TMR1CS 1 0 :1:1 
 `uc 1 nT1SYNC 1 0 :1:2 
 `uc 1 T1OSCEN 1 0 :1:3 
@@ -194,7 +194,7 @@
 `uc 1 T1GINV 1 0 :1:7 
 ]
 "604
-[s S474 . 1 `uc 1 . 1 0 :2:0 
+[s S483 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T1INSYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 T1CKPS0 1 0 :1:4 
@@ -202,24 +202,24 @@
 `uc 1 . 1 0 :1:6 
 `uc 1 T1GIV 1 0 :1:7 
 ]
-[s S482 . 1 `uc 1 . 1 0 :2:0 
+[s S491 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T1SYNC 1 0 :1:2 
 ]
-[u S485 . 1 `S466 1 . 1 0 `S474 1 . 1 0 `S482 1 . 1 0 ]
-[v _T1CONbits T1CONbits `VES485  1 e 1 @16 ]
+[u S494 . 1 `S475 1 . 1 0 `S483 1 . 1 0 `S491 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES494  1 e 1 @16 ]
 "1027
 [v _TXREG TXREG `VEuc  1 e 1 @25 ]
 "1126
 [v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
 "1132
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
-[s S237 . 1 `uc 1 ADON 1 0 :1:0 
+[s S239 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 `uc 1 ADCS 1 0 :2:6 
 ]
 "1163
-[s S242 . 1 `uc 1 . 1 0 :1:0 
+[s S244 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
@@ -228,17 +228,17 @@
 `uc 1 ADCS0 1 0 :1:6 
 `uc 1 ADCS1 1 0 :1:7 
 ]
-[s S251 . 1 `uc 1 . 1 0 :1:0 
+[s S253 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S254 . 1 `uc 1 . 1 0 :1:0 
+[s S256 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 ]
-[u S257 . 1 `S237 1 . 1 0 `S242 1 . 1 0 `S251 1 . 1 0 `S254 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES257  1 e 1 @31 ]
+[u S259 . 1 `S239 1 . 1 0 `S244 1 . 1 0 `S253 1 . 1 0 `S256 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES259  1 e 1 @31 ]
 "1232
 [v _OPTION_REG OPTION_REG `VEuc  1 e 1 @129 ]
-[s S439 . 1 `uc 1 PS 1 0 :3:0 
+[s S448 . 1 `uc 1 PS 1 0 :3:0 
 `uc 1 PSA 1 0 :1:3 
 `uc 1 T0SE 1 0 :1:4 
 `uc 1 T0CS 1 0 :1:5 
@@ -246,17 +246,17 @@
 `uc 1 nRBPU 1 0 :1:7 
 ]
 "1252
-[s S446 . 1 `uc 1 PS0 1 0 :1:0 
+[s S455 . 1 `uc 1 PS0 1 0 :1:0 
 `uc 1 PS1 1 0 :1:1 
 `uc 1 PS2 1 0 :1:2 
 ]
-[u S450 . 1 `S439 1 . 1 0 `S446 1 . 1 0 ]
-[v _OPTION_REGbits OPTION_REGbits `VES450  1 e 1 @129 ]
+[u S459 . 1 `S448 1 . 1 0 `S455 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES459  1 e 1 @129 ]
 "1301
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
 "1362
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
-[s S113 . 1 `uc 1 TRISB0 1 0 :1:0 
+[s S115 . 1 `uc 1 TRISB0 1 0 :1:0 
 `uc 1 TRISB1 1 0 :1:1 
 `uc 1 TRISB2 1 0 :1:2 
 `uc 1 TRISB3 1 0 :1:3 
@@ -266,8 +266,8 @@
 `uc 1 TRISB7 1 0 :1:7 
 ]
 "1379
-[u S122 . 1 `S113 1 . 1 0 ]
-[v _TRISBbits TRISBbits `VES122  1 e 1 @134 ]
+[u S124 . 1 `S115 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES124  1 e 1 @134 ]
 "1423
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
 [s S19 . 1 `uc 1 TRISC0 1 0 :1:0 
@@ -282,7 +282,7 @@
 "1440
 [u S28 . 1 `S19 1 . 1 0 ]
 [v _TRISCbits TRISCbits `VES28  1 e 1 @135 ]
-[s S218 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S220 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -291,8 +291,8 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1520
-[u S226 . 1 `S218 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES226  1 e 1 @140 ]
+[u S228 . 1 `S220 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES228  1 e 1 @140 ]
 "2430
 [v _SPBRG SPBRG `VEuc  1 e 1 @153 ]
 "2491
@@ -301,18 +301,18 @@
 [v _ADRESL ADRESL `VEuc  1 e 1 @158 ]
 "2759
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @159 ]
-[s S400 . 1 `uc 1 SWDTEN 1 0 :1:0 
+[s S409 . 1 `uc 1 SWDTEN 1 0 :1:0 
 `uc 1 WDTPS 1 0 :4:1 
 ]
 "2810
-[s S403 . 1 `uc 1 . 1 0 :1:0 
+[s S412 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 WDTPS0 1 0 :1:1 
 `uc 1 WDTPS1 1 0 :1:2 
 `uc 1 WDTPS2 1 0 :1:3 
 `uc 1 WDTPS3 1 0 :1:4 
 ]
-[u S409 . 1 `S400 1 . 1 0 `S403 1 . 1 0 ]
-[v _WDTCONbits WDTCONbits `VES409  1 e 1 @261 ]
+[u S418 . 1 `S409 1 . 1 0 `S412 1 . 1 0 ]
+[v _WDTCONbits WDTCONbits `VES418  1 e 1 @261 ]
 "3022
 [v _EEDATA EEDATA `VEuc  1 e 1 @268 ]
 "3033
@@ -401,6 +401,7 @@
 "59
 [v _measure measure `uc  1 e 1 0 ]
 [v _disp_count disp_count `uc  1 e 1 0 ]
+[v _measure_count measure_count `uc  1 e 1 0 ]
 [v _disp disp `uc  1 e 1 0 ]
 [v _measure_co2 measure_co2 `uc  1 e 1 0 ]
 "60
@@ -423,40 +424,40 @@
 [v _tmr_count tmr_count `ui  1 e 2 0 ]
 "4 D:\GitHub\regulacija\Regulacija.X\sht71.c
 [v _tempervalue tempervalue `[2]ui  1 e 4 0 ]
-"450 D:\GitHub\regulacija\Regulacija.X\main.c
+"458 D:\GitHub\regulacija\Regulacija.X\main.c
 [v _main main `(v  1 e 0 0 ]
 {
-"528
+"561
 } 0
-"175
+"176
 [v _resetValues resetValues `(v  1 e 0 0 ]
 {
-"192
+"194
 } 0
-"213
+"215
 [v _regulacija regulacija `(v  1 e 0 0 ]
 {
-"272
+"274
 } 0
-"386
+"392
 [v _menu menu `(v  1 e 0 0 ]
 {
-"432
+"440
 } 0
-"341
+"345
 [v _menuHumi menuHumi `(v  1 e 0 0 ]
 {
-"383
+"389
 } 0
-"299
+"301
 [v _menuCO2 menuCO2 `(v  1 e 0 0 ]
 {
-"339
+"343
 } 0
-"274
+"276
 [v _manage_buttons manage_buttons `(v  1 e 0 0 ]
 {
-"297
+"299
 } 0
 "87 C:\Program Files\Microchip\xc8\v1.35\sources\pic\eeprom.c
 [v ___itoee __itoee `(ui  1 e 2 0 ]
@@ -530,96 +531,116 @@
 [v eecpymem@to to `*.4VEuc  1 a 1 5 ]
 "21
 } 0
-"35 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
+"40 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
 [v _measureTGS4161 measureTGS4161 `(ui  1 e 2 0 ]
 {
-"36
-[v measureTGS4161@ppm ppm `ui  1 a 2 21 ]
-[v measureTGS4161@temp temp `ui  1 a 2 19 ]
-[v measureTGS4161@ppm_temp ppm_temp `ui  1 a 2 16 ]
-[v measureTGS4161@krez2 krez2 `ui  1 a 2 14 ]
-[v measureTGS4161@krez1 krez1 `ui  1 a 2 12 ]
-"37
-[v measureTGS4161@i i `uc  1 a 1 18 ]
-"59
+"41
+[v measureTGS4161@ppm ppm `ui  1 a 2 27 ]
+[v measureTGS4161@temp temp `ui  1 a 2 25 ]
+"43
+[v measureTGS4161@n n `us  1 a 2 22 ]
+"41
+[v measureTGS4161@ppm_temp ppm_temp `ui  1 a 2 20 ]
+[v measureTGS4161@krez2 krez2 `ui  1 a 2 18 ]
+[v measureTGS4161@krez1 krez1 `ui  1 a 2 16 ]
+"42
+[v measureTGS4161@i i `uc  1 a 1 24 ]
+"66
 } 0
-"12
+"13
 [v _adcRead adcRead `(ui  1 e 2 0 ]
 {
-"13
-[v adcRead@temp temp `ui  1 a 2 6 ]
 "14
-[v adcRead@tempH tempH `us  1 a 2 4 ]
-[v adcRead@tempL tempL `us  1 a 2 2 ]
+[v adcRead@temp temp `ui  1 a 2 10 ]
 "15
-[v adcRead@loop_count loop_count `ui  1 a 2 0 ]
-"33
+[v adcRead@tempH tempH `us  1 a 2 8 ]
+[v adcRead@tempL tempL `us  1 a 2 6 ]
+"16
+[v adcRead@loop_count loop_count `ui  1 a 2 4 ]
+"38
+} 0
+"46 D:\GitHub\regulacija\Regulacija.X\uart.c
+[v _UARTWriteString UARTWriteString `(v  1 e 0 0 ]
+{
+"48
+[v UARTWriteString@i i `i  1 a 2 8 ]
+"46
+[v UARTWriteString@str str `*.25uc  1 p 2 3 ]
+"51
+} 0
+"35
+[v _UARTWrite UARTWrite `(v  1 e 0 0 ]
+{
+[v UARTWrite@data data `uc  1 a 1 wreg ]
+[v UARTWrite@data data `uc  1 a 1 wreg ]
+[v UARTWrite@data data `uc  1 a 1 2 ]
+"39
 } 0
 "108 D:\GitHub\regulacija\Regulacija.X\main.c
 [v _initWDT initWDT `(v  1 e 0 0 ]
 {
-"111
+"112
 } 0
-"203
+"205
 [v _initTimer1 initTimer1 `(v  1 e 0 0 ]
 {
-"211
+"213
 } 0
-"194
+"196
 [v _initTimer0 initTimer0 `(v  1 e 0 0 ]
 {
-"201
+"203
 } 0
 "10 D:\GitHub\regulacija\Regulacija.X\sht71.c
 [v _initSHT71 initSHT71 `(v  1 e 0 0 ]
 {
 "13
 } 0
-"67 D:\GitHub\regulacija\Regulacija.X\ds18b20.c
+"69 D:\GitHub\regulacija\Regulacija.X\ds18b20.c
 [v _getTempDS18B20 getTempDS18B20 `(f  1 e 3 0 ]
 {
-"70
+"72
 [v getTempDS18B20@temperatura temperatura `f  1 a 3 52 ]
-"68
+"70
 [v getTempDS18B20@temp temp `ui  1 a 2 59 ]
-"69
+"71
 [v getTempDS18B20@tempH tempH `us  1 a 2 57 ]
 [v getTempDS18B20@tempL tempL `us  1 a 2 55 ]
-"88
+"90
 } 0
-"23
+"25
 [v _writeDS18B20 writeDS18B20 `(v  1 e 0 0 ]
 {
 [v writeDS18B20@Cmd Cmd `uc  1 a 1 wreg ]
-"24
+"26
 [v writeDS18B20@i i `uc  1 a 1 4 ]
-"23
-[v writeDS18B20@Cmd Cmd `uc  1 a 1 wreg ]
 "25
+[v writeDS18B20@Cmd Cmd `uc  1 a 1 wreg ]
+"27
 [v writeDS18B20@Cmd Cmd `uc  1 a 1 3 ]
-"45
+"47
 } 0
-"3
+"6
 [v _resetDS18B20 resetDS18B20 `(uc  1 e 1 0 ]
 {
-"20
+"23
 } 0
-"48
+"50
 [v _readDS18B20 readDS18B20 `(uc  1 e 1 0 ]
 {
-"49
+"51
 [v readDS18B20@i i `uc  1 a 1 4 ]
 [v readDS18B20@result result `uc  1 a 1 3 ]
-"64
+"66
 } 0
 "226 D:\GitHub\regulacija\Regulacija.X\sht71.c
 [v _getResSHT71 getResSHT71 `(v  1 e 0 0 ]
 {
 [v getResSHT71@p_temp p_temp `*.4f  1 a 1 wreg ]
-[u S148 . 3 `ui 1 i 2 0 `f 1 f 3 0 ]
+[u S150 . 3 `ui 1 i 2 0 `f 1 f 3 0 ]
 "227
-[v getResSHT71@temp_val temp_val `S148  1 a 3 10 ]
-[v getResSHT71@humi_val humi_val `S148  1 a 3 6 ]
+[v getResSHT71@temp_val temp_val `S150  1 a 3 10 ]
+[v getResSHT71@humi_val humi_val `S150  1 a 3 6 ]
 "228
 [v getResSHT71@checksum checksum `uc  1 a 1 9 ]
 [v getResSHT71@error error `uc  1 a 1 5 ]
@@ -628,9 +649,9 @@
 "226
 [v getResSHT71@p_temp p_temp `*.4f  1 a 1 wreg ]
 [v getResSHT71@p_humi p_humi `*.4f  1 p 1 77 ]
-"230
+"231
 [v getResSHT71@p_temp p_temp `*.4f  1 a 1 4 ]
-"250
+"251
 } 0
 "216
 [v _readStatusRegSHT71 readStatusRegSHT71 `(uc  1 e 1 0 ]
@@ -720,17 +741,17 @@
 [v ___lwtoft@c c `ui  1 p 2 0 ]
 "31
 } 0
-"165 D:\GitHub\regulacija\Regulacija.X\main.c
+"166 D:\GitHub\regulacija\Regulacija.X\main.c
 [v _displaySoilTemp displaySoilTemp `(v  1 e 0 0 ]
 {
 [v displaySoilTemp@t2 t2 `f  1 p 3 62 ]
-"173
+"174
 } 0
-"149
+"150
 [v _displayCO2 displayCO2 `(v  1 e 0 0 ]
 {
 [v displayCO2@co22 co22 `ui  1 p 2 11 ]
-"163
+"164
 } 0
 "125 D:\GitHub\regulacija\Regulacija.X\lcd.c
 [v _LcdWriteInt LcdWriteInt `(v  1 e 0 0 ]
@@ -757,25 +778,25 @@
 [v ___lwdiv@dividend dividend `ui  1 p 2 4 ]
 "31
 } 0
-"129 D:\GitHub\regulacija\Regulacija.X\main.c
+"130 D:\GitHub\regulacija\Regulacija.X\main.c
 [v _displayAirTemp displayAirTemp `(v  1 e 0 0 ]
 {
 [v displayAirTemp@temp2 temp2 `f  1 p 3 62 ]
-"137
+"138
 } 0
-"139
+"140
 [v _displayAirMoist displayAirMoist `(v  1 e 0 0 ]
 {
 [v displayAirMoist@humi2 humi2 `f  1 p 3 62 ]
-"147
+"148
 } 0
 "492 C:\Program Files\Microchip\xc8\v1.35\sources\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
-[u S747 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S753 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v sprintf@tmpval tmpval `S747  1 a 4 10 ]
+[v sprintf@tmpval tmpval `S753  1 a 4 10 ]
 "528
 [v sprintf@val val `ul  1 a 4 6 ]
 "516
@@ -1049,29 +1070,12 @@
 [v LcdSetCursor@a a `uc  1 a 1 0 ]
 "64
 } 0
-"4 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
+"5 D:\GitHub\regulacija\Regulacija.X\tgs4161.c
 [v _adcInit adcInit `(v  1 e 0 0 ]
 {
-"10
+"11
 } 0
-"46 D:\GitHub\regulacija\Regulacija.X\uart.c
-[v _UARTWriteString UARTWriteString `(v  1 e 0 0 ]
-{
-"48
-[v UARTWriteString@i i `i  1 a 2 8 ]
-"46
-[v UARTWriteString@str str `*.25uc  1 p 2 3 ]
-"51
-} 0
-"35
-[v _UARTWrite UARTWrite `(v  1 e 0 0 ]
-{
-[v UARTWrite@data data `uc  1 a 1 wreg ]
-[v UARTWrite@data data `uc  1 a 1 wreg ]
-[v UARTWrite@data data `uc  1 a 1 2 ]
-"39
-} 0
-"4
+"4 D:\GitHub\regulacija\Regulacija.X\uart.c
 [v _UARTInit UARTInit `(uc  1 e 1 0 ]
 {
 "6
@@ -1115,15 +1119,15 @@
 [v LcdPort@a a `uc  1 a 1 2 ]
 "29
 } 0
-"121 D:\GitHub\regulacija\Regulacija.X\main.c
+"122 D:\GitHub\regulacija\Regulacija.X\main.c
 [v _IOPinsInit IOPinsInit `(v  1 e 0 0 ]
 {
-"127
+"128
 } 0
-"113
+"114
 [v _IOPinsConfig IOPinsConfig `(v  1 e 0 0 ]
 {
-"119
+"120
 } 0
 "70
 [v _isr isr `II(v  1 s 0 isr ]

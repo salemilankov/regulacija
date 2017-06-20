@@ -1437,269 +1437,299 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 23: char readDS18B20();
 [; ;ds18b20.h: 24: float getTempDS18B20();
 "3 ds18b20.c
+[v _sensor1_ROM `uc ~T0 @X0 -> 8 `i e ]
+[i _sensor1_ROM
+:U ..
+-> -> 40 `i `uc
+-> -> 255 `i `uc
+-> -> 146 `i `uc
+-> -> 16 `i `uc
+-> -> 109 `i `uc
+-> -> 20 `i `uc
+-> -> 3 `i `uc
+-> -> 196 `i `uc
+..
+]
+[; ;ds18b20.c: 3: char sensor1_ROM[8]={40, 255, 146, 16, 109, 20, 3, 196};
+"4
+[v _sensor2_ROM `uc ~T0 @X0 -> 8 `i e ]
+[i _sensor2_ROM
+:U ..
+-> -> 40 `i `uc
+-> -> 255 `i `uc
+-> -> 113 `i `uc
+-> -> 26 `i `uc
+-> -> 109 `i `uc
+-> -> 20 `i `uc
+-> -> 3 `i `uc
+-> -> 75 `i `uc
+..
+]
+[; ;ds18b20.c: 4: char sensor2_ROM[8]={40, 255, 113, 26, 109, 20, 3, 75};
+"6
 [v _resetDS18B20 `(uc ~T0 @X0 1 ef ]
 {
-[; ;ds18b20.c: 3: char resetDS18B20(){
+[; ;ds18b20.c: 6: char resetDS18B20(){
 [e :U _resetDS18B20 ]
 [f ]
-[; ;ds18b20.c: 4: TRISCbits.TRISC5 = 0;
-"4
-[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 5: RC5 = 0;
-"5
-[e = _RC5 -> -> 0 `i `b ]
-[; ;ds18b20.c: 6: _delay((unsigned long)((480)*(8000000/4000000.0)));
-"6
-[e ( __delay (1 -> * -> -> 480 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 7: TRISCbits.TRISC5 = 1;
+[; ;ds18b20.c: 7: TRISCbits.TRISC5 = 0;
 "7
-[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 8: _delay((unsigned long)((60)*(8000000/4000000.0)));
+[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
+[; ;ds18b20.c: 8: RC5 = 0;
 "8
-[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 10: if (RC5 == 0)
-"10
-[e $ ! == -> _RC5 `i -> 0 `i 136  ]
-[; ;ds18b20.c: 11: {
-"11
-{
-[; ;ds18b20.c: 12: _delay((unsigned long)((480)*(8000000/4000000.0)));
-"12
+[e = _RC5 -> -> 0 `i `b ]
+[; ;ds18b20.c: 9: _delay((unsigned long)((480)*(8000000/4000000.0)));
+"9
 [e ( __delay (1 -> * -> -> 480 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 13: return 0;
+[; ;ds18b20.c: 10: TRISCbits.TRISC5 = 1;
+"10
+[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 11: _delay((unsigned long)((60)*(8000000/4000000.0)));
+"11
+[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 13: if (RC5 == 0)
 "13
+[e $ ! == -> _RC5 `i -> 0 `i 136  ]
+[; ;ds18b20.c: 14: {
+"14
+{
+[; ;ds18b20.c: 15: _delay((unsigned long)((480)*(8000000/4000000.0)));
+"15
+[e ( __delay (1 -> * -> -> 480 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 16: return 0;
+"16
 [e ) -> -> 0 `i `uc ]
 [e $UE 135  ]
-"14
-}
-[; ;ds18b20.c: 14: }
-[e $U 137  ]
-"15
-[e :U 136 ]
-[; ;ds18b20.c: 15: else
-[; ;ds18b20.c: 16: {
-"16
-{
-[; ;ds18b20.c: 17: _delay((unsigned long)((480)*(8000000/4000000.0)));
 "17
-[e ( __delay (1 -> * -> -> 480 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 18: return 1;
+}
+[; ;ds18b20.c: 17: }
+[e $U 137  ]
 "18
+[e :U 136 ]
+[; ;ds18b20.c: 18: else
+[; ;ds18b20.c: 19: {
+"19
+{
+[; ;ds18b20.c: 20: _delay((unsigned long)((480)*(8000000/4000000.0)));
+"20
+[e ( __delay (1 -> * -> -> 480 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 21: return 1;
+"21
 [e ) -> -> 1 `i `uc ]
 [e $UE 135  ]
-"19
+"22
 }
 [e :U 137 ]
-[; ;ds18b20.c: 19: }
-[; ;ds18b20.c: 20: }
-"20
+[; ;ds18b20.c: 22: }
+[; ;ds18b20.c: 23: }
+"23
 [e :UE 135 ]
 }
-"23
+"25
 [v _writeDS18B20 `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;ds18b20.c: 23: void writeDS18B20 (char Cmd){
+[; ;ds18b20.c: 25: void writeDS18B20 (char Cmd){
 [e :U _writeDS18B20 ]
 [v _Cmd `uc ~T0 @X0 1 r1 ]
 [f ]
-"24
-[v _i `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 24: char i;
-[; ;ds18b20.c: 25: TRISCbits.TRISC5 = 1;
-"25
-[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 26: for(i = 0; i < 8; i++)
 "26
+[v _i `uc ~T0 @X0 1 a ]
+[; ;ds18b20.c: 26: char i;
+[; ;ds18b20.c: 27: TRISCbits.TRISC5 = 1;
+"27
+[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 28: for(i = 0; i < 8; i++)
+"28
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 139  ]
 [e $U 140  ]
-"27
-[e :U 139 ]
-[; ;ds18b20.c: 27: {
-{
-[; ;ds18b20.c: 28: if((Cmd & (1<<i))!= 0)
-"28
-[e $ ! != & -> _Cmd `i << -> 1 `i _i -> 0 `i 142  ]
-[; ;ds18b20.c: 29: {
 "29
+[e :U 139 ]
+[; ;ds18b20.c: 29: {
 {
-[; ;ds18b20.c: 30: TRISCbits.TRISC5 = 0;
+[; ;ds18b20.c: 30: if((Cmd & (1<<i))!= 0)
 "30
-[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 31: RC5 = 0;
+[e $ ! != & -> _Cmd `i << -> 1 `i _i -> 0 `i 142  ]
+[; ;ds18b20.c: 31: {
 "31
-[e = _RC5 -> -> 0 `i `b ]
-[; ;ds18b20.c: 32: _delay((unsigned long)((1)*(8000000/4000000.0)));
-"32
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 33: TRISCbits.TRISC5 = 1;
-"33
-[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 34: _delay((unsigned long)((60)*(8000000/4000000.0)));
-"34
-[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"35
-}
-[; ;ds18b20.c: 35: }
-[e $U 143  ]
-"36
-[e :U 142 ]
-[; ;ds18b20.c: 36: else
-[; ;ds18b20.c: 37: {
-"37
 {
-[; ;ds18b20.c: 39: TRISCbits.TRISC5 = 0;
-"39
+[; ;ds18b20.c: 32: TRISCbits.TRISC5 = 0;
+"32
 [e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 40: RC5 = 0;
-"40
+[; ;ds18b20.c: 33: RC5 = 0;
+"33
 [e = _RC5 -> -> 0 `i `b ]
-[; ;ds18b20.c: 41: _delay((unsigned long)((60)*(8000000/4000000.0)));
-"41
-[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 42: TRISCbits.TRISC5 = 1;
-"42
+[; ;ds18b20.c: 34: _delay((unsigned long)((1)*(8000000/4000000.0)));
+"34
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 35: TRISCbits.TRISC5 = 1;
+"35
 [e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 36: _delay((unsigned long)((60)*(8000000/4000000.0)));
+"36
+[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+"37
+}
+[; ;ds18b20.c: 37: }
+[e $U 143  ]
+"38
+[e :U 142 ]
+[; ;ds18b20.c: 38: else
+[; ;ds18b20.c: 39: {
+"39
+{
+[; ;ds18b20.c: 41: TRISCbits.TRISC5 = 0;
+"41
+[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
+[; ;ds18b20.c: 42: RC5 = 0;
+"42
+[e = _RC5 -> -> 0 `i `b ]
+[; ;ds18b20.c: 43: _delay((unsigned long)((60)*(8000000/4000000.0)));
 "43
+[e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 44: TRISCbits.TRISC5 = 1;
+"44
+[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+"45
 }
 [e :U 143 ]
-"44
+"46
 }
-"26
+"28
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 139  ]
 [e :U 140 ]
-"44
+"46
 }
-[; ;ds18b20.c: 43: }
-[; ;ds18b20.c: 44: }
 [; ;ds18b20.c: 45: }
-"45
+[; ;ds18b20.c: 46: }
+[; ;ds18b20.c: 47: }
+"47
 [e :UE 138 ]
 }
-"48
+"50
 [v _readDS18B20 `(uc ~T0 @X0 1 ef ]
 {
-[; ;ds18b20.c: 48: char readDS18B20 (){
+[; ;ds18b20.c: 50: char readDS18B20 (){
 [e :U _readDS18B20 ]
 [f ]
-"49
+"51
 [v _i `uc ~T0 @X0 1 a ]
 [v _result `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 49: char i,result = 0;
+[; ;ds18b20.c: 51: char i,result = 0;
 [e = _result -> -> 0 `i `uc ]
-[; ;ds18b20.c: 50: TRISCbits.TRISC5 = 1;
-"50
-[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 52: for(i = 0; i < 8; i++)
+[; ;ds18b20.c: 52: TRISCbits.TRISC5 = 1;
 "52
+[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 54: for(i = 0; i < 8; i++)
+"54
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 145  ]
 [e $U 146  ]
-"53
-[e :U 145 ]
-[; ;ds18b20.c: 53: {
-{
-[; ;ds18b20.c: 54: TRISCbits.TRISC5 = 0;
-"54
-[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 55: RC5 = 0;
 "55
-[e = _RC5 -> -> 0 `i `b ]
-[; ;ds18b20.c: 56: _delay((unsigned long)((2)*(8000000/4000000.0)));
+[e :U 145 ]
+[; ;ds18b20.c: 55: {
+{
+[; ;ds18b20.c: 56: TRISCbits.TRISC5 = 0;
 "56
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;ds18b20.c: 57: TRISCbits.TRISC5 = 1;
+[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
+[; ;ds18b20.c: 57: RC5 = 0;
 "57
-[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 59: if(RC5 != 0) result |= 1<<i;
+[e = _RC5 -> -> 0 `i `b ]
+[; ;ds18b20.c: 58: _delay((unsigned long)((2)*(8000000/4000000.0)));
+"58
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;ds18b20.c: 59: TRISCbits.TRISC5 = 1;
 "59
+[e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 61: if(RC5 != 0) result |= 1<<i;
+"61
 [e $ ! != -> _RC5 `i -> 0 `i 148  ]
 [e =| _result -> << -> 1 `i _i `uc ]
 [e :U 148 ]
-[; ;ds18b20.c: 61: _delay((unsigned long)((60)*(8000000/4000000.0)));
-"61
+[; ;ds18b20.c: 63: _delay((unsigned long)((60)*(8000000/4000000.0)));
+"63
 [e ( __delay (1 -> * -> -> 60 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"62
+"64
 }
-"52
+"54
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 145  ]
 [e :U 146 ]
-"62
+"64
 }
-[; ;ds18b20.c: 62: }
-[; ;ds18b20.c: 63: return result;
-"63
+[; ;ds18b20.c: 64: }
+[; ;ds18b20.c: 65: return result;
+"65
 [e ) _result ]
 [e $UE 144  ]
-[; ;ds18b20.c: 64: }
-"64
+[; ;ds18b20.c: 66: }
+"66
 [e :UE 144 ]
 }
-"67
+"69
 [v _getTempDS18B20 `(f ~T0 @X0 1 ef ]
 {
-[; ;ds18b20.c: 67: float getTempDS18B20(){
+[; ;ds18b20.c: 69: float getTempDS18B20(){
 [e :U _getTempDS18B20 ]
 [f ]
-"68
+"70
 [v _temp `ui ~T0 @X0 1 a ]
-"69
+"71
 [v _tempL `us ~T0 @X0 1 a ]
 [v _tempH `us ~T0 @X0 1 a ]
-"70
-[v _temperatura `f ~T0 @X0 1 a ]
-[; ;ds18b20.c: 68: unsigned temp;
-[; ;ds18b20.c: 69: unsigned short tempL, tempH;
-[; ;ds18b20.c: 70: float temperatura;
-[; ;ds18b20.c: 71: if(!resetDS18B20())
-"71
-[e $ ! ! != -> ( _resetDS18B20 ..  `i -> -> -> 0 `i `uc `i 150  ]
-[; ;ds18b20.c: 72: {
 "72
-{
-[; ;ds18b20.c: 73: writeDS18B20(0xCC);
+[v _temperatura `f ~T0 @X0 1 a ]
+[; ;ds18b20.c: 70: unsigned temp;
+[; ;ds18b20.c: 71: unsigned short tempL, tempH;
+[; ;ds18b20.c: 72: float temperatura;
+[; ;ds18b20.c: 73: if(!resetDS18B20())
 "73
-[e ( _writeDS18B20 (1 -> -> 204 `i `uc ]
-[; ;ds18b20.c: 74: writeDS18B20(0x44);
+[e $ ! ! != -> ( _resetDS18B20 ..  `i -> -> -> 0 `i `uc `i 150  ]
+[; ;ds18b20.c: 74: {
 "74
-[e ( _writeDS18B20 (1 -> -> 68 `i `uc ]
-[; ;ds18b20.c: 75: _delay((unsigned long)((750)*(8000000/4000.0)));
+{
+[; ;ds18b20.c: 75: writeDS18B20(0xCC);
 "75
-[e ( __delay (1 -> * -> -> 750 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;ds18b20.c: 77: resetDS18B20();
-"77
-[e ( _resetDS18B20 ..  ]
-[; ;ds18b20.c: 78: writeDS18B20(0xCC);
-"78
 [e ( _writeDS18B20 (1 -> -> 204 `i `uc ]
-[; ;ds18b20.c: 79: writeDS18B20(0xBE);
+[; ;ds18b20.c: 76: writeDS18B20(0x44);
+"76
+[e ( _writeDS18B20 (1 -> -> 68 `i `uc ]
+[; ;ds18b20.c: 77: _delay((unsigned long)((750)*(8000000/4000.0)));
+"77
+[e ( __delay (1 -> * -> -> 750 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;ds18b20.c: 79: resetDS18B20();
 "79
-[e ( _writeDS18B20 (1 -> -> 190 `i `uc ]
-[; ;ds18b20.c: 81: tempL = readDS18B20();
+[e ( _resetDS18B20 ..  ]
+[; ;ds18b20.c: 80: writeDS18B20(0xCC);
+"80
+[e ( _writeDS18B20 (1 -> -> 204 `i `uc ]
+[; ;ds18b20.c: 81: writeDS18B20(0xBE);
 "81
+[e ( _writeDS18B20 (1 -> -> 190 `i `uc ]
+[; ;ds18b20.c: 83: tempL = readDS18B20();
+"83
 [e = _tempL -> ( _readDS18B20 ..  `us ]
-[; ;ds18b20.c: 82: tempH = readDS18B20();
-"82
-[e = _tempH -> ( _readDS18B20 ..  `us ]
-[; ;ds18b20.c: 84: temp = ((unsigned int)tempH << 8) + (unsigned int)tempL;
+[; ;ds18b20.c: 84: tempH = readDS18B20();
 "84
-[e = _temp + << -> _tempH `ui -> 8 `i -> _tempL `ui ]
-[; ;ds18b20.c: 85: temperatura = (float)temp * 0.0625 - 0.3;
-"85
-[e = _temperatura -> - * -> -> _temp `f `d .0.0625 .0.3 `f ]
+[e = _tempH -> ( _readDS18B20 ..  `us ]
+[; ;ds18b20.c: 86: temp = ((unsigned int)tempH << 8) + (unsigned int)tempL;
 "86
+[e = _temp + << -> _tempH `ui -> 8 `i -> _tempL `ui ]
+[; ;ds18b20.c: 87: temperatura = (float)temp * 0.0625 - 0.3;
+"87
+[e = _temperatura -> - * -> -> _temp `f `d .0.0625 .0.3 `f ]
+"88
 }
 [e :U 150 ]
-[; ;ds18b20.c: 86: }
-[; ;ds18b20.c: 87: return temperatura;
-"87
+[; ;ds18b20.c: 88: }
+[; ;ds18b20.c: 89: return temperatura;
+"89
 [e ) _temperatura ]
 [e $UE 149  ]
-[; ;ds18b20.c: 88: }
-"88
+[; ;ds18b20.c: 90: }
+"90
 [e :UE 149 ]
 }

@@ -1682,8 +1682,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart.h: 20: void UARTWriteString(char *);
 "43 main.c
 [p x FOSC=HS ]
-"44
-[p x WDTE=ON ]
 "45
 [p x PWRTE=OFF ]
 "46
@@ -1715,9 +1713,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 "59
 [v _measure `uc ~T0 @X0 1 e ]
 [v _disp_count `uc ~T0 @X0 1 e ]
+[v _measure_count `uc ~T0 @X0 1 e ]
 [v _disp `uc ~T0 @X0 1 e ]
 [v _measure_co2 `uc ~T0 @X0 1 e ]
-[; ;main.c: 59: unsigned char measure , disp_count, disp, measure_co2;
+[; ;main.c: 59: unsigned char measure , disp_count, measure_count, disp, measure_co2;
 "60
 [v _humidity `uc ~T0 @X0 -> 5 `i e ]
 [i _humidity
@@ -1763,9 +1762,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "68
 [v _tmr_count `ui ~T0 @X0 1 e ]
 [; ;main.c: 68: unsigned int tmr_count;
-[v F1899 `(v ~T0 @X0 1 tf ]
+[v F1900 `(v ~T0 @X0 1 tf ]
 "70
-[v _isr `IF1899 ~T0 @X0 1 s ]
+[v _isr `IF1900 ~T0 @X0 1 s ]
 {
 [; ;main.c: 70: static void interrupt isr(){
 [e :U _isr ]
@@ -1792,9 +1791,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 79: PIR1bits.TMR1IF = 0;
 "79
 [e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 92: if(tmr_count == 500)
+[; ;main.c: 92: if(tmr_count == 300)
 "92
-[e $ ! == _tmr_count -> -> 500 `i `ui 142  ]
+[e $ ! == _tmr_count -> -> 300 `i `ui 142  ]
 [; ;main.c: 93: {
 "93
 {
@@ -1826,9 +1825,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 100: }
 [; ;main.c: 101: tmr_count++;
 [e ++ _tmr_count -> -> 1 `i `ui ]
-[; ;main.c: 102: tmr_co2++;
-"102
-[e ++ _tmr_co2 -> -> 1 `i `ui ]
 [; ;main.c: 104: TMR1H = 0xD8;
 "104
 [e = _TMR1H -> -> 216 `i `uc ]
@@ -1847,1176 +1843,1275 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 109: {
 [e :U _initWDT ]
 [f ]
-[; ;main.c: 110: WDTCONbits.WDTPS = 0b1000;
+[; ;main.c: 110: WDTCONbits.SWDTEN = 1;
 "110
-[e = . . _WDTCONbits 0 1 -> -> 8 `i `uc ]
-[; ;main.c: 111: }
+[e = . . _WDTCONbits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 111: WDTCONbits.WDTPS = 0b0110;
 "111
+[e = . . _WDTCONbits 0 1 -> -> 6 `i `uc ]
+[; ;main.c: 112: }
+"112
 [e :UE 145 ]
 }
-"113
+"114
 [v _IOPinsConfig `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 113: void IOPinsConfig(){
+[; ;main.c: 114: void IOPinsConfig(){
 [e :U _IOPinsConfig ]
 [f ]
-[; ;main.c: 114: TRISA |= 0b00011110;
-"114
-[e =| _TRISA -> -> 30 `i `uc ]
-[; ;main.c: 115: TRISA &= 0b11011111;
+[; ;main.c: 115: TRISA |= 0b00011110;
 "115
-[e =& _TRISA -> -> 223 `i `uc ]
-[; ;main.c: 116: ANSEL &= 0b00000001;
+[e =| _TRISA -> -> 30 `i `uc ]
+[; ;main.c: 116: TRISA &= 0b11011111;
 "116
-[e =& _ANSEL -> -> 1 `i `uc ]
-[; ;main.c: 117: TRISC &= 0b10000000;
+[e =& _TRISA -> -> 223 `i `uc ]
+[; ;main.c: 117: ANSEL &= 0b00000001;
 "117
-[e =& _TRISC -> -> 128 `i `uc ]
-[; ;main.c: 118: TRISC |= 0b10000000;
+[e =& _ANSEL -> -> 1 `i `uc ]
+[; ;main.c: 118: TRISC &= 0b10000000;
 "118
-[e =| _TRISC -> -> 128 `i `uc ]
-[; ;main.c: 119: }
+[e =& _TRISC -> -> 128 `i `uc ]
+[; ;main.c: 119: TRISC |= 0b10000000;
 "119
+[e =| _TRISC -> -> 128 `i `uc ]
+[; ;main.c: 120: }
+"120
 [e :UE 146 ]
 }
-"121
+"122
 [v _IOPinsInit `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 121: void IOPinsInit(){
+[; ;main.c: 122: void IOPinsInit(){
 [e :U _IOPinsInit ]
 [f ]
-[; ;main.c: 122: RC4 = 0;
-"122
-[e = _RC4 -> -> 0 `i `b ]
-[; ;main.c: 123: RC1 = 0;
+[; ;main.c: 123: RC4 = 0;
 "123
-[e = _RC1 -> -> 0 `i `b ]
-[; ;main.c: 124: RC0 = 0;
+[e = _RC4 -> -> 0 `i `b ]
+[; ;main.c: 124: RC1 = 0;
 "124
-[e = _RC0 -> -> 0 `i `b ]
-[; ;main.c: 125: RC3 = 0;
+[e = _RC1 -> -> 0 `i `b ]
+[; ;main.c: 125: RC0 = 0;
 "125
-[e = _RC3 -> -> 0 `i `b ]
-[; ;main.c: 126: RA5 = 0;
+[e = _RC0 -> -> 0 `i `b ]
+[; ;main.c: 126: RC3 = 0;
 "126
-[e = _RA5 -> -> 0 `i `b ]
-[; ;main.c: 127: }
+[e = _RC3 -> -> 0 `i `b ]
+[; ;main.c: 127: RA5 = 0;
 "127
+[e = _RA5 -> -> 0 `i `b ]
+[; ;main.c: 128: }
+"128
 [e :UE 147 ]
 }
-"129
+"130
 [v _displayAirTemp `(v ~T0 @X0 1 ef1`f ]
 {
-[; ;main.c: 129: void displayAirTemp(float temp2){
+[; ;main.c: 130: void displayAirTemp(float temp2){
 [e :U _displayAirTemp ]
 [v _temp2 `f ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 130: sprintf(temperature, " %.1f", temp2);
-"130
-[e ( _sprintf (1 , (. , &U _temperature :s 1C -> _temp2 `d ]
-[; ;main.c: 131: LcdSetCursor(1,1);
+[; ;main.c: 131: sprintf(temperature, " %.1f", temp2);
 "131
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 132: LcdWriteString((char *)"Air temperature ");
+[e ( _sprintf (1 , (. , &U _temperature :s 1C -> _temp2 `d ]
+[; ;main.c: 132: LcdSetCursor(1,1);
 "132
-[e ( _LcdWriteString (1 -> :s 2C `*uc ]
-[; ;main.c: 133: LcdSetCursor(2,1);
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 133: LcdWriteString((char *)"Air temperature ");
 "133
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 134: LcdWriteString(temperature);
+[e ( _LcdWriteString (1 -> :s 2C `*uc ]
+[; ;main.c: 134: LcdSetCursor(2,1);
 "134
-[e ( _LcdWriteString (1 &U _temperature ]
-[; ;main.c: 135: LcdSetCursor(2,6);
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 135: LcdWriteString(temperature);
 "135
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 136: LcdWriteString((char *)" deg        ");
+[e ( _LcdWriteString (1 &U _temperature ]
+[; ;main.c: 136: LcdSetCursor(2,6);
 "136
-[e ( _LcdWriteString (1 -> :s 3C `*uc ]
-[; ;main.c: 137: }
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 137: LcdWriteString((char *)" deg        ");
 "137
+[e ( _LcdWriteString (1 -> :s 3C `*uc ]
+[; ;main.c: 138: }
+"138
 [e :UE 148 ]
 }
-"139
+"140
 [v _displayAirMoist `(v ~T0 @X0 1 ef1`f ]
 {
-[; ;main.c: 139: void displayAirMoist(float humi2){
+[; ;main.c: 140: void displayAirMoist(float humi2){
 [e :U _displayAirMoist ]
 [v _humi2 `f ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 140: sprintf(humidity, " %.1f", humi2);
-"140
-[e ( _sprintf (1 , (. , &U _humidity :s 4C -> _humi2 `d ]
-[; ;main.c: 141: LcdSetCursor(1,1);
+[; ;main.c: 141: sprintf(humidity, " %.1f", humi2);
 "141
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 142: LcdWriteString((char *)"Air moist       ");
+[e ( _sprintf (1 , (. , &U _humidity :s 4C -> _humi2 `d ]
+[; ;main.c: 142: LcdSetCursor(1,1);
 "142
-[e ( _LcdWriteString (1 -> :s 5C `*uc ]
-[; ;main.c: 143: LcdSetCursor(2,1);
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 143: LcdWriteString((char *)"Air moist       ");
 "143
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 144: LcdWriteString(humidity);
+[e ( _LcdWriteString (1 -> :s 5C `*uc ]
+[; ;main.c: 144: LcdSetCursor(2,1);
 "144
-[e ( _LcdWriteString (1 &U _humidity ]
-[; ;main.c: 145: LcdSetCursor(2,6);
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 145: LcdWriteString(humidity);
 "145
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 146: LcdWriteString((char *)" %          ");
+[e ( _LcdWriteString (1 &U _humidity ]
+[; ;main.c: 146: LcdSetCursor(2,6);
 "146
-[e ( _LcdWriteString (1 -> :s 6C `*uc ]
-[; ;main.c: 147: }
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 147: LcdWriteString((char *)" %          ");
 "147
+[e ( _LcdWriteString (1 -> :s 6C `*uc ]
+[; ;main.c: 148: }
+"148
 [e :UE 149 ]
 }
-"149
+"150
 [v _displayCO2 `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;main.c: 149: void displayCO2(unsigned int co22){
+[; ;main.c: 150: void displayCO2(unsigned int co22){
 [e :U _displayCO2 ]
 [v _co22 `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 150: LcdSetCursor(1,1);
-"150
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 151: LcdWriteString((char *)"CO2 in air      ");
+[; ;main.c: 151: LcdSetCursor(1,1);
 "151
-[e ( _LcdWriteString (1 -> :s 7C `*uc ]
-[; ;main.c: 152: if(measure_co2)
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 152: LcdWriteString((char *)"CO2 in air      ");
 "152
-[e $ ! != -> _measure_co2 `i -> -> -> 0 `i `uc `i 151  ]
-[; ;main.c: 153: {
+[e ( _LcdWriteString (1 -> :s 7C `*uc ]
+[; ;main.c: 153: if(measure_co2)
 "153
-{
-[; ;main.c: 154: LcdWriteInt(co22,2,1);
+[e $ ! != -> _measure_co2 `i -> -> -> 0 `i `uc `i 151  ]
+[; ;main.c: 154: {
 "154
-[e ( _LcdWriteInt (3 , , _co22 -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 155: LcdSetCursor(2,5);
-"155
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
-[; ;main.c: 156: LcdWriteString((char *)" ppm        ");
-"156
-[e ( _LcdWriteString (1 -> :s 8C `*uc ]
-"157
-}
-[; ;main.c: 157: }
-[e $U 152  ]
-"158
-[e :U 151 ]
-[; ;main.c: 158: else
-[; ;main.c: 159: {
-"159
 {
-[; ;main.c: 160: LcdSetCursor(2,1);
+[; ;main.c: 155: LcdWriteInt(co22,2,1);
+"155
+[e ( _LcdWriteInt (3 , , _co22 -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 156: LcdSetCursor(2,5);
+"156
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
+[; ;main.c: 157: LcdWriteString((char *)" ppm        ");
+"157
+[e ( _LcdWriteString (1 -> :s 8C `*uc ]
+"158
+}
+[; ;main.c: 158: }
+[e $U 152  ]
+"159
+[e :U 151 ]
+[; ;main.c: 159: else
+[; ;main.c: 160: {
 "160
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 161: LcdWriteString((char *)"Measuring...    ");
+{
+[; ;main.c: 161: LcdSetCursor(2,1);
 "161
-[e ( _LcdWriteString (1 -> :s 9C `*uc ]
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 162: LcdWriteString((char *)"Measuring...    ");
 "162
+[e ( _LcdWriteString (1 -> :s 9C `*uc ]
+"163
 }
 [e :U 152 ]
-[; ;main.c: 162: }
 [; ;main.c: 163: }
-"163
+[; ;main.c: 164: }
+"164
 [e :UE 150 ]
 }
-"165
+"166
 [v _displaySoilTemp `(v ~T0 @X0 1 ef1`f ]
 {
-[; ;main.c: 165: void displaySoilTemp(float t2){
+[; ;main.c: 166: void displaySoilTemp(float t2){
 [e :U _displaySoilTemp ]
 [v _t2 `f ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 166: sprintf(temperature, " %.1f", t2);
-"166
-[e ( _sprintf (1 , (. , &U _temperature :s 10C -> _t2 `d ]
-[; ;main.c: 167: LcdSetCursor(1,1);
+[; ;main.c: 167: sprintf(temperature, " %.1f", t2);
 "167
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 168: LcdWriteString((char *)"Soil temperature");
+[e ( _sprintf (1 , (. , &U _temperature :s 10C -> _t2 `d ]
+[; ;main.c: 168: LcdSetCursor(1,1);
 "168
-[e ( _LcdWriteString (1 -> :s 11C `*uc ]
-[; ;main.c: 169: LcdSetCursor(2,1);
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 169: LcdWriteString((char *)"Soil temperature");
 "169
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 170: LcdWriteString(temperature);
+[e ( _LcdWriteString (1 -> :s 11C `*uc ]
+[; ;main.c: 170: LcdSetCursor(2,1);
 "170
-[e ( _LcdWriteString (1 &U _temperature ]
-[; ;main.c: 171: LcdSetCursor(2,6);
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 171: LcdWriteString(temperature);
 "171
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 172: LcdWriteString((char *)" deg        ");
+[e ( _LcdWriteString (1 &U _temperature ]
+[; ;main.c: 172: LcdSetCursor(2,6);
 "172
-[e ( _LcdWriteString (1 -> :s 12C `*uc ]
-[; ;main.c: 173: }
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 173: LcdWriteString((char *)" deg        ");
 "173
+[e ( _LcdWriteString (1 -> :s 12C `*uc ]
+[; ;main.c: 174: }
+"174
 [e :UE 153 ]
 }
-"175
+"176
 [v _resetValues `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 175: void resetValues(){
+[; ;main.c: 176: void resetValues(){
 [e :U _resetValues ]
 [f ]
-[; ;main.c: 176: ok_flag = 0;
-"176
-[e = _ok_flag -> -> 0 `i `uc ]
-[; ;main.c: 177: menu_flag = 0;
+[; ;main.c: 177: ok_flag = 0;
 "177
-[e = _menu_flag -> -> 0 `i `uc ]
-[; ;main.c: 178: plus_flag = 0;
+[e = _ok_flag -> -> 0 `i `uc ]
+[; ;main.c: 178: menu_flag = 0;
 "178
-[e = _plus_flag -> -> 0 `i `uc ]
-[; ;main.c: 179: minus_flag = 0;
+[e = _menu_flag -> -> 0 `i `uc ]
+[; ;main.c: 179: plus_flag = 0;
 "179
-[e = _minus_flag -> -> 0 `i `uc ]
-[; ;main.c: 180: tmr_count = 0;
+[e = _plus_flag -> -> 0 `i `uc ]
+[; ;main.c: 180: minus_flag = 0;
 "180
-[e = _tmr_count -> -> 0 `i `ui ]
-[; ;main.c: 181: measure = 0;
+[e = _minus_flag -> -> 0 `i `uc ]
+[; ;main.c: 181: tmr_count = 0;
 "181
-[e = _measure -> -> 0 `i `uc ]
-[; ;main.c: 182: disp_count = 0;
+[e = _tmr_count -> -> 0 `i `ui ]
+[; ;main.c: 182: measure = 0;
 "182
-[e = _disp_count -> -> 0 `i `uc ]
-[; ;main.c: 183: disp = 1;
+[e = _measure -> -> 0 `i `uc ]
+[; ;main.c: 183: disp_count = 0;
 "183
+[e = _disp_count -> -> 0 `i `uc ]
+[; ;main.c: 184: measure_count = 0;
+"184
+[e = _measure_count -> -> 0 `i `uc ]
+[; ;main.c: 185: disp = 1;
+"185
 [e = _disp -> -> 1 `i `uc ]
-[; ;main.c: 187: ok_flag_humi = 0;
-"187
-[e = _ok_flag_humi -> -> 0 `i `uc ]
-[; ;main.c: 188: ok_flag_co2 = 0;
-"188
-[e = _ok_flag_co2 -> -> 0 `i `uc ]
-[; ;main.c: 189: tmr_co2 = 0;
+[; ;main.c: 189: ok_flag_humi = 0;
 "189
-[e = _tmr_co2 -> -> 0 `i `ui ]
-[; ;main.c: 190: measure_co2 = 1;
+[e = _ok_flag_humi -> -> 0 `i `uc ]
+[; ;main.c: 190: ok_flag_co2 = 0;
 "190
-[e = _measure_co2 -> -> 1 `i `uc ]
-[; ;main.c: 191: co2 = 0;
+[e = _ok_flag_co2 -> -> 0 `i `uc ]
+[; ;main.c: 191: tmr_co2 = 0;
 "191
-[e = _co2 -> -> 0 `i `ui ]
-[; ;main.c: 192: }
+[e = _tmr_co2 -> -> 0 `i `ui ]
+[; ;main.c: 192: measure_co2 = 1;
 "192
+[e = _measure_co2 -> -> 1 `i `uc ]
+[; ;main.c: 193: co2 = 0;
+"193
+[e = _co2 -> -> 0 `i `ui ]
+[; ;main.c: 194: }
+"194
 [e :UE 154 ]
 }
-"194
+"196
 [v _initTimer0 `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 194: void initTimer0(){
+[; ;main.c: 196: void initTimer0(){
 [e :U _initTimer0 ]
 [f ]
-[; ;main.c: 195: OPTION_REGbits.T0CS = 0;
-"195
-[e = . . _OPTION_REGbits 0 3 -> -> 0 `i `uc ]
-[; ;main.c: 196: OPTION_REGbits.PSA = 1;
-"196
-[e = . . _OPTION_REGbits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 197: OPTION_REG |= 0b00000111;
+[; ;main.c: 197: OPTION_REGbits.T0CS = 0;
 "197
-[e =| _OPTION_REG -> -> 7 `i `uc ]
-[; ;main.c: 198: INTCONbits.GIE = 1;
+[e = . . _OPTION_REGbits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 198: OPTION_REGbits.PSA = 1;
 "198
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 199: TMR0 = 0;
+[e = . . _OPTION_REGbits 0 1 -> -> 1 `i `uc ]
+[; ;main.c: 199: OPTION_REG |= 0b00000111;
 "199
-[e = _TMR0 -> -> 0 `i `uc ]
-[; ;main.c: 200: INTCONbits.T0IE = 1;
+[e =| _OPTION_REG -> -> 7 `i `uc ]
+[; ;main.c: 200: INTCONbits.GIE = 1;
 "200
-[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 201: }
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 201: TMR0 = 0;
 "201
+[e = _TMR0 -> -> 0 `i `uc ]
+[; ;main.c: 202: INTCONbits.T0IE = 1;
+"202
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+[; ;main.c: 203: }
+"203
 [e :UE 155 ]
 }
-"203
+"205
 [v _initTimer1 `(v ~T0 @X0 1 ef ]
-"204
+"206
 {
-[; ;main.c: 203: void initTimer1()
-[; ;main.c: 204: {
+[; ;main.c: 205: void initTimer1()
+[; ;main.c: 206: {
 [e :U _initTimer1 ]
 [f ]
-[; ;main.c: 205: T1CONbits.T1CKPS = 0b01;
-"205
-[e = . . _T1CONbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 206: TMR1H = 0xD8;
-"206
-[e = _TMR1H -> -> 216 `i `uc ]
-[; ;main.c: 207: TMR1L = 0xEF;
+[; ;main.c: 207: T1CONbits.T1CKPS = 0b01;
 "207
-[e = _TMR1L -> -> 239 `i `uc ]
-[; ;main.c: 208: PIE1bits.TMR1IE = 1;
+[e = . . _T1CONbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 208: TMR1H = 0xD8;
 "208
-[e = . . _PIE1bits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 209: INTCONbits.GIE = 1;
+[e = _TMR1H -> -> 216 `i `uc ]
+[; ;main.c: 209: TMR1L = 0xEF;
 "209
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 210: T1CONbits.TMR1ON = 1;
+[e = _TMR1L -> -> 239 `i `uc ]
+[; ;main.c: 210: PIE1bits.TMR1IE = 1;
 "210
-[e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 211: }
+[e = . . _PIE1bits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 211: INTCONbits.GIE = 1;
 "211
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 212: T1CONbits.TMR1ON = 1;
+"212
+[e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 213: }
+"213
 [e :UE 156 ]
 }
-"213
+"215
 [v _regulacija `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 213: void regulacija(){
+[; ;main.c: 215: void regulacija(){
 [e :U _regulacija ]
 [f ]
-[; ;main.c: 215: if(RC4)
-"215
-[e $ ! _RC4 158  ]
-[; ;main.c: 216: {
-"216
-{
-[; ;main.c: 217: if(temp > zeljena_temperatura)
+[; ;main.c: 217: if(RC4)
 "217
-[e $ ! > _temp _zeljena_temperatura 159  ]
+[e $ ! _RC4 158  ]
 [; ;main.c: 218: {
 "218
 {
-[; ;main.c: 219: RC4 = 0;
+[; ;main.c: 219: if(temp > zeljena_temperatura)
 "219
-[e = _RC4 -> -> 0 `i `b ]
+[e $ ! > _temp _zeljena_temperatura 159  ]
+[; ;main.c: 220: {
 "220
+{
+[; ;main.c: 221: RC4 = 0;
+"221
+[e = _RC4 -> -> 0 `i `b ]
+"222
 }
 [e :U 159 ]
-"221
-}
-[; ;main.c: 220: }
-[; ;main.c: 221: }
-[e $U 160  ]
-"222
-[e :U 158 ]
-[; ;main.c: 222: else if(temp < (zeljena_temperatura - 0.4))
-[e $ ! < -> _temp `d - -> _zeljena_temperatura `d .0.4 161  ]
-[; ;main.c: 223: {
 "223
-{
-[; ;main.c: 224: RC4 = 1;
+}
+[; ;main.c: 222: }
+[; ;main.c: 223: }
+[e $U 160  ]
 "224
-[e = _RC4 -> -> 1 `i `b ]
+[e :U 158 ]
+[; ;main.c: 224: else if(temp < (zeljena_temperatura - 0.4))
+[e $ ! < -> _temp `d - -> _zeljena_temperatura `d .0.4 161  ]
+[; ;main.c: 225: {
 "225
+{
+[; ;main.c: 226: RC4 = 1;
+"226
+[e = _RC4 -> -> 1 `i `b ]
+"227
 }
 [e :U 161 ]
-"227
-[e :U 160 ]
-[; ;main.c: 225: }
-[; ;main.c: 227: if(RC3)
-[e $ ! _RC3 162  ]
-[; ;main.c: 228: {
-"228
-{
-[; ;main.c: 229: if(temp < zeljena_temperatura)
 "229
-[e $ ! < _temp _zeljena_temperatura 163  ]
+[e :U 160 ]
+[; ;main.c: 227: }
+[; ;main.c: 229: if(RC3)
+[e $ ! _RC3 162  ]
 [; ;main.c: 230: {
 "230
 {
-[; ;main.c: 231: RC3 = 0;
+[; ;main.c: 231: if(temp < zeljena_temperatura)
 "231
-[e = _RC3 -> -> 0 `i `b ]
+[e $ ! < _temp _zeljena_temperatura 163  ]
+[; ;main.c: 232: {
 "232
+{
+[; ;main.c: 233: RC3 = 0;
+"233
+[e = _RC3 -> -> 0 `i `b ]
+"234
 }
 [e :U 163 ]
-"233
-}
-[; ;main.c: 232: }
-[; ;main.c: 233: }
-[e $U 164  ]
-"234
-[e :U 162 ]
-[; ;main.c: 234: else if(temp > (zeljena_temperatura + 0.4))
-[e $ ! > -> _temp `d + -> _zeljena_temperatura `d .0.4 165  ]
-[; ;main.c: 235: {
 "235
-{
-[; ;main.c: 236: RC3 = 1;
+}
+[; ;main.c: 234: }
+[; ;main.c: 235: }
+[e $U 164  ]
 "236
-[e = _RC3 -> -> 1 `i `b ]
+[e :U 162 ]
+[; ;main.c: 236: else if(temp > (zeljena_temperatura + 0.4))
+[e $ ! > -> _temp `d + -> _zeljena_temperatura `d .0.4 165  ]
+[; ;main.c: 237: {
 "237
+{
+[; ;main.c: 238: RC3 = 1;
+"238
+[e = _RC3 -> -> 1 `i `b ]
+"239
 }
 [e :U 165 ]
-"242
-[e :U 164 ]
-[; ;main.c: 237: }
-[; ;main.c: 242: if(RC1)
-[e $ ! _RC1 166  ]
-[; ;main.c: 243: {
-"243
-{
-[; ;main.c: 244: if(humi > (zeljena_vlaznost + 2.5))
 "244
-[e $ ! > -> _humi `d + -> _zeljena_vlaznost `d .2.5 167  ]
+[e :U 164 ]
+[; ;main.c: 239: }
+[; ;main.c: 244: if(RC1)
+[e $ ! _RC1 166  ]
 [; ;main.c: 245: {
 "245
 {
-[; ;main.c: 246: RC1 = 0;
+[; ;main.c: 246: if(humi > (zeljena_vlaznost + 2.5))
 "246
-[e = _RC1 -> -> 0 `i `b ]
+[e $ ! > -> _humi `d + -> _zeljena_vlaznost `d .2.5 167  ]
+[; ;main.c: 247: {
 "247
+{
+[; ;main.c: 248: RC1 = 0;
+"248
+[e = _RC1 -> -> 0 `i `b ]
+"249
 }
 [e :U 167 ]
-"248
-}
-[; ;main.c: 247: }
-[; ;main.c: 248: }
-[e $U 168  ]
 "250
-[e :U 166 ]
-[; ;main.c: 250: else if(humi < (zeljena_vlaznost - 2.5))
-[e $ ! < -> _humi `d - -> _zeljena_vlaznost `d .2.5 169  ]
-[; ;main.c: 251: {
-"251
-{
-[; ;main.c: 252: RC1 = 1;
+}
+[; ;main.c: 249: }
+[; ;main.c: 250: }
+[e $U 168  ]
 "252
-[e = _RC1 -> -> 1 `i `b ]
+[e :U 166 ]
+[; ;main.c: 252: else if(humi < (zeljena_vlaznost - 2.5))
+[e $ ! < -> _humi `d - -> _zeljena_vlaznost `d .2.5 169  ]
+[; ;main.c: 253: {
 "253
+{
+[; ;main.c: 254: RC1 = 1;
+"254
+[e = _RC1 -> -> 1 `i `b ]
+"255
 }
 [e :U 169 ]
-"257
-[e :U 168 ]
-[; ;main.c: 253: }
-[; ;main.c: 257: if(measure_co2)
-[e $ ! != -> _measure_co2 `i -> -> -> 0 `i `uc `i 170  ]
-[; ;main.c: 258: {
-"258
-{
-[; ;main.c: 259: if (RC0)
 "259
-[e $ ! _RC0 171  ]
+[e :U 168 ]
+[; ;main.c: 255: }
+[; ;main.c: 259: if(measure_co2)
+[e $ ! != -> _measure_co2 `i -> -> -> 0 `i `uc `i 170  ]
 [; ;main.c: 260: {
 "260
 {
-[; ;main.c: 261: if(co2 < (zeljena_co2 - 250))
+[; ;main.c: 261: if (RC0)
 "261
-[e $ ! < _co2 -> - _zeljena_co2 -> 250 `i `ui 172  ]
+[e $ ! _RC0 171  ]
 [; ;main.c: 262: {
 "262
 {
-[; ;main.c: 263: RC0 = 0;
+[; ;main.c: 263: if(co2 < (zeljena_co2 - 250))
 "263
-[e = _RC0 -> -> 0 `i `b ]
+[e $ ! < _co2 -> - _zeljena_co2 -> 250 `i `ui 172  ]
+[; ;main.c: 264: {
 "264
+{
+[; ;main.c: 265: RC0 = 0;
+"265
+[e = _RC0 -> -> 0 `i `b ]
+"266
 }
 [e :U 172 ]
-"265
-}
-[; ;main.c: 264: }
-[; ;main.c: 265: }
-[e $U 173  ]
 "267
-[e :U 171 ]
-[; ;main.c: 267: else if(co2 > (zeljena_co2 + 250))
-[e $ ! > _co2 -> + _zeljena_co2 -> 250 `i `ui 174  ]
-[; ;main.c: 268: {
-"268
-{
-[; ;main.c: 269: RC0 = 1;
+}
+[; ;main.c: 266: }
+[; ;main.c: 267: }
+[e $U 173  ]
 "269
-[e = _RC0 -> -> 1 `i `b ]
+[e :U 171 ]
+[; ;main.c: 269: else if(co2 > (zeljena_co2 + 250))
+[e $ ! > _co2 -> + _zeljena_co2 -> 250 `i `ui 174  ]
+[; ;main.c: 270: {
 "270
+{
+[; ;main.c: 271: RC0 = 1;
+"271
+[e = _RC0 -> -> 1 `i `b ]
+"272
 }
 [e :U 174 ]
-"271
+"273
 [e :U 173 ]
 }
 [e :U 170 ]
-[; ;main.c: 270: }
-[; ;main.c: 271: }
 [; ;main.c: 272: }
-"272
+[; ;main.c: 273: }
+[; ;main.c: 274: }
+"274
 [e :UE 157 ]
 }
-"274
-[v _manage_buttons `(v ~T0 @X0 1 ef ]
-"275
-{
-[; ;main.c: 274: void manage_buttons()
-[; ;main.c: 275: {
-[e :U _manage_buttons ]
-[f ]
-[; ;main.c: 276: if(RA2)
 "276
-[e $ ! _RA2 176  ]
-[; ;main.c: 277: {
+[v _manage_buttons `(v ~T0 @X0 1 ef ]
 "277
 {
-[; ;main.c: 278: _delay((unsigned long)((20)*(8000000/4000.0)));
+[; ;main.c: 276: void manage_buttons()
+[; ;main.c: 277: {
+[e :U _manage_buttons ]
+[f ]
+[; ;main.c: 278: if(RA2)
 "278
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 279: if(RA2) plus_flag = 1;
+[e $ ! _RA2 176  ]
+[; ;main.c: 279: {
 "279
+{
+[; ;main.c: 280: _delay((unsigned long)((20)*(8000000/4000.0)));
+"280
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 281: if(RA2) plus_flag = 1;
+"281
 [e $ ! _RA2 177  ]
 [e = _plus_flag -> -> 1 `i `uc ]
 [e :U 177 ]
-[; ;main.c: 280: _delay((unsigned long)((150)*(8000000/4000.0)));
-"280
+[; ;main.c: 282: _delay((unsigned long)((150)*(8000000/4000.0)));
+"282
 [e ( __delay (1 -> * -> -> 150 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"281
+"283
 }
 [e :U 176 ]
-[; ;main.c: 281: }
-[; ;main.c: 283: if(RA3)
-"283
-[e $ ! _RA3 178  ]
-[; ;main.c: 284: {
-"284
-{
-[; ;main.c: 285: _delay((unsigned long)((20)*(8000000/4000.0)));
+[; ;main.c: 283: }
+[; ;main.c: 285: if(RA3)
 "285
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 286: if(RA3) minus_flag = 1;
+[e $ ! _RA3 178  ]
+[; ;main.c: 286: {
 "286
+{
+[; ;main.c: 287: _delay((unsigned long)((20)*(8000000/4000.0)));
+"287
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 288: if(RA3) minus_flag = 1;
+"288
 [e $ ! _RA3 179  ]
 [e = _minus_flag -> -> 1 `i `uc ]
 [e :U 179 ]
-[; ;main.c: 287: _delay((unsigned long)((150)*(8000000/4000.0)));
-"287
+[; ;main.c: 289: _delay((unsigned long)((150)*(8000000/4000.0)));
+"289
 [e ( __delay (1 -> * -> -> 150 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"288
+"290
 }
 [e :U 178 ]
-[; ;main.c: 288: }
-[; ;main.c: 290: if(RA1)
-"290
-[e $ ! _RA1 180  ]
-[; ;main.c: 291: {
-"291
-{
-[; ;main.c: 292: _delay((unsigned long)((20)*(8000000/4000.0)));
+[; ;main.c: 290: }
+[; ;main.c: 292: if(RA1)
 "292
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 293: if(RA1) ok_flag = 1;
+[e $ ! _RA1 180  ]
+[; ;main.c: 293: {
 "293
+{
+[; ;main.c: 294: _delay((unsigned long)((20)*(8000000/4000.0)));
+"294
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 295: if(RA1) ok_flag = 1;
+"295
 [e $ ! _RA1 181  ]
 [e = _ok_flag -> -> 1 `i `uc ]
 [e :U 181 ]
-[; ;main.c: 294: while(RA1);
-"294
+[; ;main.c: 296: while(RA1);
+"296
 [e $U 182  ]
 [e :U 183 ]
 [e :U 182 ]
 [e $ _RA1 183  ]
 [e :U 184 ]
-[; ;main.c: 295: _delay((unsigned long)((20)*(8000000/4000.0)));
-"295
+[; ;main.c: 297: _delay((unsigned long)((20)*(8000000/4000.0)));
+"297
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"296
+"298
 }
 [e :U 180 ]
-[; ;main.c: 296: }
-[; ;main.c: 297: }
-"297
+[; ;main.c: 298: }
+[; ;main.c: 299: }
+"299
 [e :UE 175 ]
 }
-"299
+"301
 [v _menuCO2 `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 299: void menuCO2(){
+[; ;main.c: 301: void menuCO2(){
 [e :U _menuCO2 ]
 [f ]
-[; ;main.c: 300: LcdSetCursor(1,1);
-"300
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 301: LcdWriteString((char *)"Set CO2 in air  ");
-"301
-[e ( _LcdWriteString (1 -> :s 13C `*uc ]
-[; ;main.c: 302: LcdSetCursor(2,1);
+[; ;main.c: 302: LcdSetCursor(1,1);
 "302
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 303: LcdWriteString((char *)"          ");
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 303: LcdWriteString((char *)"Set CO2 in air  ");
 "303
-[e ( _LcdWriteString (1 -> :s 14C `*uc ]
+[e ( _LcdWriteString (1 -> :s 13C `*uc ]
 [; ;main.c: 304: LcdSetCursor(2,1);
 "304
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 305: LcdWriteInt(zeljena_co2,2,1);
+[; ;main.c: 305: LcdWriteString((char *)"          ");
 "305
-[e ( _LcdWriteInt (3 , , -> _zeljena_co2 `ui -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 306: LcdSetCursor(2,6);
+[e ( _LcdWriteString (1 -> :s 14C `*uc ]
+[; ;main.c: 306: LcdSetCursor(2,1);
 "306
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 307: LcdWriteString((char *)"        ");
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 307: LcdWriteInt(zeljena_co2,2,1);
 "307
-[e ( _LcdWriteString (1 -> :s 15C `*uc ]
-[; ;main.c: 308: while(!ok_flag)
+[e ( _LcdWriteInt (3 , , -> _zeljena_co2 `ui -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 308: LcdSetCursor(2,6);
 "308
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 309: LcdWriteString((char *)"        ");
+"309
+[e ( _LcdWriteString (1 -> :s 15C `*uc ]
+[; ;main.c: 310: while(!ok_flag)
+"310
 [e $U 186  ]
 [e :U 187 ]
-[; ;main.c: 309: {
-"309
+[; ;main.c: 311: {
+"311
 {
-[; ;main.c: 310: manage_buttons();
-"310
-[e ( _manage_buttons ..  ]
-[; ;main.c: 312: if(plus_flag)
+[; ;main.c: 312: asm("clrwdt");
 "312
-[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 189  ]
-[; ;main.c: 313: {
-"313
-{
-[; ;main.c: 314: zeljena_co2 += 100;
+[; <" clrwdt ;# ">
+[; ;main.c: 314: manage_buttons();
 "314
+[e ( _manage_buttons ..  ]
+[; ;main.c: 316: if(plus_flag)
+"316
+[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 189  ]
+[; ;main.c: 317: {
+"317
+{
+[; ;main.c: 318: zeljena_co2 += 100;
+"318
 [e =+ _zeljena_co2 -> 100 `i ]
-[; ;main.c: 315: if(zeljena_co2 > 5000) zeljena_co2 = 5000;
-"315
+[; ;main.c: 319: if(zeljena_co2 > 5000) zeljena_co2 = 5000;
+"319
 [e $ ! > _zeljena_co2 -> 5000 `i 190  ]
 [e = _zeljena_co2 -> 5000 `i ]
 [e :U 190 ]
-[; ;main.c: 316: plus_flag = 0;
-"316
-[e = _plus_flag -> -> 0 `i `uc ]
-[; ;main.c: 318: LcdSetCursor(2,1);
-"318
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 319: LcdWriteInt(zeljena_co2,2,1);
-"319
-[e ( _LcdWriteInt (3 , , -> _zeljena_co2 `ui -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 320: plus_flag = 0;
 "320
+[e = _plus_flag -> -> 0 `i `uc ]
+[; ;main.c: 322: LcdSetCursor(2,1);
+"322
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 323: LcdWriteInt(zeljena_co2,2,1);
+"323
+[e ( _LcdWriteInt (3 , , -> _zeljena_co2 `ui -> -> 2 `i `uc -> -> 1 `i `uc ]
+"324
 }
 [e :U 189 ]
-[; ;main.c: 320: }
-[; ;main.c: 322: if(minus_flag)
-"322
+[; ;main.c: 324: }
+[; ;main.c: 326: if(minus_flag)
+"326
 [e $ ! != -> _minus_flag `i -> -> -> 0 `i `uc `i 191  ]
-[; ;main.c: 323: {
-"323
+[; ;main.c: 327: {
+"327
 {
-[; ;main.c: 324: zeljena_co2 -= 100;
-"324
+[; ;main.c: 328: zeljena_co2 -= 100;
+"328
 [e =- _zeljena_co2 -> 100 `i ]
-[; ;main.c: 325: if(zeljena_co2 < 300) zeljena_co2 = 300;
-"325
+[; ;main.c: 329: if(zeljena_co2 < 300) zeljena_co2 = 300;
+"329
 [e $ ! < _zeljena_co2 -> 300 `i 192  ]
 [e = _zeljena_co2 -> 300 `i ]
 [e :U 192 ]
-[; ;main.c: 326: minus_flag = 0;
-"326
+[; ;main.c: 330: minus_flag = 0;
+"330
 [e = _minus_flag -> -> 0 `i `uc ]
-[; ;main.c: 328: LcdSetCursor(2,1);
-"328
+[; ;main.c: 332: LcdSetCursor(2,1);
+"332
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 329: LcdWriteInt(zeljena_co2,2,1);
-"329
+[; ;main.c: 333: LcdWriteInt(zeljena_co2,2,1);
+"333
 [e ( _LcdWriteInt (3 , , -> _zeljena_co2 `ui -> -> 2 `i `uc -> -> 1 `i `uc ]
-"331
+"335
 }
 [e :U 191 ]
-[; ;main.c: 331: }
-[; ;main.c: 333: if(ok_flag)
-"333
-[e $ ! != -> _ok_flag `i -> -> -> 0 `i `uc `i 193  ]
-[; ;main.c: 334: {
-"334
-{
-[; ;main.c: 335: ok_flag = 1;
-"335
-[e = _ok_flag -> -> 1 `i `uc ]
-[; ;main.c: 336: ok_flag_co2 = 1;
-"336
-[e = _ok_flag_co2 -> -> 1 `i `uc ]
+[; ;main.c: 335: }
+[; ;main.c: 337: if(ok_flag)
 "337
+[e $ ! != -> _ok_flag `i -> -> -> 0 `i `uc `i 193  ]
+[; ;main.c: 338: {
+"338
+{
+[; ;main.c: 339: ok_flag = 1;
+"339
+[e = _ok_flag -> -> 1 `i `uc ]
+[; ;main.c: 340: ok_flag_co2 = 1;
+"340
+[e = _ok_flag_co2 -> -> 1 `i `uc ]
+"341
 }
 [e :U 193 ]
-"338
+"342
 }
 [e :U 186 ]
-"308
+"310
 [e $ ! != -> _ok_flag `i -> -> -> 0 `i `uc `i 187  ]
 [e :U 188 ]
-[; ;main.c: 337: }
-[; ;main.c: 338: }
-[; ;main.c: 339: }
-"339
+[; ;main.c: 341: }
+[; ;main.c: 342: }
+[; ;main.c: 343: }
+"343
 [e :UE 185 ]
 }
-"341
+"345
 [v _menuHumi `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 341: void menuHumi(){
+[; ;main.c: 345: void menuHumi(){
 [e :U _menuHumi ]
 [f ]
-[; ;main.c: 342: sprintf(humidity, " %.1f", zeljena_vlaznost);
-"342
-[e ( _sprintf (1 , (. , &U _humidity :s 16C -> _zeljena_vlaznost `d ]
-[; ;main.c: 343: LcdSetCursor(1,1);
-"343
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 344: LcdWriteString((char *)"Set air moist   ");
-"344
-[e ( _LcdWriteString (1 -> :s 17C `*uc ]
-[; ;main.c: 345: LcdSetCursor(2,1);
-"345
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 346: LcdWriteString(humidity);
+[; ;main.c: 346: sprintf(humidity, " %.1f", zeljena_vlaznost);
 "346
-[e ( _LcdWriteString (1 &U _humidity ]
-[; ;main.c: 347: LcdSetCursor(2,6);
+[e ( _sprintf (1 , (. , &U _humidity :s 16C -> _zeljena_vlaznost `d ]
+[; ;main.c: 347: LcdSetCursor(1,1);
 "347
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 348: LcdWriteString((char *)"        ");
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 348: LcdWriteString((char *)"Set air moist   ");
 "348
-[e ( _LcdWriteString (1 -> :s 18C `*uc ]
-[; ;main.c: 350: while(!ok_flag_co2)
+[e ( _LcdWriteString (1 -> :s 17C `*uc ]
+[; ;main.c: 349: LcdSetCursor(2,1);
+"349
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 350: LcdWriteString(humidity);
 "350
+[e ( _LcdWriteString (1 &U _humidity ]
+[; ;main.c: 351: LcdSetCursor(2,6);
+"351
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 352: LcdWriteString((char *)"        ");
+"352
+[e ( _LcdWriteString (1 -> :s 18C `*uc ]
+[; ;main.c: 354: while(!ok_flag_co2)
+"354
 [e $U 195  ]
 [e :U 196 ]
-[; ;main.c: 351: {
-"351
-{
-[; ;main.c: 352: manage_buttons();
-"352
-[e ( _manage_buttons ..  ]
-[; ;main.c: 354: if(plus_flag)
-"354
-[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 198  ]
 [; ;main.c: 355: {
 "355
 {
-[; ;main.c: 356: zeljena_vlaznost += 1;
+[; ;main.c: 356: asm("clrwdt");
 "356
+[; <" clrwdt ;# ">
+[; ;main.c: 358: manage_buttons();
+"358
+[e ( _manage_buttons ..  ]
+[; ;main.c: 360: if(plus_flag)
+"360
+[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 198  ]
+[; ;main.c: 361: {
+"361
+{
+[; ;main.c: 362: zeljena_vlaznost += 1;
+"362
 [e =+ _zeljena_vlaznost -> -> 1 `i `f ]
-[; ;main.c: 357: if(zeljena_vlaznost > 99) zeljena_vlaznost = 99;
-"357
+[; ;main.c: 363: if(zeljena_vlaznost > 99) zeljena_vlaznost = 99;
+"363
 [e $ ! > _zeljena_vlaznost -> -> 99 `i `f 199  ]
 [e = _zeljena_vlaznost -> -> 99 `i `f ]
 [e :U 199 ]
-[; ;main.c: 358: plus_flag = 0;
-"358
+[; ;main.c: 364: plus_flag = 0;
+"364
 [e = _plus_flag -> -> 0 `i `uc ]
-[; ;main.c: 360: sprintf(humidity, " %.1f", zeljena_vlaznost);
-"360
+[; ;main.c: 366: sprintf(humidity, " %.1f", zeljena_vlaznost);
+"366
 [e ( _sprintf (1 , (. , &U _humidity :s 19C -> _zeljena_vlaznost `d ]
-[; ;main.c: 361: LcdSetCursor(2,1);
-"361
+[; ;main.c: 367: LcdSetCursor(2,1);
+"367
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 362: LcdWriteString(humidity);
-"362
+[; ;main.c: 368: LcdWriteString(humidity);
+"368
 [e ( _LcdWriteString (1 &U _humidity ]
-"363
+"369
 }
 [e :U 198 ]
-[; ;main.c: 363: }
-[; ;main.c: 365: if(minus_flag)
-"365
+[; ;main.c: 369: }
+[; ;main.c: 371: if(minus_flag)
+"371
 [e $ ! != -> _minus_flag `i -> -> -> 0 `i `uc `i 200  ]
-[; ;main.c: 366: {
-"366
+[; ;main.c: 372: {
+"372
 {
-[; ;main.c: 367: zeljena_vlaznost -= 1;
-"367
+[; ;main.c: 373: zeljena_vlaznost -= 1;
+"373
 [e =- _zeljena_vlaznost -> -> 1 `i `f ]
-[; ;main.c: 368: if(zeljena_vlaznost < 30) zeljena_vlaznost = 30;
-"368
+[; ;main.c: 374: if(zeljena_vlaznost < 30) zeljena_vlaznost = 30;
+"374
 [e $ ! < _zeljena_vlaznost -> -> 30 `i `f 201  ]
 [e = _zeljena_vlaznost -> -> 30 `i `f ]
 [e :U 201 ]
-[; ;main.c: 369: minus_flag = 0;
-"369
+[; ;main.c: 375: minus_flag = 0;
+"375
 [e = _minus_flag -> -> 0 `i `uc ]
-[; ;main.c: 371: sprintf(humidity, " %.1f", zeljena_vlaznost);
-"371
+[; ;main.c: 377: sprintf(humidity, " %.1f", zeljena_vlaznost);
+"377
 [e ( _sprintf (1 , (. , &U _humidity :s 20C -> _zeljena_vlaznost `d ]
-[; ;main.c: 372: LcdSetCursor(2,1);
-"372
+[; ;main.c: 378: LcdSetCursor(2,1);
+"378
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 373: LcdWriteString(humidity);
-"373
+[; ;main.c: 379: LcdWriteString(humidity);
+"379
 [e ( _LcdWriteString (1 &U _humidity ]
-"374
+"380
 }
 [e :U 200 ]
-[; ;main.c: 374: }
-[; ;main.c: 376: if(ok_flag)
-"376
+[; ;main.c: 380: }
+[; ;main.c: 382: if(ok_flag)
+"382
 [e $ ! != -> _ok_flag `i -> -> -> 0 `i `uc `i 202  ]
-[; ;main.c: 377: {
-"377
+[; ;main.c: 383: {
+"383
 {
-[; ;main.c: 378: ok_flag = 0;
-"378
+[; ;main.c: 384: ok_flag = 0;
+"384
 [e = _ok_flag -> -> 0 `i `uc ]
-[; ;main.c: 379: ok_flag_humi = 1;
-"379
+[; ;main.c: 385: ok_flag_humi = 1;
+"385
 [e = _ok_flag_humi -> -> 1 `i `uc ]
-[; ;main.c: 380: menuCO2();
-"380
+[; ;main.c: 386: menuCO2();
+"386
 [e ( _menuCO2 ..  ]
-"381
+"387
 }
 [e :U 202 ]
-"382
+"388
 }
 [e :U 195 ]
-"350
+"354
 [e $ ! != -> _ok_flag_co2 `i -> -> -> 0 `i `uc `i 196  ]
 [e :U 197 ]
-[; ;main.c: 381: }
-[; ;main.c: 382: }
-[; ;main.c: 383: }
-"383
+[; ;main.c: 387: }
+[; ;main.c: 388: }
+[; ;main.c: 389: }
+"389
 [e :UE 194 ]
 }
-"386
+"392
 [v _menu `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 386: void menu(){
+[; ;main.c: 392: void menu(){
 [e :U _menu ]
 [f ]
-[; ;main.c: 388: sprintf(temperature, " %.1f", zeljena_temperatura);
-"388
-[e ( _sprintf (1 , (. , &U _temperature :s 21C -> _zeljena_temperatura `d ]
-[; ;main.c: 389: LcdSetCursor(1,1);
-"389
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 390: LcdWriteString((char *)"Set air temp.   ");
-"390
-[e ( _LcdWriteString (1 -> :s 22C `*uc ]
-[; ;main.c: 391: LcdSetCursor(2,1);
-"391
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 392: LcdWriteString(temperature);
-"392
-[e ( _LcdWriteString (1 &U _temperature ]
-[; ;main.c: 393: LcdSetCursor(2,6);
-"393
-[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 394: LcdWriteString((char *)"         ");
+[; ;main.c: 394: sprintf(temperature, " %.1f", zeljena_temperatura);
 "394
-[e ( _LcdWriteString (1 -> :s 23C `*uc ]
-[; ;main.c: 396: while(!ok_flag_humi)
+[e ( _sprintf (1 , (. , &U _temperature :s 21C -> _zeljena_temperatura `d ]
+[; ;main.c: 395: LcdSetCursor(1,1);
+"395
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 396: LcdWriteString((char *)"Set air temp.   ");
 "396
+[e ( _LcdWriteString (1 -> :s 22C `*uc ]
+[; ;main.c: 397: LcdSetCursor(2,1);
+"397
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 398: LcdWriteString(temperature);
+"398
+[e ( _LcdWriteString (1 &U _temperature ]
+[; ;main.c: 399: LcdSetCursor(2,6);
+"399
+[e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 6 `i `uc ]
+[; ;main.c: 400: LcdWriteString((char *)"         ");
+"400
+[e ( _LcdWriteString (1 -> :s 23C `*uc ]
+[; ;main.c: 402: while(!ok_flag_humi)
+"402
 [e $U 204  ]
 [e :U 205 ]
-[; ;main.c: 397: {
-"397
-{
-[; ;main.c: 398: manage_buttons();
-"398
-[e ( _manage_buttons ..  ]
-[; ;main.c: 400: if(plus_flag)
-"400
-[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 207  ]
-[; ;main.c: 401: {
-"401
-{
-[; ;main.c: 402: zeljena_temperatura += 0.1;
-"402
-[e =+ _zeljena_temperatura -> .0.1 `f ]
-[; ;main.c: 403: if(zeljena_temperatura > 40) zeljena_temperatura = 40;
+[; ;main.c: 403: {
 "403
+{
+[; ;main.c: 404: asm("clrwdt");
+"404
+[; <" clrwdt ;# ">
+[; ;main.c: 406: manage_buttons();
+"406
+[e ( _manage_buttons ..  ]
+[; ;main.c: 408: if(plus_flag)
+"408
+[e $ ! != -> _plus_flag `i -> -> -> 0 `i `uc `i 207  ]
+[; ;main.c: 409: {
+"409
+{
+[; ;main.c: 410: zeljena_temperatura += 0.1;
+"410
+[e =+ _zeljena_temperatura -> .0.1 `f ]
+[; ;main.c: 411: if(zeljena_temperatura > 40) zeljena_temperatura = 40;
+"411
 [e $ ! > _zeljena_temperatura -> -> 40 `i `f 208  ]
 [e = _zeljena_temperatura -> -> 40 `i `f ]
 [e :U 208 ]
-[; ;main.c: 404: plus_flag = 0;
-"404
+[; ;main.c: 412: plus_flag = 0;
+"412
 [e = _plus_flag -> -> 0 `i `uc ]
-[; ;main.c: 406: sprintf(temperature, " %.1f", zeljena_temperatura);
-"406
+[; ;main.c: 414: sprintf(temperature, " %.1f", zeljena_temperatura);
+"414
 [e ( _sprintf (1 , (. , &U _temperature :s 24C -> _zeljena_temperatura `d ]
-[; ;main.c: 407: LcdSetCursor(2,1);
-"407
+[; ;main.c: 415: LcdSetCursor(2,1);
+"415
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 408: LcdWriteString(temperature);
-"408
+[; ;main.c: 416: LcdWriteString(temperature);
+"416
 [e ( _LcdWriteString (1 &U _temperature ]
-"409
+"417
 }
 [e :U 207 ]
-[; ;main.c: 409: }
-[; ;main.c: 411: if(minus_flag)
-"411
+[; ;main.c: 417: }
+[; ;main.c: 419: if(minus_flag)
+"419
 [e $ ! != -> _minus_flag `i -> -> -> 0 `i `uc `i 209  ]
-[; ;main.c: 412: {
-"412
+[; ;main.c: 420: {
+"420
 {
-[; ;main.c: 413: zeljena_temperatura -= 0.1;
-"413
+[; ;main.c: 421: zeljena_temperatura -= 0.1;
+"421
 [e =- _zeljena_temperatura -> .0.1 `f ]
-[; ;main.c: 414: if(zeljena_temperatura < 15) zeljena_temperatura = 15;
-"414
+[; ;main.c: 422: if(zeljena_temperatura < 15) zeljena_temperatura = 15;
+"422
 [e $ ! < _zeljena_temperatura -> -> 15 `i `f 210  ]
 [e = _zeljena_temperatura -> -> 15 `i `f ]
 [e :U 210 ]
-[; ;main.c: 415: minus_flag = 0;
-"415
+[; ;main.c: 423: minus_flag = 0;
+"423
 [e = _minus_flag -> -> 0 `i `uc ]
-[; ;main.c: 417: sprintf(temperature, " %.1f", zeljena_temperatura);
-"417
+[; ;main.c: 425: sprintf(temperature, " %.1f", zeljena_temperatura);
+"425
 [e ( _sprintf (1 , (. , &U _temperature :s 25C -> _zeljena_temperatura `d ]
-[; ;main.c: 418: LcdSetCursor(2,1);
-"418
+[; ;main.c: 426: LcdSetCursor(2,1);
+"426
 [e ( _LcdSetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 419: LcdWriteString(temperature);
-"419
+[; ;main.c: 427: LcdWriteString(temperature);
+"427
 [e ( _LcdWriteString (1 &U _temperature ]
-"420
+"428
 }
 [e :U 209 ]
-[; ;main.c: 420: }
-[; ;main.c: 422: if(ok_flag)
-"422
+[; ;main.c: 428: }
+[; ;main.c: 430: if(ok_flag)
+"430
 [e $ ! != -> _ok_flag `i -> -> -> 0 `i `uc `i 211  ]
-[; ;main.c: 423: {
-"423
+[; ;main.c: 431: {
+"431
 {
-[; ;main.c: 424: ok_flag = 0;
-"424
+[; ;main.c: 432: ok_flag = 0;
+"432
 [e = _ok_flag -> -> 0 `i `uc ]
-[; ;main.c: 425: menuHumi();
-"425
+[; ;main.c: 433: menuHumi();
+"433
 [e ( _menuHumi ..  ]
-"426
+"434
 }
 [e :U 211 ]
-"427
+"435
 }
 [e :U 204 ]
-"396
+"402
 [e $ ! != -> _ok_flag_humi `i -> -> -> 0 `i `uc `i 205  ]
 [e :U 206 ]
-[; ;main.c: 426: }
-[; ;main.c: 427: }
-[; ;main.c: 429: ok_flag = 0;
-"429
+[; ;main.c: 434: }
+[; ;main.c: 435: }
+[; ;main.c: 437: ok_flag = 0;
+"437
 [e = _ok_flag -> -> 0 `i `uc ]
-[; ;main.c: 430: ok_flag_humi = 0;
-"430
+[; ;main.c: 438: ok_flag_humi = 0;
+"438
 [e = _ok_flag_humi -> -> 0 `i `uc ]
-[; ;main.c: 431: ok_flag_co2 = 0;
-"431
+[; ;main.c: 439: ok_flag_co2 = 0;
+"439
 [e = _ok_flag_co2 -> -> 0 `i `uc ]
-[; ;main.c: 432: }
-"432
+[; ;main.c: 440: }
+"440
 [e :UE 203 ]
 }
-"450
+"458
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 450: void main(void) {
+[; ;main.c: 458: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 452: LcdInit();
-"452
-[e ( _LcdInit ..  ]
-[; ;main.c: 453: initSHT71();
-"453
-[e ( _initSHT71 ..  ]
-[; ;main.c: 454: resetDS18B20();
-"454
-[e ( _resetDS18B20 ..  ]
-[; ;main.c: 455: adcInit();
-"455
-[e ( _adcInit ..  ]
-[; ;main.c: 456: UARTInit(9600);
-"456
-[e ( _UARTInit (1 -> -> -> 9600 `i `l `ul ]
-[; ;main.c: 457: IOPinsConfig();
-"457
-[e ( _IOPinsConfig ..  ]
-[; ;main.c: 458: IOPinsInit();
-"458
-[e ( _IOPinsInit ..  ]
-[; ;main.c: 459: resetValues();
-"459
-[e ( _resetValues ..  ]
-[; ;main.c: 460: initTimer1();
+[; ;main.c: 460: LcdInit();
 "460
-[e ( _initTimer1 ..  ]
-[; ;main.c: 461: initTimer0();
+[e ( _LcdInit ..  ]
+[; ;main.c: 461: initSHT71();
 "461
-[e ( _initTimer0 ..  ]
-[; ;main.c: 462: initWDT();
+[e ( _initSHT71 ..  ]
+[; ;main.c: 462: resetDS18B20();
 "462
-[e ( _initWDT ..  ]
-[; ;main.c: 464: getResSHT71(&temp, &humi);
+[e ( _resetDS18B20 ..  ]
+[; ;main.c: 463: adcInit();
+"463
+[e ( _adcInit ..  ]
+[; ;main.c: 464: UARTInit(9600);
 "464
-[e ( _getResSHT71 (2 , &U _temp &U _humi ]
-[; ;main.c: 466: t = getTempDS18B20();
+[e ( _UARTInit (1 -> -> -> 9600 `i `l `ul ]
+[; ;main.c: 465: IOPinsConfig();
+"465
+[e ( _IOPinsConfig ..  ]
+[; ;main.c: 466: IOPinsInit();
 "466
-[e = _t ( _getTempDS18B20 ..  ]
-[; ;main.c: 468: while(1)
+[e ( _IOPinsInit ..  ]
+[; ;main.c: 467: resetValues();
+"467
+[e ( _resetValues ..  ]
+[; ;main.c: 468: initTimer1();
 "468
-[e :U 214 ]
-[; ;main.c: 469: {
+[e ( _initTimer1 ..  ]
+[; ;main.c: 469: initTimer0();
 "469
-{
-[; ;main.c: 470: if(measure)
+[e ( _initTimer0 ..  ]
+[; ;main.c: 470: initWDT();
 "470
-[e $ ! != -> _measure `i -> -> -> 0 `i `uc `i 216  ]
-[; ;main.c: 471: {
+[e ( _initWDT ..  ]
+[; ;main.c: 471: _delay((unsigned long)((100)*(8000000/4000.0)));
 "471
-{
-[; ;main.c: 472: measure = 0;
-"472
-[e = _measure -> -> 0 `i `uc ]
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 [; ;main.c: 473: getResSHT71(&temp, &humi);
 "473
 [e ( _getResSHT71 (2 , &U _temp &U _humi ]
-[; ;main.c: 474: UARTWriteString("\nSHT OK.\n");
-"474
-[e ( _UARTWriteString (1 -> :s 26C `*uc ]
-[; ;main.c: 478: co2 = measureTGS4161();
-"478
-[e = _co2 ( _measureTGS4161 ..  ]
-[; ;main.c: 479: UARTWriteString("\nTGS OK.\n");
-"479
-[e ( _UARTWriteString (1 -> :s 27C `*uc ]
-[; ;main.c: 482: t = getTempDS18B20();
-"482
+[; ;main.c: 475: t = getTempDS18B20();
+"475
 [e = _t ( _getTempDS18B20 ..  ]
-[; ;main.c: 483: UARTWriteString("\nDS OK.\n");
+[; ;main.c: 477: while(1)
+"477
+[e :U 214 ]
+[; ;main.c: 478: {
+"478
+{
+[; ;main.c: 479: if(measure)
+"479
+[e $ ! != -> _measure `i -> -> -> 0 `i `uc `i 216  ]
+[; ;main.c: 480: {
+"480
+{
+[; ;main.c: 481: measure = 0;
+"481
+[e = _measure -> -> 0 `i `uc ]
+[; ;main.c: 483: switch(measure_count)
 "483
-[e ( _UARTWriteString (1 -> :s 28C `*uc ]
+[e $U 218  ]
+[; ;main.c: 484: {
 "484
-}
-[e :U 216 ]
-[; ;main.c: 484: }
-[; ;main.c: 486: if(disp)
+{
+[; ;main.c: 485: case 0:
+"485
+[e :U 219 ]
+[; ;main.c: 486: {
 "486
-[e $ ! != -> _disp `i -> -> -> 0 `i `uc `i 217  ]
-[; ;main.c: 487: {
+{
+[; ;main.c: 487: getResSHT71(&temp, &humi);
 "487
-{
-[; ;main.c: 488: disp = 0;
+[e ( _getResSHT71 (2 , &U _temp &U _humi ]
+[; ;main.c: 488: UARTWriteString((char *)"\nSHT OK.\n");
 "488
-[e = _disp -> -> 0 `i `uc ]
-[; ;main.c: 490: switch(disp_count)
+[e ( _UARTWriteString (1 -> :s 26C `*uc ]
+"489
+}
+[; ;main.c: 489: }
+[; ;main.c: 490: break;
 "490
-[e $U 219  ]
-[; ;main.c: 491: {
-"491
-{
+[e $U 217  ]
 [; ;main.c: 492: case 1:
 "492
 [e :U 220 ]
-[; ;main.c: 493: displayAirTemp(temp);
+[; ;main.c: 493: {
 "493
-[e ( _displayAirTemp (1 _temp ]
-[; ;main.c: 494: break;
+{
+[; ;main.c: 494: if(measure_co2)
 "494
-[e $U 218  ]
-[; ;main.c: 495: case 2:
+[e $ ! != -> _measure_co2 `i -> -> -> 0 `i `uc `i 221  ]
+[; ;main.c: 495: {
 "495
-[e :U 221 ]
-[; ;main.c: 496: displayAirMoist(humi);
+{
+[; ;main.c: 496: co2 = measureTGS4161();
 "496
-[e ( _displayAirMoist (1 _humi ]
-[; ;main.c: 497: break;
+[e = _co2 ( _measureTGS4161 ..  ]
+[; ;main.c: 497: UARTWriteString((char *)"\nTGS OK.\n");
 "497
-[e $U 218  ]
-[; ;main.c: 498: case 3:
+[e ( _UARTWriteString (1 -> :s 27C `*uc ]
 "498
-[e :U 222 ]
-[; ;main.c: 499: displayCO2(co2);
+}
+[e :U 221 ]
 "499
-[e ( _displayCO2 (1 _co2 ]
+}
+[; ;main.c: 498: }
+[; ;main.c: 499: }
 [; ;main.c: 500: break;
 "500
-[e $U 218  ]
-[; ;main.c: 501: case 4:
-"501
-[e :U 223 ]
-[; ;main.c: 502: displaySoilTemp(t);
+[e $U 217  ]
+[; ;main.c: 502: case 2:
 "502
-[e ( _displaySoilTemp (1 _t ]
-[; ;main.c: 503: break;
+[e :U 222 ]
+[; ;main.c: 503: {
 "503
-[e $U 218  ]
-"504
-}
-[; ;main.c: 504: }
-[e $U 218  ]
-"490
-[e :U 219 ]
-[e [\ _disp_count , $ -> -> 1 `i `uc 220
- , $ -> -> 2 `i `uc 221
- , $ -> -> 3 `i `uc 222
- , $ -> -> 4 `i `uc 223
- 218 ]
-"504
-[e :U 218 ]
-[; ;main.c: 506: disp_count++;
-"506
-[e ++ _disp_count -> -> 1 `i `uc ]
-[; ;main.c: 507: if(disp_count > 4) disp_count = 0;
-"507
-[e $ ! > -> _disp_count `i -> 4 `i 224  ]
-[e = _disp_count -> -> 0 `i `uc ]
-[e :U 224 ]
-"508
-}
-[e :U 217 ]
-[; ;main.c: 508: }
-[; ;main.c: 510: if (RA4)
-"510
-[e $ ! _RA4 225  ]
-[; ;main.c: 511: {
-"511
 {
-[; ;main.c: 512: _delay((unsigned long)((20)*(8000000/4000.0)));
-"512
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 513: if(RA4) menu_flag = 1;
+[; ;main.c: 504: t = getTempDS18B20();
+"504
+[e = _t ( _getTempDS18B20 ..  ]
+[; ;main.c: 505: UARTWriteString((char *)"\nDS OK.\n");
+"505
+[e ( _UARTWriteString (1 -> :s 28C `*uc ]
+"506
+}
+[; ;main.c: 506: }
+[; ;main.c: 507: break;
+"507
+[e $U 217  ]
+[; ;main.c: 509: default:
+"509
+[e :U 223 ]
+[; ;main.c: 510: break;
+"510
+[e $U 217  ]
+"511
+}
+[; ;main.c: 511: }
+[e $U 217  ]
+"483
+[e :U 218 ]
+[e [\ _measure_count , $ -> -> 0 `i `uc 219
+ , $ -> -> 1 `i `uc 220
+ , $ -> -> 2 `i `uc 222
+ 223 ]
+"511
+[e :U 217 ]
+[; ;main.c: 513: if(++measure_count > 3) measure_count = 0;
 "513
-[e $ ! _RA4 226  ]
-[e = _menu_flag -> -> 1 `i `uc ]
-[e :U 226 ]
-[; ;main.c: 514: while(RA4);
+[e $ ! > -> =+ _measure_count -> -> 1 `i `uc `i -> 3 `i 224  ]
+[e = _measure_count -> -> 0 `i `uc ]
+[e :U 224 ]
 "514
-[e $U 227  ]
-[e :U 228 ]
-[e :U 227 ]
-[e $ _RA4 228  ]
-[e :U 229 ]
-[; ;main.c: 515: _delay((unsigned long)((20)*(8000000/4000.0)));
-"515
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+}
+[e :U 216 ]
+[; ;main.c: 514: }
+[; ;main.c: 516: if(disp)
 "516
+[e $ ! != -> _disp `i -> -> -> 0 `i `uc `i 225  ]
+[; ;main.c: 517: {
+"517
+{
+[; ;main.c: 518: disp = 0;
+"518
+[e = _disp -> -> 0 `i `uc ]
+[; ;main.c: 520: switch(disp_count)
+"520
+[e $U 227  ]
+[; ;main.c: 521: {
+"521
+{
+[; ;main.c: 522: case 1:
+"522
+[e :U 228 ]
+[; ;main.c: 523: displayAirTemp(temp);
+"523
+[e ( _displayAirTemp (1 _temp ]
+[; ;main.c: 524: break;
+"524
+[e $U 226  ]
+[; ;main.c: 525: case 2:
+"525
+[e :U 229 ]
+[; ;main.c: 526: displayAirMoist(humi);
+"526
+[e ( _displayAirMoist (1 _humi ]
+[; ;main.c: 527: break;
+"527
+[e $U 226  ]
+[; ;main.c: 528: case 3:
+"528
+[e :U 230 ]
+[; ;main.c: 529: displayCO2(co2);
+"529
+[e ( _displayCO2 (1 _co2 ]
+[; ;main.c: 530: break;
+"530
+[e $U 226  ]
+[; ;main.c: 531: case 4:
+"531
+[e :U 231 ]
+[; ;main.c: 532: displaySoilTemp(t);
+"532
+[e ( _displaySoilTemp (1 _t ]
+[; ;main.c: 533: break;
+"533
+[e $U 226  ]
+[; ;main.c: 535: default:
+"535
+[e :U 232 ]
+[; ;main.c: 536: break;
+"536
+[e $U 226  ]
+"537
+}
+[; ;main.c: 537: }
+[e $U 226  ]
+"520
+[e :U 227 ]
+[e [\ _disp_count , $ -> -> 1 `i `uc 228
+ , $ -> -> 2 `i `uc 229
+ , $ -> -> 3 `i `uc 230
+ , $ -> -> 4 `i `uc 231
+ 232 ]
+"537
+[e :U 226 ]
+[; ;main.c: 539: disp_count++;
+"539
+[e ++ _disp_count -> -> 1 `i `uc ]
+[; ;main.c: 540: if(disp_count > 4) disp_count = 0;
+"540
+[e $ ! > -> _disp_count `i -> 4 `i 233  ]
+[e = _disp_count -> -> 0 `i `uc ]
+[e :U 233 ]
+"541
 }
 [e :U 225 ]
-[; ;main.c: 516: }
-[; ;main.c: 517: if(menu_flag)
-"517
-[e $ ! != -> _menu_flag `i -> -> -> 0 `i `uc `i 230  ]
-[; ;main.c: 518: {
-"518
+[; ;main.c: 541: }
+[; ;main.c: 543: if (RA4)
+"543
+[e $ ! _RA4 234  ]
+[; ;main.c: 544: {
+"544
 {
-[; ;main.c: 519: menu_flag = 0;
-"519
-[e = _menu_flag -> -> 0 `i `uc ]
-[; ;main.c: 520: PIE1bits.TMR1IE = 0;
-"520
-[e = . . _PIE1bits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 521: menu();
-"521
-[e ( _menu ..  ]
-[; ;main.c: 522: PIE1bits.TMR1IE = 1;
-"522
-[e = . . _PIE1bits 0 0 -> -> 1 `i `uc ]
-"523
+[; ;main.c: 545: _delay((unsigned long)((20)*(8000000/4000.0)));
+"545
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 546: if(RA4) menu_flag = 1;
+"546
+[e $ ! _RA4 235  ]
+[e = _menu_flag -> -> 1 `i `uc ]
+[e :U 235 ]
+[; ;main.c: 547: while(RA4);
+"547
+[e $U 236  ]
+[e :U 237 ]
+[e :U 236 ]
+[e $ _RA4 237  ]
+[e :U 238 ]
+[; ;main.c: 548: _delay((unsigned long)((20)*(8000000/4000.0)));
+"548
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"549
 }
-[e :U 230 ]
-[; ;main.c: 523: }
-[; ;main.c: 525: regulacija();
-"525
+[e :U 234 ]
+[; ;main.c: 549: }
+[; ;main.c: 550: if(menu_flag)
+"550
+[e $ ! != -> _menu_flag `i -> -> -> 0 `i `uc `i 239  ]
+[; ;main.c: 551: {
+"551
+{
+[; ;main.c: 552: menu_flag = 0;
+"552
+[e = _menu_flag -> -> 0 `i `uc ]
+[; ;main.c: 553: PIE1bits.TMR1IE = 0;
+"553
+[e = . . _PIE1bits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 554: menu();
+"554
+[e ( _menu ..  ]
+[; ;main.c: 555: PIE1bits.TMR1IE = 1;
+"555
+[e = . . _PIE1bits 0 0 -> -> 1 `i `uc ]
+"556
+}
+[e :U 239 ]
+[; ;main.c: 556: }
+[; ;main.c: 558: regulacija();
+"558
 [e ( _regulacija ..  ]
-[; ;main.c: 526: asm("clrwdt");
-"526
+[; ;main.c: 559: asm("clrwdt");
+"559
 [; <" clrwdt ;# ">
-"527
+"560
 }
 [e :U 213 ]
-"468
+"477
 [e $U 214  ]
 [e :U 215 ]
-[; ;main.c: 527: }
-[; ;main.c: 528: }
-"528
+[; ;main.c: 560: }
+[; ;main.c: 561: }
+"561
 [e :UE 212 ]
 }
 [p f _sprintf 8462336 ]

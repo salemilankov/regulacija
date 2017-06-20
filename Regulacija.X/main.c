@@ -41,7 +41,7 @@
 
 // CONFIG1
 #pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
-#pragma config WDTE = ON        // Watchdog Timer Enable bit (WDT disabled and can be enabled by SWDTEN bit of the WDTCON register)
+//#pragma config WDTE = ON        // Watchdog Timer Enable bit (WDT disabled and can be enabled by SWDTEN bit of the WDTCON register)
 #pragma config PWRTE = OFF      // Power-up Timer Enable bit (PWRT disabled)
 #pragma config MCLRE = ON       // RE3/MCLR pin function select bit (RE3/MCLR pin function is MCLR)
 #pragma config CP = OFF         // Code Protection bit (Program memory code protection is disabled)
@@ -56,7 +56,7 @@
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
 
 char ok_flag, ok_flag_humi, ok_flag_co2, menu_flag, plus_flag, minus_flag;
-unsigned char measure , disp_count, disp, measure_co2;
+unsigned char measure , disp_count, measure_count, disp, measure_co2;
 unsigned char humidity[5]={0,0,0,0,0};
 unsigned char temperature[5]={0,0,0,0,0};
 //char uart_data[30], str[5]; //za uart
@@ -77,29 +77,29 @@ static void interrupt isr(){
 
     //INTCONbits.T0IF = 0;    //interrupt flag clear
     PIR1bits.TMR1IF = 0;
-    //if(tmr_co2 == 5450) //priblizno 3 min (5450 = 180/0.033)
-    //{
-    //    tmr_co2 = 0;
-    //    TGS_OFF = ~TGS_OFF;
-    //}
-    //if((!TGS_OFF) && (tmr_co2 > 3600))  //senzor je ukljucen duze od 2 minuta
-    //{
-    //    measure_co2 = 1;    //mogu se vrsiti merenja
-    //}
-    //else measure_co2 = 0;   // ne vrse se merenja
 
-    //if(tmr_count == 91) //priblizno 3s
-    if(tmr_count == 500)        // 5 sekundi
+//    if(tmr_co2 == 18000) //priblizno 3 min (5450 = 180/0.033)
+//    {
+//        tmr_co2 = 0;
+//        TGS_OFF = ~TGS_OFF;
+//    }
+//    if((!TGS_OFF) && (tmr_co2 > 12000))  //senzor je ukljucen duze od 2 minuta
+//    {
+//        measure_co2 = 1;    //mogu se vrsiti merenja
+//    }
+//    else measure_co2 = 0;   // ne vrse se merenja
+
+    if(tmr_count == 300)        // 3 sekunde
     {
         tmr_count = 0;
         measure = 1;
     }
-    else if(tmr_count == 200)  //priblizno 2s
+    else if(tmr_count == 200)  // 2 sekunde
     {
         disp = 1;
     }
     tmr_count++;    //obican brojac prekida
-    tmr_co2++;      //brojac prekida koji ce sluziti za odredj. vremena uklj. i isklj. senzora co2
+    //tmr_co2++;      //brojac prekida koji ce sluziti za odredj. vremena uklj. i isklj. senzora co2
     //TMR0 = 0;
     TMR1H = 0xD8;
     TMR1L = 0xEF;
@@ -107,7 +107,8 @@ static void interrupt isr(){
 
 void initWDT()
 {
-    WDTCONbits.WDTPS = 0b1000;
+    WDTCONbits.SWDTEN = 1;
+    WDTCONbits.WDTPS = 0b0110;
 }
 
 void IOPinsConfig(){
@@ -180,6 +181,7 @@ void resetValues(){ //f-ja koja dodeljuje pocetne vrednosti promenljivima
     tmr_count = 0;
     measure = 0;
     disp_count = 0;
+    measure_count = 0;
     disp = 1;
     //zeljena_temperatura = 24;
     //zeljena_vlaznost = 90;
@@ -307,6 +309,8 @@ void menuCO2(){
     LcdWriteString((char *)"        ");
     while(!ok_flag)
     {
+        CLRWDT();                           // Reset watchdog timer
+        
         manage_buttons();
 
         if(plus_flag)
@@ -349,6 +353,8 @@ void menuHumi(){
 
     while(!ok_flag_co2)
     {
+        CLRWDT();                           // Reset watchdog timer
+
         manage_buttons();
 
         if(plus_flag)
@@ -395,6 +401,8 @@ void menu(){
 
     while(!ok_flag_humi)
     {
+        CLRWDT();                           // Reset watchdog timer
+
         manage_buttons();
 
         if(plus_flag)
@@ -460,9 +468,10 @@ void main(void) {
     initTimer1();
     initTimer0();   // Used for WDT
     initWDT();      // Reset on ~35 sec
+    __delay_ms(100);
 
     getResSHT71(&temp, &humi);  //pocetna merenja
-//    co2 = measureTGS4161(); preskacemo prvo merenje co2 jer senzor nije zagrejan
+    //co2 = measureTGS4161();     //preskacemo prvo merenje co2 jer senzor nije zagrejan
     t = getTempDS18B20();
 
     while(1)
@@ -470,17 +479,38 @@ void main(void) {
         if(measure)
         {
             measure = 0;
-            getResSHT71(&temp, &humi);
-            UARTWriteString("\nSHT OK.\n");
 
-            //if(measure_co2) //ako je senzor dovoljno zagrejan vrse se merenja
-            //{
-                co2 = measureTGS4161();
-            UARTWriteString("\nTGS OK.\n");
-            //}
-            
-            t = getTempDS18B20();
-            UARTWriteString("\nDS OK.\n");
+            switch(measure_count)
+            {
+                case 0:
+                {
+                    getResSHT71(&temp, &humi);
+                    UARTWriteString((char *)"\nSHT OK.\n");
+                }
+                break;
+
+                case 1:
+                {
+                    if(measure_co2)
+                    {
+                        co2 = measureTGS4161();
+                        UARTWriteString((char *)"\nTGS OK.\n");
+                    }
+                }
+                break;
+
+                case 2:
+                {
+                    t = getTempDS18B20();
+                    UARTWriteString((char *)"\nDS OK.\n");
+                }
+                break;
+
+                default:
+                    break;
+            }
+
+            if(++measure_count > 3) measure_count = 0;
         }
 
         if(disp)
@@ -500,6 +530,9 @@ void main(void) {
                     break;
                 case 4:
                     displaySoilTemp(t);
+                    break;
+
+                default:
                     break;
             }
             //slanjePodataka();

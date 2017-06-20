@@ -2198,7 +2198,7 @@ void UARTWriteString(char *);
 
 # 43 "main.c"
 #pragma config FOSC = HS
-#pragma config WDTE = ON
+
 #pragma config PWRTE = OFF
 #pragma config MCLRE = ON
 #pragma config CP = OFF
@@ -2213,7 +2213,7 @@ void UARTWriteString(char *);
 #pragma config WRT = OFF
 
 char ok_flag, ok_flag_humi, ok_flag_co2, menu_flag, plus_flag, minus_flag;
-unsigned char measure , disp_count, disp, measure_co2;
+unsigned char measure , disp_count, measure_count, disp, measure_co2;
 unsigned char humidity[5]={0,0,0,0,0};
 unsigned char temperature[5]={0,0,0,0,0};
 
@@ -2236,7 +2236,7 @@ return;
 PIR1bits.TMR1IF = 0;
 
 # 92
-if(tmr_count == 500)
+if(tmr_count == 300)
 {
 tmr_count = 0;
 measure = 1;
@@ -2246,7 +2246,7 @@ else if(tmr_count == 200)
 disp = 1;
 }
 tmr_count++;
-tmr_co2++;
+
 
 TMR1H = 0xD8;
 TMR1L = 0xEF;
@@ -2254,7 +2254,8 @@ TMR1L = 0xEF;
 
 void initWDT()
 {
-WDTCONbits.WDTPS = 0b1000;
+WDTCONbits.SWDTEN = 1;
+WDTCONbits.WDTPS = 0b0110;
 }
 
 void IOPinsConfig(){
@@ -2327,6 +2328,7 @@ minus_flag = 0;
 tmr_count = 0;
 measure = 0;
 disp_count = 0;
+measure_count = 0;
 disp = 1;
 
 
@@ -2454,6 +2456,8 @@ LcdSetCursor(2,6);
 LcdWriteString((char *)"        ");
 while(!ok_flag)
 {
+asm("clrwdt");
+
 manage_buttons();
 
 if(plus_flag)
@@ -2496,6 +2500,8 @@ LcdWriteString((char *)"        ");
 
 while(!ok_flag_co2)
 {
+asm("clrwdt");
+
 manage_buttons();
 
 if(plus_flag)
@@ -2542,6 +2548,8 @@ LcdWriteString((char *)"         ");
 
 while(!ok_flag_humi)
 {
+asm("clrwdt");
+
 manage_buttons();
 
 if(plus_flag)
@@ -2578,7 +2586,7 @@ ok_flag_humi = 0;
 ok_flag_co2 = 0;
 }
 
-# 450
+# 458
 void main(void) {
 
 LcdInit();
@@ -2592,6 +2600,7 @@ resetValues();
 initTimer1();
 initTimer0();
 initWDT();
+_delay((unsigned long)((100)*(8000000/4000.0)));
 
 getResSHT71(&temp, &humi);
 
@@ -2602,17 +2611,38 @@ while(1)
 if(measure)
 {
 measure = 0;
+
+switch(measure_count)
+{
+case 0:
+{
 getResSHT71(&temp, &humi);
-UARTWriteString("\nSHT OK.\n");
+UARTWriteString((char *)"\nSHT OK.\n");
+}
+break;
 
-
-
+case 1:
+{
+if(measure_co2)
+{
 co2 = measureTGS4161();
-UARTWriteString("\nTGS OK.\n");
+UARTWriteString((char *)"\nTGS OK.\n");
+}
+}
+break;
 
-
+case 2:
+{
 t = getTempDS18B20();
-UARTWriteString("\nDS OK.\n");
+UARTWriteString((char *)"\nDS OK.\n");
+}
+break;
+
+default:
+break;
+}
+
+if(++measure_count > 3) measure_count = 0;
 }
 
 if(disp)
@@ -2632,6 +2662,9 @@ displayCO2(co2);
 break;
 case 4:
 displaySoilTemp(t);
+break;
+
+default:
 break;
 }
 

@@ -2071,67 +2071,67 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;sht71.c: 227: value humi_val,temp_val;
 [; ;sht71.c: 228: unsigned char error, checksum;
 [; ;sht71.c: 229: char inp;
-[; ;sht71.c: 230: error=0;
-"230
-[e = _error -> -> 0 `i `uc ]
-[; ;sht71.c: 231: error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,3);
+[; ;sht71.c: 231: error=0;
 "231
-[e =+ _error ( _measureSHT71 (3 , , -> &U . _humi_val 0 `*uc &U _checksum -> -> 3 `i `uc ]
-[; ;sht71.c: 232: error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,2);
+[e = _error -> -> 0 `i `uc ]
+[; ;sht71.c: 232: error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,3);
 "232
-[e =+ _error ( _measureSHT71 (3 , , -> &U . _temp_val 0 `*uc &U _checksum -> -> 2 `i `uc ]
-[; ;sht71.c: 233: error += readStatusRegSHT71(&inp, &checksum);
+[e =+ _error ( _measureSHT71 (3 , , -> &U . _humi_val 0 `*uc &U _checksum -> -> 3 `i `uc ]
+[; ;sht71.c: 233: error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,2);
 "233
-[e =+ _error ( _readStatusRegSHT71 (2 , &U _inp &U _checksum ]
-[; ;sht71.c: 234: if(error != 0)
+[e =+ _error ( _measureSHT71 (3 , , -> &U . _temp_val 0 `*uc &U _checksum -> -> 2 `i `uc ]
+[; ;sht71.c: 234: error += readStatusRegSHT71(&inp, &checksum);
 "234
-[e $ ! != -> _error `i -> 0 `i 175  ]
-[; ;sht71.c: 235: {
+[e =+ _error ( _readStatusRegSHT71 (2 , &U _inp &U _checksum ]
+[; ;sht71.c: 235: if(error != 0)
 "235
-{
-[; ;sht71.c: 236: connectionResetSHT71();
+[e $ ! != -> _error `i -> 0 `i 175  ]
+[; ;sht71.c: 236: {
 "236
-[e ( _connectionResetSHT71 ..  ]
-[; ;sht71.c: 237: LcdSetCursor(1,1);
-"237
-[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;sht71.c: 238: LcdWriteString("Greska SHT71!");
-"238
-[e ( _LcdWriteString (1 -> :s 1C `*uc ]
-[; ;sht71.c: 239: _delay((unsigned long)((1000)*(8000000/4000.0)));
-"239
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"240
-}
-[; ;sht71.c: 240: }
-[e $U 176  ]
-"241
-[e :U 175 ]
-[; ;sht71.c: 241: else
-[; ;sht71.c: 242: {
-"242
 {
-[; ;sht71.c: 243: humi_val.f = (float)tempervalue[1];
+[; ;sht71.c: 237: connectionResetSHT71();
+"237
+[e ( _connectionResetSHT71 ..  ]
+[; ;sht71.c: 238: LcdSetCursor(1,1);
+"238
+[e ( _LcdSetCursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;sht71.c: 239: LcdWriteString((char *)"Greska SHT71!");
+"239
+[e ( _LcdWriteString (1 -> :s 1C `*uc ]
+[; ;sht71.c: 240: _delay((unsigned long)((1000)*(8000000/4000.0)));
+"240
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"241
+}
+[; ;sht71.c: 241: }
+[e $U 176  ]
+"242
+[e :U 175 ]
+[; ;sht71.c: 242: else
+[; ;sht71.c: 243: {
 "243
-[e = . _humi_val 1 -> *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
-[; ;sht71.c: 244: temp_val.f = (float)tempervalue[0];
+{
+[; ;sht71.c: 244: humi_val.f = (float)tempervalue[1];
 "244
-[e = . _temp_val 1 -> *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
-[; ;sht71.c: 245: humi_val.f = calcSHT71(humi_val.f,&temp_val.f);
+[e = . _humi_val 1 -> *U + &U _tempervalue * -> -> -> 1 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
+[; ;sht71.c: 245: temp_val.f = (float)tempervalue[0];
 "245
-[e = . _humi_val 1 ( _calcSHT71 (2 , . _humi_val 1 &U . _temp_val 1 ]
-[; ;sht71.c: 246: *p_temp = temp_val.f;
+[e = . _temp_val 1 -> *U + &U _tempervalue * -> -> -> 0 `i `ui `ux -> -> # *U &U _tempervalue `ui `ux `f ]
+[; ;sht71.c: 246: humi_val.f = calcSHT71(humi_val.f,&temp_val.f);
 "246
-[e = *U _p_temp . _temp_val 1 ]
-[; ;sht71.c: 247: *p_humi = humi_val.f;
+[e = . _humi_val 1 ( _calcSHT71 (2 , . _humi_val 1 &U . _temp_val 1 ]
+[; ;sht71.c: 247: *p_temp = temp_val.f;
 "247
-[e = *U _p_humi . _humi_val 1 ]
+[e = *U _p_temp . _temp_val 1 ]
+[; ;sht71.c: 248: *p_humi = humi_val.f;
 "248
+[e = *U _p_humi . _humi_val 1 ]
+"249
 }
 [e :U 176 ]
-[; ;sht71.c: 248: }
-[; ;sht71.c: 250: }
-"250
+[; ;sht71.c: 249: }
+[; ;sht71.c: 251: }
+"251
 [e :UE 174 ]
 }
 [a 1C 71 114 101 115 107 97 32 83 72 84 55 49 33 0 ]

@@ -1996,7 +1996,13 @@ void adcInit();
 unsigned int adcRead();
 unsigned int measureTGS4161();
 
-# 4 "tgs4161.c"
+# 17 "uart.h"
+char UARTInit(const unsigned long);
+void UARTWrite(char);
+char UARTTxFull();
+void UARTWriteString(char *);
+
+# 5 "tgs4161.c"
 void adcInit(){
 TRISA |= 0b00000001;
 ANSEL |= 0b00000001;
@@ -2017,7 +2023,11 @@ ADCON0bits.GO = 1;
 while(ADCON0bits.GO)
 {
 _delay((unsigned long)((10)*(8000000/4000.0)));
-if(++loop_count > 150) return 0;
+if(++loop_count > 150)
+{
+UARTWriteString((char *)"\nADC ERROR.\n");
+return 0;
+}
 }
 
 tempL |= ADRESL;
@@ -2031,6 +2041,7 @@ return temp;
 unsigned int measureTGS4161(){
 unsigned int temp=0, ppm=0, ppm_temp=0, krez1, krez2;
 char i;
+unsigned short n=0;
 
 krez1 = -23.43;
 krez2 = -53.63;
@@ -2043,11 +2054,12 @@ temp = adcRead();
 if(temp > 236) ppm = krez1*temp + 6650;
 else ppm = krez2*temp + 13500;
 ppm_temp += ppm;
+n++;
 _delay((unsigned long)((20)*(8000000/4000.0)));
 }
 INTCONbits.T0IE = 1;
 
-ppm = ppm_temp/7;
+ppm = ppm_temp/n;
 if(ppm < 350) ppm = 350;
 if(ppm > 5500) ppm = 5500;
 

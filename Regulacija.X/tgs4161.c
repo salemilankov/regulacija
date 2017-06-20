@@ -1,4 +1,5 @@
 #include "tgs4161.h"
+#include "uart.h"
 
 
 void adcInit(){
@@ -21,7 +22,11 @@ unsigned int adcRead(){
     while(ADCON0bits.GO)    //cekamo da se zavrsi AD konverzija
     {
         __delay_ms(10);
-        if(++loop_count > 150) return 0;
+        if(++loop_count > 150)
+        {
+            UARTWriteString((char *)"\nADC ERROR.\n");
+            return 0;
+        }
     }
 
     tempL |= ADRESL;    //uzimamo rezultat
@@ -35,6 +40,7 @@ unsigned int adcRead(){
 unsigned int measureTGS4161(){
     unsigned int temp=0, ppm=0, ppm_temp=0, krez1, krez2;
     char i;
+    unsigned short n=0;
 
     krez1 = -23.43;
     krez2 = -53.63;
@@ -47,11 +53,12 @@ unsigned int measureTGS4161(){
         if(temp > 236) ppm = krez1*temp + N1;
         else ppm = krez2*temp + N2;
         ppm_temp += ppm;
+        n++;
         __delay_ms(20);
     }
     INTCONbits.T0IE = 1;    //prekid timer0 dozvoljen
 
-    ppm = ppm_temp/7;
+    ppm = ppm_temp/n;
     if(ppm < 350) ppm = 350;
     if(ppm > 5500) ppm = 5500;
     

@@ -2187,6 +2187,7 @@ void getResSHT71(float *p_temp, float *p_humi){
 value humi_val,temp_val;
 unsigned char error, checksum;
 char inp;
+
 error=0;
 error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,3);
 error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,2);
@@ -2195,7 +2196,7 @@ if(error != 0)
 {
 connectionResetSHT71();
 LcdSetCursor(1,1);
-LcdWriteString("Greska SHT71!");
+LcdWriteString((char *)"Greska SHT71!");
 _delay((unsigned long)((1000)*(8000000/4000.0)));
 }
 else

@@ -1998,6 +1998,9 @@ char readDS18B20();
 float getTempDS18B20();
 
 # 3 "ds18b20.c"
+char sensor1_ROM[8]={40, 255, 146, 16, 109, 20, 3, 196};
+char sensor2_ROM[8]={40, 255, 113, 26, 109, 20, 3, 75};
+
 char resetDS18B20(){
 TRISCbits.TRISC5 = 0;
 RC5 = 0;
@@ -2016,7 +2019,6 @@ _delay((unsigned long)((480)*(8000000/4000000.0)));
 return 1;
 }
 }
-
 
 void writeDS18B20 (char Cmd){
 char i;

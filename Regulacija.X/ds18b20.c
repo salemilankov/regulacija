@@ -1,5 +1,8 @@
 #include "ds18b20.h"
 
+char sensor1_ROM[8]={40, 255, 146, 16, 109, 20, 3, 196};
+char sensor2_ROM[8]={40, 255, 113, 26, 109, 20, 3, 75};
+
 char resetDS18B20(){
     PIN_DIR_18B20 = 0;   // Tris = 0 (output)
     PIN_18B20 = 0;     // set pin# to low (0)
@@ -18,7 +21,6 @@ char resetDS18B20(){
             return 1;   // return 1 ( 1-wire is NOT presence)
         }
 }
-
 
 void writeDS18B20 (char Cmd){
     char i;

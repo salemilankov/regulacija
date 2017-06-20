@@ -227,25 +227,26 @@ void getResSHT71(float *p_temp, float *p_humi){   //f-ja koja vraca rezultate u 
     value humi_val,temp_val;
     unsigned char error, checksum;
     char inp;
-        error=0;
-        error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,HUM);  //measure humidity
-        error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,TEM);  //measure temperature
-        error += readStatusRegSHT71(&inp, &checksum);
-        if(error != 0)
-        {
-            connectionResetSHT71();                 //in case of an error: connection reset
-            LcdSetCursor(1,1);
-            LcdWriteString("Greska SHT71!");
-            __delay_ms(1000);
-        }
-        else
-        {
-            humi_val.f = (float)tempervalue[1];                   //converts integer to float
-            temp_val.f = (float)tempervalue[0];                   //converts integer to float
-            humi_val.f = calcSHT71(humi_val.f,&temp_val.f);      //calculate humidity, temperature
-            *p_temp = temp_val.f;
-            *p_humi = humi_val.f;
-        }
+    
+    error=0;
+    error += measureSHT71((unsigned char*) (&humi_val.i),&checksum,HUM);  //measure humidity
+    error += measureSHT71((unsigned char*) (&temp_val.i),&checksum,TEM);  //measure temperature
+    error += readStatusRegSHT71(&inp, &checksum);
+    if(error != 0)
+    {
+        connectionResetSHT71();                 //in case of an error: connection reset
+        LcdSetCursor(1,1);
+        LcdWriteString((char *)"Greska SHT71!");
+        __delay_ms(1000);
+    }
+    else
+    {
+        humi_val.f = (float)tempervalue[1];                   //converts integer to float
+        temp_val.f = (float)tempervalue[0];                   //converts integer to float
+        humi_val.f = calcSHT71(humi_val.f,&temp_val.f);      //calculate humidity, temperature
+        *p_temp = temp_val.f;
+        *p_humi = humi_val.f;
+    }
 //        return humi_val.f;
 }
 
